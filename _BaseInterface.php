@@ -1,11 +1,9 @@
 <?php namespace SurveyGizmo;
 interface iBaseInterface{
-
-	// public function __construct();
-	public function fetch($filter);
-	public function save();
-	public function get();
-	public function delete();
+	public static function fetch($filter);
+	public static function save();
+	public static function get();
+	public static function delete();
 
 }
 

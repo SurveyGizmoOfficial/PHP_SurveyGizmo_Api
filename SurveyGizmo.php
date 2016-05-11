@@ -2,34 +2,38 @@
 class SurveyGizmoAPI{
 
 	/***PROPERTIES***/
-	private $AuthToken;
-	private $AuthToken;
-	public $Surveys;
-	public $Users;
-	public $Teams;
-	//use \SurveyGizmo\Survey as Surveys
+	static $AuthToken;
+	static $AuthSecret;
+	static $config;
+	// public $Surveys;
+	// public $Users;
+	// public $Teams;
 
 	/***FUNCTIONS***/
-	function __construct($token,$secret){
-		echo "sg";
-		$this->auth($token,$secret)
-		//$this->loadConfig();
-		//init out objects
-		$this->Surveys = new Survey();
-	}
 
-	public function Auth($token,$secret){
+	public static function auth($token,$secret){
 		//do test auth
-
 		//set property for token & secret
-		$this->AuthToken = $token;
-		$this->AuthSecret =  $secret;
+		self::$AuthToken = $token;
+		self::$AuthSecret =  $secret;
 	}
 
-	/***PRIVATE FUNCTIONS***/
-	private function loadConfig(){
-		//read json file, parse and set as properties on this class
+	public static function getAuth(){
+		return array("AuthToken"=>self::$AuthToken,"AuthSecret"=>self::$AuthSecret);
 	}
+	//public static function getConfig(){
+	// public static function getConfig(){
+	// 	if(!isset(self::$config)){
+	// 		self::$config = self::loadConfig();
+	// 	}
+	// 	return self::$config;
+	// }
+
+	// /***PRIVATE FUNCTIONS***/
+	// private static function loadConfig(){
+	// 	var_dump(file_get_contents(__DIR__ . "config.json"));
+	// 	return json_decode(file_get_contents(__DIR__ . "config.json"));
+	// }
 
 
 }
