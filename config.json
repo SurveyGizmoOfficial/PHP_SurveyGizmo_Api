@@ -1,5 +1,3 @@
 {
-	baseuri: 'https://restapi.surveygizmo.com',
-	api_version: 'head',
-	
+	baseuri: 'app2.garrett.restapi.boulder.sgizmo.com/services/rest/v4/'
 }
