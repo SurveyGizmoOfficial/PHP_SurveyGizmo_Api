@@ -1,0 +1,5 @@
+{
+	baseuri: 'https://restapi.surveygizmo.com',
+	api_version: 'head',
+	
+}
