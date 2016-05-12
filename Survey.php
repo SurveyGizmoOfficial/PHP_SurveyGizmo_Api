@@ -1,21 +1,28 @@
 <?php namespace SurveyGizmo;
-use SurveyGizmo\BaseObject;
+use SurveyGizmo\ApiResource;
 use SurveyGizmo\iBaseInterface;
-class Survey extends BaseObject implements iBaseInterface{
-	
+class Survey extends ApiResource implements iBaseInterface{
 
-	public static function save(){
+	static $path = "/survey";
 
+	public function save(){
+		$this->type = empty($this->type) ? "survey" : $this->type;
+		return parent::_save();
 	}
-	public static function get(){
-
+	public static function get($id){
+		return parent::_get(get_class($this), $id);
 	}
-	public static function delete(){
-
+	public function delete(){
+		return parent::_delete();	
 	}
 
 	public static function fetch($filter){
-		parent::makeRequest("/survey",$filter);
+		return parent::_fetch(get_class($this), $filter);
 	}
+
+	public static function getPath($append = ""){
+		return parent::_getPath(self::$path,$append);
+	}
+
 }
 ?>

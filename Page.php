@@ -1,5 +1,4 @@
-<?php
-namespace SurveyGizmo;
+<?php namespace SurveyGizmo;
 class Page extends BaseObject implements BaseInterface{
 	
 	/***PROPERTIES***/

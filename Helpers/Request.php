@@ -3,43 +3,61 @@ class Request{
 
 	private $baseuri = 'app2.garrett.restapi.boulder.sgizmo.com/services/rest/v4';
 
+	function __construct($method = "GET"){
+		$this->method = $method;
+	}	
+
 	public function makeRequest(){
 		$returnVal = null;
-		//get creds
-		$this->buildURI();
-		//TODO: look at moving to guzzle at some point
-		var_dump($this->uri,$this->AuthToken,$this->AuthSecret);
-		if($this->uri && $this->AuthToken && $this->AuthSecret){
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $this->uri);
-			curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
-			curl_setopt($ch, CURLOPT_VERBOSE, 0);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-			curl_setopt($ch, CURLOPT_POST, 0);
-			//curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
-			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		try{
+			//get creds
+			$this->buildURI();
+			//TODO: look at moving to guzzle at some point
+			//echo "hitting it";	
+			//var_dump($this->uri,$this->AuthToken,$this->AuthSecret);
+			if($this->uri && $this->AuthToken && $this->AuthSecret){
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $this->uri);
+				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
+				curl_setopt($ch, CURLOPT_VERBOSE, 0);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+				if($this->method == "PUT" || $this->method == "POST"){
+					curl_setopt($ch, CURLOPT_POST, 1);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->buildPayload());
+				}
+				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-			$buffer = curl_exec($ch);
+				$buffer = curl_exec($ch);
 
-			if ($buffer === false) {
-				return false;
+				if ($buffer === false) {
+					return false;
+				}
+				curl_close($ch);
+				return json_decode($buffer);
+
 			}
-			curl_close($ch);
-			return json_decode($buffer);
-
+		}catch(Exception $ex){
+			//throw our custom excpetion
 		}
 		return $returnVal;
 	}
 
-
+	private function buildPayload(){
+		if($this->data){
+			$post_data = http_build_query(get_object_vars($this->data));
+			return $post_data;
+		}else{
+			return "";
+		}
+	}
 
 	private function buildURI(){
 		$creds = SurveyGizmoAPI::getAuth();
 		if($this->path && $creds['AuthToken'] && $creds['AuthSecret']){
 			$this->AuthToken = $creds['AuthToken'];
 			$this->AuthSecret = $creds['AuthSecret'];
-			$this->uri = $this->baseuri . $this->path . ".json?api_token=" . $this->AuthToken . "&api_token_secret=" . $this->AuthSecret;
+			$this->uri = $this->baseuri . $this->path . ".json?api_token=" . $this->AuthToken . "&api_token_secret=" . $this->AuthSecret . "&_method=" . $this->method;
 			//add filters if they exist
 		}
 		return $this->uri;

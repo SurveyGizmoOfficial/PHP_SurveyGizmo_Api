@@ -1,5 +1,4 @@
-<?php
-namespace SurveyGizmo;
+<?php namespace SurveyGizmo;
 class Auth{
 	
 	/***PROPERTIES***/
@@ -7,7 +6,7 @@ class Auth{
 	/***FUNCTIONS***/
 	function __construct($token,$secret){
 		if(isset($token) && isset($secret)){
-			$this->token = $token;
+			$this->authenticate
 		}else{
 			new SurveyGizmoException();
 		}
