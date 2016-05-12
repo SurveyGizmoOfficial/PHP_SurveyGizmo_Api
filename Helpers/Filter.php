@@ -1,5 +1,4 @@
-<?php
-namepsace SurveyGizmo;
+<?php namespace SurveyGizmo;
 class Filter{
 
 	public $Items;

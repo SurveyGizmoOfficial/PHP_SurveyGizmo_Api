@@ -1,5 +1,4 @@
-<?php
-namepsace SurveyGizmo;
+<?php namespace SurveyGizmo;
 class SurveyGizmoException extends Exception{
 	
 	function __construct($type,$message){

@@ -3,7 +3,7 @@
 
 $sg_autoload_mapping = array(
 	"SurveyGizmo\SurveyGizmoAPI" => __DIR__ . "/SurveyGizmo.php",
-	"SurveyGizmo\BaseObject" => __DIR__ . "/_BaseObject.php",
+	"SurveyGizmo\ApiResource" => __DIR__ . "/_ApiResource.php",
 	"SurveyGizmo\iBaseInterface" => __DIR__ . "/_BaseInterface.php",
 	"SurveyGizmo\Auth" => __DIR__ . "/Auth.php",
 	"SurveyGizmo\Survey" => __DIR__ . "/Survey.php",
@@ -18,7 +18,7 @@ $sg_autoload_mapping = array(
 
 spl_autoload_register(function ($class_name) {
 	global $sg_autoload_mapping;
-	var_dump($class_name,$sg_autoload_mapping[$class_name]);
+	//var_dump($class_name,$sg_autoload_mapping[$class_name]);
     if (isset($sg_autoload_mapping[$class_name])) {
         require $sg_autoload_mapping[$class_name];
     }

@@ -1,6 +1,10 @@
-<?php
-namepsace SurveyGizmo;
+<?php namespace SurveyGizmo;
 class Response{
-	//handle api responses
-}
-?>
+	
+	// public $total_count;
+	// public $page;
+	// public $total_pages;
+	// public $results_per_page;
+	// public $data;
+
+}?>
