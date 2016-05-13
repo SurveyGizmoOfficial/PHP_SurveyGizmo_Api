@@ -12,7 +12,7 @@ function testDump($dump){
 }
 testLog("TESTING Library");
 //Require autoloader
-require "../../apiwrapper/SurveyGizmoAutoLoader.php";
+require_once "../SurveyGizmoAutoLoader.php";
 //set token & secret
 $token = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
 $secret = "A9SByZ3cS%2FqpE";

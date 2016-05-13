@@ -92,7 +92,6 @@ class ApiResource{
 	private static function _makeRequest($path, $fitler){
 		$request = new Request("get");
 		$response = null;
-		echo "making request";
 		$request->path = $path;
 		$request->filter = $filter;
 		$data = $request->makeRequest();
