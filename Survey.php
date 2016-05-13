@@ -24,5 +24,13 @@ class Survey extends ApiResource implements iBaseInterface{
 		return parent::_getPath(self::$path,$append);
 	}
 
+	/*HELPERS*/
+	public function getPages(){
+		return $this->pages;
+	}
+	public function getPage($sku){
+		
+	}
+
 }
 ?>
