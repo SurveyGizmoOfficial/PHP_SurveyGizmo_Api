@@ -16,7 +16,7 @@ class Account extends ApiResource implements iBaseInterface{
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
 
-	public static function fetch($filter){
+	public static function fetch($filters=null, $options=null){
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
 

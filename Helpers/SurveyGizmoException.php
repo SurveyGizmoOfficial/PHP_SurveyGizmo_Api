@@ -11,7 +11,7 @@ class SurveyGizmoException{
 
     function getMessage(){
     	$type = $this->type;
-    	$response = new Response();
+    	$response = new APIResponse();
 		$response->results = false;
 		$message = 'An Error has Occurred.';
 
