@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1463168323">
+  <project timestamp="1463168323">
+    <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/._Filter.php">
+      <line num="1" type="stmt" count="0"/>
+      <metrics loc="0" ncloc="0" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/._FilterItem.php">
+      <line num="1" type="stmt" count="0"/>
+      <metrics loc="0" ncloc="0" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/._Request.php">
+      <line num="1" type="stmt" count="0"/>
+      <metrics loc="0" ncloc="0" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/._Response.php">
+      <line num="1" type="stmt" count="0"/>
+      <metrics loc="0" ncloc="0" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/._SurveyGizmoException.php">
+      <line num="1" type="stmt" count="0"/>
+      <metrics loc="0" ncloc="0" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+    </file>
+    <package name="SurveyGizmo">
+      <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/Filter.php">
+        <class name="Filter" namespace="SurveyGizmo">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+        </class>
+        <line num="6" type="method" name="__contstruct" crap="2" count="0"/>
+        <line num="8" type="stmt" count="0"/>
+        <metrics loc="9" ncloc="9" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+      </file>
+      <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/FilterItem.php">
+        <class name="FilterItem" namespace="SurveyGizmo">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+        </class>
+        <line num="8" type="method" name="__contstruct" crap="2" count="0"/>
+        <line num="10" type="stmt" count="0"/>
+        <metrics loc="16" ncloc="14" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+      </file>
+      <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/Request.php">
+        <class name="Request" namespace="SurveyGizmo">
+          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="0" elements="51" coveredelements="0"/>
+        </class>
+        <line num="6" type="method" name="__construct" crap="2" count="0"/>
+        <line num="7" type="stmt" count="0"/>
+        <line num="8" type="stmt" count="0"/>
+        <line num="10" type="method" name="makeRequest" crap="72" count="0"/>
+        <line num="11" type="stmt" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="46" type="method" name="buildPayload" crap="6" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="49" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="55" type="method" name="buildURI" crap="20" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="60" type="stmt" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <metrics loc="65" ncloc="53" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="0" elements="51" coveredelements="0"/>
+      </file>
+      <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/Response.php">
+        <class name="Response" namespace="SurveyGizmo">
+          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        </class>
+        <metrics loc="9" ncloc="-1" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      </file>
+      <file name="/home/httpd/vhosts/surveygizmo.com/_dev/erik/_releases/apiwrappers_php/Helpers/SurveyGizmoException.php">
+        <class name="SurveyGizmoException" namespace="SurveyGizmo">
+          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="6" coveredelements="0"/>
+        </class>
+        <line num="4" type="method" name="__construct" crap="2" count="0"/>
+        <line num="6" type="stmt" count="0"/>
+        <line num="8" type="method" name="processException" crap="2" count="0"/>
+        <line num="10" type="stmt" count="0"/>
+        <metrics loc="11" ncloc="11" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="4" coveredstatements="0" elements="6" coveredelements="0"/>
+      </file>
+    </package>
+    <metrics files="10" loc="110" ncloc="86" classes="5" methods="8" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="55" coveredstatements="0" elements="63" coveredelements="0"/>
+  </project>
+</coverage>

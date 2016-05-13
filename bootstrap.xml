@@ -1,0 +1,15 @@
+<phpunit bootstrap="Tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="SurveyGizmo PHP Test Suite">
+            <directory suffix="Test.php">Tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>Helpers</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="clover.xml"/>
+    </logging>
+</phpunit>
