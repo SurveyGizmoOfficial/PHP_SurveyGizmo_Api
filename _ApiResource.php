@@ -8,6 +8,16 @@ class ApiResource{
 		return $path;
 	}
 
+	public static function _mergePath($path, $options){
+		if(!is_array($options)){
+			$options = (array)$options;
+		}
+		foreach($options as $key => $value) {
+			$path = str_replace("{". $key ."}", $value, $path);
+		}
+		return $path;
+	}
+
 	public static function _fetch($type, $filter){
 		$path = $type::getPath();
 		$response = self::_makeRequest($path, $filter);
@@ -30,7 +40,7 @@ class ApiResource{
 	}
 
 	public function _save(){
-		$response =  new Response();
+		$response =  new APIResponse();
 		//determine save method
 		$method = isset($this->id) ? "POST" : "PUT";
 		$request = new Request($method);
@@ -46,7 +56,7 @@ class ApiResource{
 	}
 
 	public function _delete(){
-		$response =  new Response();
+		$response =  new APIResponse();
 		//determine save method
 		$method = "DELETE";
 		$request = new Request($method);
@@ -71,7 +81,7 @@ class ApiResource{
 		return $return;
 	}
 
-	private static function _formatObject($type, $item){
+	protected static function _formatObject($type, $item){
 		$obj = new $type;
 		foreach ($item as $property => $value) {
 		   $obj->$property = $value;
@@ -87,7 +97,7 @@ class ApiResource{
 		$request->filter = $filter;
 		$data = $request->makeRequest();
 		if(isset($data)){
-			$response = new Response();		
+			$response = new APIResponse();		
 			//add meta data
 			if(isset($data->total_count)){
 				$response->total_count = $data->total_count;

@@ -8,11 +8,16 @@ $sg_autoload_mapping = array(
 	"SurveyGizmo\Account" => __DIR__ . "/Account.php",
 	"SurveyGizmo\Survey" => __DIR__ . "/Survey.php",
 	"SurveyGizmo\Page" => __DIR__ . "/Page.php",
-	"SurveyGizmo\Quesiton" => __DIR__ . "/Quesiton.php",
+	"SurveyGizmo\Question" => __DIR__ . "/Question.php",
+	"SurveyGizmo\QuestionOption" => __DIR__ . "/QuestionOption.php",
+	"SurveyGizmo\Response" => __DIR__ . "/Response.php",
+	"SurveyGizmo\User" => __DIR__ . "/User.php",
+	"SurveyGizmo\Team" => __DIR__ . "/Team.php",
+	"SurveyGizmo\Report" => __DIR__ . "/Report.php",
 	"SurveyGizmo\Filter" => __DIR__ . "/Helpers/Filter.php",
 	"SurveyGizmo\FilterItem" => __DIR__ . "/Helpers/FilterItem.php",
 	"SurveyGizmo\Request" => __DIR__ . "/Helpers/Request.php",
-	"SurveyGizmo\Response" => __DIR__ . "/Helpers/Response.php",
+	"SurveyGizmo\APIResponse" => __DIR__ . "/Helpers/APIResponse.php",
 	"SurveyGizmo\SurveyGizmoException" => __DIR__ . "/Helpers/SurveyGizmoException.php"
 );
 

@@ -1,9 +1,9 @@
 <?php namespace SurveyGizmo;
 use SurveyGizmo\ApiResource;
 use SurveyGizmo\iBaseInterface;
-class Page extends ApiResource implements iBaseInterface{
+class User extends ApiResource implements iBaseInterface{
 
-	static $path = "/survey/{survey_id}/surveypage";
+	static $path = "/accountuser";
 
 	public function save(){
 		return parent::_save();
@@ -15,8 +15,8 @@ class Page extends ApiResource implements iBaseInterface{
 		return parent::_delete();
 	}
 
-	public static function fetch($filters=null, $options=null){
-		return parent::_fetch(get_class($this),$filter);
+	public static function fetch($filter, $options){
+		return parent::_fetch(get_class($this), $filter);
 	}
 
 	public static function getPath($append = ""){
