@@ -13,7 +13,6 @@ class Request{
 			//get creds
 			$this->buildURI();
 			//TODO: look at moving to guzzle at some point
-			//echo "hitting it";	
 			//var_dump($this->uri,$this->AuthToken,$this->AuthSecret);
 			if($this->uri && $this->AuthToken && $this->AuthSecret){
 				$ch = curl_init();

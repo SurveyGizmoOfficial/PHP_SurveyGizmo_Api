@@ -23,7 +23,7 @@ class ApiResource{
 		$path = $type::getPath($id);
 		$response = self::_makeRequest($path);
 		if(isset($response)){
-			return self::_formatObject($response->data);
+			return self::_formatObject($type, $response->data);
 		}else{
 			return null;
 		}
@@ -41,7 +41,7 @@ class ApiResource{
 		$response->results = $results->result_ok;
 		$response->code = $results->code;
 		$response->message = $results->message;
-		$response->data = $this->_formatObject(get_class($this),$results->data);
+		$response->data = $this->_formatObject(get_class($this), $results->data);
 		return $response;
 	}
 
