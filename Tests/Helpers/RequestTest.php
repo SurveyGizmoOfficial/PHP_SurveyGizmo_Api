@@ -65,6 +65,10 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
       //returns null
     }
 
+    /*
+     *
+     * @covers buildPayload
+     */
     public function testBuildPayloadBasic()
     {
       $expected = "test=i+am+a+property&property=this+is+a+test";
@@ -75,7 +79,10 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
       $payload = $this->invokeMethod($test, 'buildPayload');
       $this->assertEquals($expected, $payload);
     }
-
+    /*
+     *
+     * @covers buildPayload
+     */
     public function testBuildPayloadEmpty()
     {
       $expected = "";
@@ -84,7 +91,10 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
       $payload = $this->invokeMethod($test, 'buildPayload');
       $this->assertEquals($expected, $payload);
     }
-
+    /*
+     *
+     * @covers buildPayload
+     */
     public function testBuildPayloadNotReturnEmpty()
     {
       $notExpected = "";
@@ -95,21 +105,15 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
       $payload = $this->invokeMethod($test, 'buildPayload');
       $this->assertNotEquals($notExpected, $payload);
     }
-
+    /*
+     *
+     * @covers buildURI
+     */
     public function testbuildURI()
     {
 
       $expected = "trunk.qa.devo.boulder.sgizmo.com/services/rest/v4this is a string.json?api_token=testing&api_token_secret=sauce&_method=GET";
-/*
-      $response = new \stdClass();
-      $response->approved = true;
-      //for Return of Auth to be true
-      $mockAuth = $this->getMockBuilder('\SurveyGizmoAPI')
-      ->getMock();
 
-      $mockAuth->expects($this->any())
-      ->method('auth');
-*/
       $test = new Request();
       $test->data = new \stdClass();
       $test->path = 'this is a string';
@@ -117,14 +121,10 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
         "AuthToken"=>"testing",
         "AuthSecret"=>"sauce"
         );
-      //$results = $test->makeRequest();
-
-      //var_dump($results); die;
       $uri = $this->invokeMethod($test, 'buildURI', $creds);
-      $this->assertEquals($expected, $uri);
-      //var_dump($uri);die;
 
-      //returns null
+      $this->assertEquals($expected, $uri);
+      
     }
 
 
