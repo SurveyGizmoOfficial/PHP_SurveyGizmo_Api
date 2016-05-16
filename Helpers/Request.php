@@ -59,6 +59,9 @@ class Request{
 			$this->uri = $this->baseuri . $this->path . ".json?api_token=" . $this->AuthToken . "&api_token_secret=" . $this->AuthSecret . "&_method=" . $this->method;
 			//add filters if they exist
 		}
+		if($this->filter){
+			$this->uri .= $this->filter->buildRequestQuery();
+		}
 		return $this->uri;
 	}
 }
