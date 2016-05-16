@@ -5,13 +5,14 @@ class Request{
 
 	function __construct($method = "GET"){
 		$this->method = $method;
-	}	
+	}
 
 	public function makeRequest(){
 		$returnVal = null;
 		try{
 			//get creds
-			$this->buildURI();
+			$creds = SurveyGizmoAPI::getAuth();
+			$this->buildURI($creds);
 			//TODO: look at moving to guzzle at some point
 			//var_dump($this->uri,$this->AuthToken,$this->AuthSecret);
 			if($this->uri && $this->AuthToken && $this->AuthSecret){
@@ -51,8 +52,9 @@ class Request{
 		}
 	}
 
-	private function buildURI(){
-		$creds = SurveyGizmoAPI::getAuth();
+	private function buildURI(array $creds){
+//SurveyGizmoAPI::getAuth();
+	//var_dump($creds);die;
 		if($this->path && $creds['AuthToken'] && $creds['AuthSecret']){
 			$this->AuthToken = $creds['AuthToken'];
 			$this->AuthSecret = $creds['AuthSecret'];
