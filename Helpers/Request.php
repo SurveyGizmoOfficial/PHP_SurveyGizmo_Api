@@ -58,6 +58,9 @@ class Request{
 			$this->AuthSecret = $creds['AuthSecret'];
 			$uri = $this->baseuri . $this->path . ".json?api_token=" . urlencode($this->AuthToken) . "&api_token_secret=" . urlencode($this->AuthSecret) . "&_method=" . $this->method;
 			//add filters if they exist
+			if($this->filter){
+			$uri .= $this->filter->buildRequestQuery();
+			}
 		}
 		return $uri;
 	}

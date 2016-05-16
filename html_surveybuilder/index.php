@@ -31,8 +31,13 @@ if($sg != true){
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
 testLog("Getting Surveys");
-
-$surveys = SurveyGizmo\Survey::fetch();
+$filter = new SurveyGizmo\Filter();
+$filter_item = new SurveyGizmo\FilterItem();
+$filter_item->setField('title');
+$filter_item->setOperator('=');
+$filter_item->setCondition('TEST from API');
+$filter->addFilterItem($filter_item);
+$surveys = SurveyGizmo\Survey::fetch($filter);
 
 testLog("got Surveys",$surveys);
 
