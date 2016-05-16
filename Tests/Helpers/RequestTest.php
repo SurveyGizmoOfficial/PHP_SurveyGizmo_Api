@@ -99,7 +99,7 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
     public function testbuildURI()
     {
 
-      $expected = "app2.garrett.restapi.boulder.sgizmo.com/services/rest/v4this is a string.json?api_token=testing&api_token_secret=sauce&_method=GET";
+      $expected = "trunk.qa.devo.boulder.sgizmo.com/services/rest/v4this is a string.json?api_token=testing&api_token_secret=sauce&_method=GET";
 /*
       $response = new \stdClass();
       $response->approved = true;
