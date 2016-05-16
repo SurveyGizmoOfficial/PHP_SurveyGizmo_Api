@@ -16,11 +16,22 @@ class Page extends ApiResource implements iBaseInterface{
 	}
 
 	public static function fetch($filters=null, $options=null){
+		if(!$options['survey_id']){
+			return new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+		}
+		self::setPath($options);
 		return parent::_fetch(get_class($this),$filter);
 	}
 
 	public static function getPath($append = ""){
 		return parent::_getPath(self::$path,$append);
 	}
+
+	private static function setPath($options){
+		self::$path = parent::_mergePath(self::$path,$options);
+		echo "setting path";
+		var_dump(self::$path);
+	}
+
 }
 ?>

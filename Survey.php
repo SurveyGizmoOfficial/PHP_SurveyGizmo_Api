@@ -7,7 +7,9 @@ class Survey extends ApiResource implements iBaseInterface{
 
 	public function save(){
 		$this->type = empty($this->type) ? "survey" : $this->type;
-		return parent::_save();
+		$survey = parent::_save();
+		$survey = self::formatPages($survey);
+		return $survey;
 	}
 	public static function get($id){
 		$survey = parent::_get(get_class($this), $id);
