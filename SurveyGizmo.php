@@ -7,9 +7,9 @@ class SurveyGizmoAPI{
 	static $config;
 	/***FUNCTIONS***/
 
-	public static function auth($token,$secret){
-		self::$AuthToken = $token;
-		self::$AuthSecret =  $secret;
+	public static function auth($api_key,$api_secret){
+		self::$AuthToken = $api_key;
+		self::$AuthSecret =  $api_secret;
 		//TODO: test auth & return exception if not valid
 		$creds_ok = self::testCredentials();
 		if($creds_ok->results == true){
