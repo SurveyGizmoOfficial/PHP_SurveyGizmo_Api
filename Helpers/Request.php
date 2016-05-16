@@ -14,7 +14,7 @@ class Request{
 			//get creds
 
 			$creds = SurveyGizmoAPI::getAuth();
-			$this->buildURI($creds);
+			$this->uri = $this->buildURI($creds);
 			//TODO: look at moving to guzzle at some point
 			//var_dump($this->uri,$this->AuthToken,$this->AuthSecret);
 			if(!empty($this->uri) && $this->AuthToken && $this->AuthSecret){
