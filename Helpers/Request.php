@@ -1,7 +1,7 @@
 <?php namespace SurveyGizmo;
 class Request{
 
-	private $baseuri = 'trunk.qa.devo.boulder.sgizmo.com/services/rest/v4';
+	private $baseuri = 'app.erik.devo.boulder.sgizmo.com/services/rest/v5';
 
 	function __construct($method = "GET"){
 		$this->method = $method;

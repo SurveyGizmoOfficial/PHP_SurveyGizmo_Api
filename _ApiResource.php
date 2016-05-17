@@ -89,7 +89,7 @@ class ApiResource{
 		return $obj;
 	}
 
-	private static function _makeRequest($path, $filter){
+	protected static function _makeRequest($path, $filter){
 		$request = new Request("get");
 		$response = null;
 		$request->path = $path;
