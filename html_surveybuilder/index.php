@@ -14,8 +14,8 @@ testLog("TESTING Library");
 //Require autoloader
 require_once "../SurveyGizmoAutoLoader.php";
 //set token & secret
-$api_key = "c6712a67ee7663540626170e39792fbc8bc57263ab8c885fdc";
-$api_secret = "A9KD2rvur1M/U";
+$api_key = "987d89c9904b1600b61f2c8b97dae737d1afdf643a2f91871d";
+$api_secret = "A9Ns5Cac0G6Dk";
 
 // $api_key = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
 // $api_secret = "A9SByZ3cS%2FqpE";
@@ -31,15 +31,15 @@ if($sg != true){
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
 testLog("Getting Surveys");
-$filter = new SurveyGizmo\Filter();
-$filter_item = new SurveyGizmo\FilterItem();
-$filter_item->setField('title');
-$filter_item->setOperator('=');
-$filter_item->setCondition('TEST from API');
-$filter->addFilterItem($filter_item);
-$surveys = SurveyGizmo\Survey::fetch($filter);
+// $filter = new SurveyGizmo\Filter();
+// $filter_item = new SurveyGizmo\FilterItem();
+// $filter_item->setField('title');
+// $filter_item->setOperator('=');
+// $filter_item->setCondition('TEST from API');
+// $filter->addFilterItem($filter_item);
+$surveys = SurveyGizmo\Survey::fetch();
 
-testLog("got Surveys",$surveys);
+// testLog("got Surveys",$surveys);
 
 $survey = $surveys->data[0];
 $sid = $survey->id;
@@ -47,13 +47,14 @@ testLog("Updating Survey " . $sid);
 $survey->title = "TEST from API";
 $survey->save();
 
+$sid = 1078944;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
-testLog("got Survey",$survey);
+// testLog("got Survey",$survey);
 
 testLog("Getting Responses for survey " . $sid);
 $responses = $survey->getResponses();
-testLog("got Responses ",$responses->data[0]);
+testLog("got Responses ",array_pop($responses->data));
 
 testLog("Getting Reports for survey " . $sid);
 $reports = $survey->getReports();
