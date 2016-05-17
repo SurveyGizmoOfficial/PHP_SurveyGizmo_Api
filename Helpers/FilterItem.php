@@ -18,9 +18,9 @@ class FilterItem{
 	public function setLogic($filterJson)
 	{
 		$FilterParts = json_decode($filterJson);
-		$this->setField($FilterParts['Field']);
-		$this->setOperator($FilterParts['Operator']);
-		$this->setCondition($FilterParts['Condition']);
+		$this->setField($FilterParts->Field);
+		$this->setOperator($FilterParts->Operator);
+		$this->setCondition($FilterParts->Condition);
 		return $this->isValid();
 	}
 
