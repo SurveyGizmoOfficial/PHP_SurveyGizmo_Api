@@ -30,7 +30,9 @@ class FilterTest extends TestCase
 
     }
     /*
-    *
+    * technically more of an integration test - covers a bunch of stuff.
+    *@covers addFilterItem
+    @covers returnItems
     *@covers buildRequestQuery
     */
 
@@ -47,14 +49,57 @@ class FilterTest extends TestCase
 
       $query = $filter->addFilterItem($filter->data);
       $this->assertTrue($query);
+      $addeds = $filter->returnItems();
+      $addeds = $addeds[0];
+      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals($expected, $actual);
 
-      //var_dump($filter->data);
+    }
+
+    public function  testBuildRequestQueryEmpty()
+    {
+      $expected = "&filter%5Bfield%5D%5B0%5D=&filter%5Boperator%5D%5B0%5D=&filter%5Bvalue%5D%5B0%5D=";
+      $param->Field = "";
+      $param->Operator = "" ;
+      $param->Condition = "";
+      $param = json_encode($param);
+
+      $filter = new Filter;
+      $filter->data = new FilterItem($param);
+
+      $query = $filter->addFilterItem($filter->data);
+      $this->assertTrue($query);
+      $addeds = $filter->returnItems();
+      $addeds = $addeds[0];
+      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $actual = $filter->buildRequestQuery();
+      $this->assertEquals($expected, $actual);
 
     }
 
+    public function  testBuildRequestQueryFilterCreatedButNotPopulated()
+    {
+      //$expected = "&filter%5Bfield%5D%5B0%5D=&filter%5Boperator%5D%5B0%5D=&filter%5Bvalue%5D%5B0%5D=";
+      $filter = new Filter;
+      $filter->data = new FilterItem();
+      $query = $filter->addFilterItem($filter->data);
+      $this->assertTrue($query);
+      $addeds = $filter->returnItems();
+      $addeds = $addeds[0];
+      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $actual = $filter->buildRequestQuery();
+      $this->assertEquals('&', $actual);
+    }
 
+    public function  testBuildRequestQueryWithoutFilterItemObject()
+    {
+      //$expected = "&filter%5Bfield%5D%5B0%5D=&filter%5Boperator%5D%5B0%5D=&filter%5Bvalue%5D%5B0%5D=";
+      $filter = new Filter;
+      #$filter->data = new FilterItem();
+      $actual = $filter->buildRequestQuery();
+      $this->assertEquals('', $actual);
+    }
     /**
  * Call protected/private method of a class.
  *
