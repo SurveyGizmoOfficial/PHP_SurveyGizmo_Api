@@ -1,46 +1,11 @@
 <?php
-
 namespace SurveyGizmo;
-#namespace Tests\SurveyTest;
-//use Helpers\Request;
 
 class RequestTest extends TestCase
 {
 
 /*======= TestSuite Setup ======*/
 
-  // Include with all test classes.  Does not need to be changed.
-/*
-protected $resource;
-
-/**
- * Setup needed data
- *
- */
- /*
-protected function setUp()
-{
-  require_once 'Survey.php';
-  $this->resource = new Survey();
-}
-
-require_once "../SurveyGizmoAutoLoader.php";
-//set token & secret
-$token = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
-$secret = "A9SByZ3cS%2FqpE";
-//authetnicate
-testLog("Authenticating");
-
-$sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
-
-
-
-
-
-
-
-
-*/
 /*======== End of Setup ========*/
 
     public function testIsTrue()
@@ -122,9 +87,8 @@ $sg = SurveyGizmo\SurveyGizmoAPI::auth($token,$secret);
         "AuthSecret"=>"sauce"
         );
       $uri = $this->invokeMethod($test, 'buildURI', $creds);
-
       $this->assertEquals($expected, $uri);
-      
+
     }
 
 
