@@ -1,9 +1,8 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 
 class ApiResource
 {
-
-	public static $obj;
 
 	public static function _getPath($path, $append = "")
 	{
@@ -45,6 +44,23 @@ class ApiResource
 		}
 	}
 
+	/*
+	public static function _get($params = null, $options = null)
+	{
+		$path = static::$path;
+		if (is_array($params)) {
+			$path = self::_mergePath($path, $params);
+		}
+		$request = new Request("get");
+		$request->path = $path;
+		$request->makeRequest();
+
+		$response = $request->getResponse();
+
+		return self::_formatObject(__CLASS__, $response->data);
+	}
+	*/
+
 	public function _save()
 	{
 		$response = new APIResponse();
@@ -65,6 +81,9 @@ class ApiResource
 
 	public function _delete()
 	{
+		if (!$this->exists()) {
+			throw new Exception("Resource does not exist");
+		}
 		$response = new APIResponse();
 		//determine save method
 		$method = "DELETE";
@@ -121,8 +140,27 @@ class ApiResource
 		return $response;
 	}
 
-	public function isValid()
+	public function exists()
 	{
 		return $this->id > 0;
 	}
+
+	//BASE FUNCTIONS
+	public static function fetch()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public static function get()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public function save()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public function delete()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+
 }

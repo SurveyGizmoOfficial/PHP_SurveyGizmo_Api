@@ -1,26 +1,34 @@
-<?php namespace SurveyGizmo;
+<?php 
+namespace SurveyGizmo;
+
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
-class Report extends ApiResource implements iBaseInterface{
+
+
+class Report extends ApiResource 
+{
 
 	static $path = "/survey/{survey_id}/surveyreport";
 
-	public function save(){
+	public function save()
+	{
 		return parent::_save();
 	}
-	public static function get($id){
-		return parent::_get(get_class($this),$id);
+	public static function get($id)
+	{
+		return parent::_get(__CLASS__, $id);
 	}
-	public function delete(){
+	public function delete()
+	{
 		return parent::_delete();
 	}
 
-	public static function fetch($filters=null, $options=null){
-		return parent::_fetch(get_class($this), $filter);
+	public static function fetch($filters = null, $options = null)
+	{
+		return parent::_fetch(__CLASS__, $filter);
 	}
 
-	public static function getPath($append = ""){
-		return parent::_getPath(self::$path,$append);
+	public static function getPath($append = "")
+	{
+		return parent::_getPath(self::$path, $append);
 	}
 }
-?>

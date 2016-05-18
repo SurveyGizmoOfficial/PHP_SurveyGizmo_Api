@@ -1,7 +1,8 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
-class Response extends ApiResource implements iBaseInterface{
+
+class Response extends ApiResource {
 
 	static $path = "/survey/{survey_id}/surveyresponse";
  	// static $regex_pattern = '/\\[(question|url|variable|calc|comment)\\(("(?:\\\\"|[^"])+"|\d+)\\)(?:\\s?,\\s?option\\(("(?:\\\\"|[^"]){0,}"|\d{0,})\\))?(?:\\s?,\\s?question_pipe\\(("(?:\\\\"|[^"]){0,}"|\d{0,})\\))?(?:\\s?,\\s?page_pipe\\(("(?:\\\\"|[^"]){0,}"|\d{0,})\\))?\\]/';

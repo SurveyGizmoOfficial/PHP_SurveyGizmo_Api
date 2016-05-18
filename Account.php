@@ -1,28 +1,42 @@
-<?php namespace SurveyGizmo;
-use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
-class Account extends ApiResource implements iBaseInterface{
+<?php
+namespace SurveyGizmo;
 
+use SurveyGizmo\ApiResource;
+
+class Account extends ApiResource 
+{
 	static $path = "/account";
 
-	public function save(){
+	// Account::get is a singleton
+	static $_instance;
+
+	public function save()
+	{
 		return parent::_save();
 	}
-	public static function get($id){
-		$id = null;//don't let them pass in id
-		return parent::_get(get_class($this));
+
+	public static function get()
+	{
+		if (!self::$_instance) {
+			self::$_instance = parent::_get(__CLASS__);
+			// self::$_instance = self::_get();
+		}
+		return self::$_instance;
 	}
-	public function delete(){
+	
+	public function delete()
+	{
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
 
-	public static function fetch($filters=null, $options=null){
+	public static function fetch()
+	{
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
 
-	public static function getPath($append = ""){
-		return parent::_getPath(self::$path,$append);
+	public static function getPath($append = "")
+	{
+		return parent::_getPath(self::$path, $append);
 	}
 
 }
-?>
