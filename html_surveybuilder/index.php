@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ERROR | E_PARSE);
+ini_set('display_errors', 1);
 function testLog($message, $dump = null){
 	echo "<h3>". $message . "</h3>";
 	if($dump){
@@ -17,8 +19,10 @@ require_once "../SurveyGizmoAutoLoader.php";
 $api_key = "987d89c9904b1600b61f2c8b97dae737d1afdf643a2f91871d";
 $api_secret = "A9Ns5Cac0G6Dk";
 
-// $api_key = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
-// $api_secret = "A9SByZ3cS%2FqpE";
+// G's account
+$api_key = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
+$api_secret = "A9SByZ3cS/qpE";
+
 //authetnicate
 testLog("Authenticating");
 
@@ -30,14 +34,15 @@ if($sg != true){
 // $filter = new SurveyGizmo\Filter();
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
+
 testLog("Getting Surveys");
-// $filter = new SurveyGizmo\Filter();
-// $filter_item = new SurveyGizmo\FilterItem();
-// $filter_item->setField('title');
-// $filter_item->setOperator('=');
-// $filter_item->setCondition('TEST from API');
-// $filter->addFilterItem($filter_item);
-$surveys = SurveyGizmo\Survey::fetch();
+$filter = new SurveyGizmo\Filter();
+$filter_item = new SurveyGizmo\FilterItem();
+$filter_item->setField('title');
+$filter_item->setOperator('=');
+$filter_item->setCondition('TEST from API');
+$filter->addFilterItem($filter_item);
+$surveys = SurveyGizmo\Survey::fetch($filter);
 
 // testLog("got Surveys",$surveys);
 
@@ -47,10 +52,10 @@ testLog("Updating Survey " . $sid);
 $survey->title = "TEST from API";
 $survey->save();
 
-$sid = 1078944;
+$sid = 1098763;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
-// testLog("got Survey",$survey);
+testLog("got Survey",$survey);
 
 testLog("Getting Responses for survey " . $sid);
 $responses = $survey->getResponses();
