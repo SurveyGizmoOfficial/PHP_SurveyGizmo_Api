@@ -23,9 +23,4 @@ class Account extends ApiResource
 		return self::$_instance;
 	}
 
-	public static function getPath($append = "")
-	{
-		return parent::_getPath(self::$path, $append);
-	}
-
 }
