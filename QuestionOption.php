@@ -20,8 +20,8 @@ class QuestionOption extends ApiResource {
 		return parent::_fetch(get_class($this), $filter);
 	}
 
-	public static function getPath($append = ""){
-		return parent::_getPath(self::$path,$append);
-	}
+	// public static function getPath($append = ""){
+	// 	return parent::_getPath(self::$path,$append);
+	// }
 }
 ?>
