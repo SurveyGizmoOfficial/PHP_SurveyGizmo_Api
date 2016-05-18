@@ -107,4 +107,16 @@ testDump($account);
 // $user->username = 'Works?';
 // $user->team = 223388;
 // var_dump($user->save());
+
+// testLog("Getting teams");
+// $team = SurveyGizmo\Team::get(224885);
+// testDump(SurveyGizmo\Team::fetch());
+// testDump($team);
+// $team->delete();
+// $team = new SurveyGizmo\Team();
+// $team = SurveyGizmo\Team::get(235681);
+// $team->teamname = 'Team Awesome';
+// $team->description = 'Team Awesome is awesome too';
+// testDump($team);
+// $team->save();
 ?>
