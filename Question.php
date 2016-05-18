@@ -1,7 +1,8 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
-class Question extends ApiResource implements iBaseInterface{
+
+class Question extends ApiResource {
 
 	static $path = "/?";
 

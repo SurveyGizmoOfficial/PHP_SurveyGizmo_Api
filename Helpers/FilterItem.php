@@ -1,4 +1,5 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 class FilterItem{
 
 	private $Field;

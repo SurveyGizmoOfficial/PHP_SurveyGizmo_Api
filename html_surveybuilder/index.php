@@ -26,11 +26,16 @@ $api_secret = "A9Ns5Cac0G6Dk";
 //authetnicate
 testLog("Authenticating");
 
-$sg = SurveyGizmo\SurveyGizmoAPI::auth($api_key,$api_secret);
-if($sg != true){
-	testLog("Error Authenticating",$sg);
+try {
+	$sg = SurveyGizmo\SurveyGizmoAPI::auth($api_key,$api_secret);
+} catch (Exception $e) {
+	testLog("Error Authenticating", $e);
 	die;
 }
+// if($sg != true){
+// 	testLog("Error Authenticating",$sg);
+// 	die;
+// }
 // $filter = new SurveyGizmo\Filter();
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
