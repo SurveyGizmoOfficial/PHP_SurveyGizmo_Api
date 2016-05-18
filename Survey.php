@@ -58,8 +58,7 @@ class Survey extends ApiResource
 	/*HELPERS*/
 	private function getSubObject($type, $id)
 	{
-		$options = array("survey_id" => $this->id);
-		return $type::get($id, $options);
+		return $type::get($this->id, $id);
 	}
 
 	/*PAGES*/

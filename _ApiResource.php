@@ -72,8 +72,8 @@ class ApiResource
 
 	public function _save($params = null)
 	{
+		var_dump('expression123');//die;
 		$path = self::_mergePath(static::$path, $params);
-
 		$request = new Request($this->exists() ? 'POST' : 'PUT');
 		$request->path = $path;
 		$request->data = $this;
