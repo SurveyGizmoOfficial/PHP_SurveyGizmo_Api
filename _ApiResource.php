@@ -128,4 +128,23 @@ class ApiResource
 	{
 		return $this->id > 0;
 	}
+
+	//BASE FUNCTIONS
+	public static function fetch($filters = null, $options = null)
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public static function get($id)
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public function save()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public function delete()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+
 }
