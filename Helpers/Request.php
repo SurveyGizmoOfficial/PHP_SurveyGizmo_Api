@@ -1,7 +1,7 @@
 <?php
 namespace SurveyGizmo;
 
-use APIResponse;
+use SurveyGizmo\APIResponse;
 
 class Request
 {
@@ -74,6 +74,7 @@ class Request
 	public function getResponse () {
 		$response = new APIResponse();
 		if (is_object($this->request_return)) {
+			$response->result_ok = $this->request_return->result_ok;
 			//add meta data
 			if (isset($this->request_return->total_count)) {
 				$response->total_count = $this->request_return->total_count;
