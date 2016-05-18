@@ -4,12 +4,6 @@ namespace SurveyGizmo;
 class ApiResource
 {
 
-	// public static function _getPath($path, $append = "")
-	// {
-	// 	$path = !empty($append) ? $path . "/" . $append : $path;
-	// 	return $path;
-	// }
-
 	public static function _mergePath($path, $options)
 	{
 		// preg_match_all('/\{([^\{\}\/]+)\}/', $path, $matches, PREG_SET_ORDER);
@@ -28,12 +22,15 @@ class ApiResource
 
 		$request = new Request("GET");
 		$request->path = $path;
+		$request->filter = $filter;
+		$request->setOptions($options);
 		$request->makeRequest();
 
 		$response = $request->getResponse();
 		if ($response->data) {
 			$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
 			$response->data = self::_parseObjects($class_name, $response->data);
+			// Add extra parameters to each instance (e.g. survey_id)
 			if (is_array($params)) {
 				foreach ($response->data as $object) {
 					foreach ($params as $key => $value) {
@@ -62,6 +59,7 @@ class ApiResource
 			$response->data = $response->data[0];
 		}
 
+		// Determine the name of class from the static function call
 		$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
 
 		$object = self::_formatObject($class_name, $response->data);
@@ -80,7 +78,6 @@ class ApiResource
 
 	public function _save($params = null)
 	{
-		var_dump('expression123');//die;
 		$path = self::_mergePath(static::$path, $params);
 		$request = new Request($this->exists() ? 'POST' : 'PUT');
 		$request->path = $path;
@@ -128,27 +125,6 @@ class ApiResource
 		}
 		return $obj;
 	}
-
-	// protected static function _makeRequest($path, $filter)
-	// {
-	// 	$request = new Request("get");
-	// 	$response = null;
-	// 	$request->path = $path;
-	// 	$request->filter = $filter;
-	// 	$data = $request->makeRequest();
-	// 	if (isset($data)) {
-	// 		$response = new APIResponse();
-	// 		//add meta data
-	// 		if (isset($data->total_count)) {
-	// 			$response->total_count = $data->total_count;
-	// 			$response->page = $data->page;
-	// 			$response->total_pages = $data->total_pages;
-	// 			$response->results_per_page = $data->results_per_page;
-	// 		}
-	// 		$response->data = $data->data;
-	// 	}
-	// 	return $response;
-	// }
 
 	public function exists()
 	{

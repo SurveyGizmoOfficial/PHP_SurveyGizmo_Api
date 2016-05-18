@@ -40,6 +40,12 @@ try {
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
 
+// testLog("Getting surveys with paging");
+// testDump(SurveyGizmo\Survey::fetch(null, array(
+// 	'page' => 3,
+// 	'limit' => 100
+// )));
+
 testLog("Getting Surveys");
 $filter = new SurveyGizmo\Filter();
 $filter_item = new SurveyGizmo\FilterItem();
