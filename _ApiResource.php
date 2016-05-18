@@ -65,6 +65,9 @@ class ApiResource
 
 	public function _delete()
 	{
+		if (!$this->exists()) {
+			throw new Exception("Resource does not exist");
+		}
 		$response = new APIResponse();
 		//determine save method
 		$method = "DELETE";
@@ -121,7 +124,7 @@ class ApiResource
 		return $response;
 	}
 
-	public function isValid()
+	public function exists()
 	{
 		return $this->id > 0;
 	}

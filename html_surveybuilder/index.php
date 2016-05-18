@@ -63,7 +63,7 @@ testLog("got Responses ",array_pop($responses->data));
 
 testLog("Getting Reports for survey " . $sid);
 $reports = $survey->getReports();
-testLog("got Reports ",$reports->data[0]);
+testLog("got Reports ",$reports);
 
 testLog("Updating Survey Page 1 title for survey " . $sid);
 $page = $survey->pages[0];
@@ -79,4 +79,8 @@ testLog("Survey created",$results->data);
 testLog("Deleting our new survey " . $survey->id);
 $results = $survey->delete();
 testDump($results);
+
+testLog("Getting account");
+$account = SurveyGizmo\Account::get();
+testDump($account);
 ?>
