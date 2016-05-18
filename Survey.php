@@ -3,7 +3,6 @@ namespace SurveyGizmo;
 
 use SurveyGizmo\ApiResource;
 
-
 class Survey extends ApiResource 
 {
 
