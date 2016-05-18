@@ -1,7 +1,8 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
-class Team extends ApiResource implements iBaseInterface{
+
+class Team extends ApiResource {
 
 	static $path = "/accountteams";
 
