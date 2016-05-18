@@ -26,14 +26,20 @@ $api_secret = "A9SByZ3cS/qpE";
 //authetnicate
 testLog("Authenticating");
 
-$sg = SurveyGizmo\SurveyGizmoAPI::auth($api_key,$api_secret);
-if($sg != true){
-	testLog("Error Authenticating",$sg);
+try {
+	$sg = SurveyGizmo\SurveyGizmoAPI::auth($api_key,$api_secret);
+} catch (Exception $e) {
+	testLog("Error Authenticating", $e);
 	die;
 }
+// if($sg != true){
+// 	testLog("Error Authenticating",$sg);
+// 	die;
+// }
 // $filter = new SurveyGizmo\Filter();
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
+
 
 testLog("Getting Surveys");
 $filter = new SurveyGizmo\Filter();
@@ -75,10 +81,12 @@ $survey = new SurveyGizmo\Survey();
 $survey->title = "NEW FROM API";
 $results = $survey->save();
 testLog("Survey created",$results->data);
+testLog("Survey created 2",$survey);
 
 testLog("Deleting our new survey " . $survey->id);
 $results = $survey->delete();
 testDump($results);
+
 
 testLog("Getting account");
 $account = SurveyGizmo\Account::get();

@@ -1,12 +1,12 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
 
-class Survey extends ApiResource implements iBaseInterface
+class Survey extends ApiResource 
 {
 
-	static $path = "/survey";
+	static $path = "/survey/{id}";
 
 	public function __set($name, $value)
 	{
@@ -19,36 +19,40 @@ class Survey extends ApiResource implements iBaseInterface
 	public function save()
 	{
 		$this->type = empty($this->type) ? "survey" : $this->type;
-		$survey = parent::_save();
-		return $survey;
+		return $this->_save(array(
+			'id' => $this->exists() ? $this->id : ''
+		));
 	}
 	
 	public static function get($id)
 	{
-		$survey = parent::_get(__CLASS__, $id);
-		return $survey;
+		return self::_get(array(
+			'id' => $id
+		));
 	}
 
 	public function delete()
 	{
-		return parent::_delete();
+		return self::_delete(array(
+			'id' => $this->id
+		));
 	}
 
 	public static function fetch($filter, $options)
 	{
-		return parent::_fetch(__CLASS__, $filter);
+		return self::_fetch(array('id' => ''), $filter, $options);
 	}
 
-	public static function getPath($append = "")
-	{
-		return parent::_getPath(self::$path, $append);
-	}
+	// public static function getPath($append = "")
+	// {
+	// 	return parent::_getPath(self::$path, $append);
+	// }
 
 	/*HELPERS*/
-	private function getSubObjects($type)
+	private function getSubObjects($type, $filter = null, $options = null)
 	{
 		$options = array("survey_id" => $this->id);
-		return $type::fetch($filter, $options);
+		return $type::fetch($this->id, $filter, $options);
 	}
 
 	/*PAGES*/

@@ -1,34 +1,47 @@
-<?php 
+<?php
 namespace SurveyGizmo;
 
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
 
-class Report extends ApiResource implements iBaseInterface
+class Report extends ApiResource
 {
 
-	static $path = "/survey/{survey_id}/surveyreport";
+	static $path = "/survey/{survey_id}/surveyreport/{id}";
 
 	public function save()
 	{
-		return parent::_save();
+		return $this->_save(array(
+			'survey_id' => $this->survey_id,
+			'id' => $this->exists() ? $this->id : ''
+		));
 	}
-	public static function get($id)
+
+	public static function get($survey_id, $id)
 	{
-		return parent::_get(__CLASS__, $id);
+		return self::_get(array(
+			'survey_id' => $survey_id,
+			'id' => $id
+		));
 	}
+
 	public function delete()
 	{
-		return parent::_delete();
+		return self::_delete(array(
+			'survey_id' => $this->survey_id,
+			'id' => $this->id
+		));
 	}
 
-	public static function fetch($filters = null, $options = null)
-	{
-		return parent::_fetch(__CLASS__, $filter);
+	public static function fetch($survey_id, $filters = null, $options = null) {
+		if ($survey_id < 1) {
+			throw new SurveyGizmoException(500, "Missing survey ID");
+		}
+		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
+		return $response;
 	}
 
-	public static function getPath($append = "")
-	{
-		return parent::_getPath(self::$path, $append);
-	}
+	// public static function getPath($append = "")
+	// {
+	// 	return parent::_getPath(self::$path, $append);
+	// }
 }

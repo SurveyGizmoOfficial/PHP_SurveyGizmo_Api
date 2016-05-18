@@ -1,9 +1,8 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
 
 class ApiResource
 {
-
-	public static $obj;
 
 	public static function _getPath($path, $append = "")
 	{
@@ -22,64 +21,83 @@ class ApiResource
 		return $path;
 	}
 
-	public static function _fetch($type, $filter)
+	public static function _fetch($params = null, $filter = null, $options = null)
 	{
-		$path = $type::getPath();
-		$response = self::_makeRequest($path, $filter);
-		if (isset($response)) {
-			$response->data = self::_parseObjects($type, $response->data);
-			return $response;
-		} else {
-			return null;
+		$path = self::_mergePath(static::$path, $params);
+
+		$request = new Request("GET");
+		$request->path = $path;
+		$request->makeRequest();
+
+		$response = $request->getResponse();
+		if ($response->data) {
+			$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
+			$response->data = self::_parseObjects($class_name, $response->data);
+			if (is_array($params)) {
+				foreach ($response->data as $object) {
+					foreach ($params as $key => $value) {
+						if (!empty($value) && !isset($object->{$key})) {
+							$object->{$key} = $value;
+						}
+					}
+				}
+			}
 		}
+		return $response;
+	}
+	
+	public static function _get($params = null, $options = null)
+	{
+		$path = self::_mergePath(static::$path, $params);
+
+		$request = new Request("GET");
+		$request->path = $path;
+		$request->makeRequest();
+
+		$response = $request->getResponse();
+
+		$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
+
+		$object = self::_formatObject($class_name, $response->data);
+
+		if (is_array($params)) {
+			foreach ($params as $key => $value) {
+				if (!empty($value) && !isset($object->{$key})) {
+					$object->{$key} = $value;
+				}
+			}
+		}
+		return $object;
 	}
 
-	public static function _get($type, $id)
+	public function _save($params = null)
 	{
-		$path = $type::getPath($id);
-		$response = self::_makeRequest($path);
-		if (isset($response)) {
-			return self::_formatObject($type, $response->data);
-		} else {
-			return null;
-		}
-	}
+		$path = self::_mergePath(static::$path, $params);
 
-	public function _save()
-	{
-		$response = new APIResponse();
-		//determine save method
-		$method = isset($this->id) ? "POST" : "PUT";
-		$request = new Request($method);
-		$request->path = $this->getPath($this->id);
+		$request = new Request($this->exists() ? 'POST' : 'PUT');
+		$request->path = $path;
 		$request->data = $this;
-		$results = $request->makeRequest();
-		//format response
-		$response->results = $results->result_ok;
-		$response->code = $results->code;
-		$response->message = $results->message;
-		// Saving an object should update the instance
-		$response->data = $this->_formatObject($this, $results->data);
+		$request->makeRequest();
+
+		$response = $request->getResponse();
+
+		$this->_formatObject($this, $response->data);
+
 		return $response;
 	}
 
-	public function _delete()
+	public function _delete($params = null)
 	{
 		if (!$this->exists()) {
-			throw new Exception("Resource does not exist");
+			throw new SurveyGizmoException(500, "Resource does not exist");
 		}
-		$response = new APIResponse();
-		//determine save method
-		$method = "DELETE";
-		$request = new Request($method);
-		$request->path = $this->getPath($this->id);
-		//$request->data = $this;
-		$results = $request->makeRequest();
-		//format response
-		$response->results = $results->result_ok;
-		$response->code = $results->code;
-		$response->message = $results->message;
-		return $response;
+		$path = self::_mergePath(static::$path, $params);
+
+		$request = new Request('DELETE');
+		$request->path = $path;
+		$request->makeRequest();
+
+		return $request->getResponse();
 	}
 
 	private static function _parseObjects($type, $data)
@@ -103,26 +121,26 @@ class ApiResource
 		return $obj;
 	}
 
-	protected static function _makeRequest($path, $filter)
-	{
-		$request = new Request("get");
-		$response = null;
-		$request->path = $path;
-		$request->filter = $filter;
-		$data = $request->makeRequest();
-		if (isset($data)) {
-			$response = new APIResponse();
-			//add meta data
-			if (isset($data->total_count)) {
-				$response->total_count = $data->total_count;
-				$response->page = $data->page;
-				$response->total_pages = $data->total_pages;
-				$response->results_per_page = $data->results_per_page;
-			}
-			$response->data = $data->data;
-		}
-		return $response;
-	}
+	// protected static function _makeRequest($path, $filter)
+	// {
+	// 	$request = new Request("get");
+	// 	$response = null;
+	// 	$request->path = $path;
+	// 	$request->filter = $filter;
+	// 	$data = $request->makeRequest();
+	// 	if (isset($data)) {
+	// 		$response = new APIResponse();
+	// 		//add meta data
+	// 		if (isset($data->total_count)) {
+	// 			$response->total_count = $data->total_count;
+	// 			$response->page = $data->page;
+	// 			$response->total_pages = $data->total_pages;
+	// 			$response->results_per_page = $data->results_per_page;
+	// 		}
+	// 		$response->data = $data->data;
+	// 	}
+	// 	return $response;
+	// }
 
 	public function exists()
 	{
@@ -130,11 +148,11 @@ class ApiResource
 	}
 
 	//BASE FUNCTIONS
-	public static function fetch($filters = null, $options = null)
+	public static function fetch()
 	{
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
-	public static function get($id)
+	public static function get()
 	{
 		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
