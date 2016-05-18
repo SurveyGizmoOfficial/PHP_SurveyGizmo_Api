@@ -11,6 +11,7 @@ class Response extends ApiResource {
 	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
 	 */
 	public function save(){
+		$ret = $this->buildSaveDataPayload();
 		return parent::_save();
 	}
 
@@ -19,8 +20,22 @@ class Response extends ApiResource {
 	 * @param int $id - response id
 	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
 	 */
-	public static function get($id){
-		return parent::_get(get_class($this),$id);
+	public static function get($id, $options){
+		if(!$options['survey_id']){
+			return new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+		}
+		self::setPath($options);
+		$path = self::getPath($id);
+		$response = parent::_makeRequest($path, $filter);
+		// var_dump($response);die;
+		if(isset($response)){
+			$type = get_class($this);
+			$response->data = self::_parseResponse($type,$response->data);
+			return $response;
+		}else{
+			return null;
+		}
+		// return parent::_get(get_class($this),$id);
 	}
 
 	/**
@@ -66,6 +81,9 @@ class Response extends ApiResource {
 				$return[] = $obj;
 			}
 		}
+		elseif(is_object($data)){
+			$return = self::_formatData($type, $data);
+		}
 		return $return;
 	}
 
@@ -107,14 +125,34 @@ class Response extends ApiResource {
 	}
 
 
-	private function buildPayload()
+	private function buildSaveDataPayload()
 	{
-		if ($this->data) {
-			$post_data = http_build_query(get_object_vars($this->data));
-			return $post_data;
-		} else {
-			return "";
+		$data = $this->survey_data;
+		$payload_data = $this->processSurveyData($data);
+		unset($this->survey_data);
+		$this->data = $payload_data;
+	}
+
+	private function processSurveyData($survey_data){
+		$payload_data = array();
+		foreach ($survey_data as $question_sku => $question_data) {
+			if(isset($question_data['subquestions'])){
+				foreach ($question_data['subquestions'] as $sub_question_sku => $sub_question_data) {
+					$data_to_process = array($sub_question_sku => array('options' => $sub_question_data));
+					$process_sub_data = $this->processSurveyData($data_to_process);
+					$payload_data[$sub_question_sku] = array_pop($process_sub_data);
+				}
+			}
+			elseif (isset($question_data['options'])) {
+				foreach ($question_data['options'] as $option_sku => $option_data) {
+					$payload_data[$question_sku][$option_sku] = isset($option_data['answer']) ? $question_data['answer'] : null;
+				}
+			}
+			else{
+				$payload_data[$question_sku] = isset($question_data['answer']) ? $question_data['answer'] : null;
+			}
 		}
+		return $payload_data;
 	}
 }
 ?>

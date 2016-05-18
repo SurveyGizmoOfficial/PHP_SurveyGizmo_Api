@@ -63,8 +63,10 @@ $survey = SurveyGizmo\Survey::get($sid);
 // testLog("got Survey",$survey);
 
 testLog("Getting Responses for survey " . $sid);
-$responses = $survey->getResponses();
-testLog("got Responses ",array_pop($responses->data));
+// $responses = $survey->getResponses();
+$response = $survey->getResponse(3119);
+testLog("got Responses ", $response);die;
+$response->save();die;
 
 testLog("Getting Reports for survey " . $sid);
 $reports = $survey->getReports();
