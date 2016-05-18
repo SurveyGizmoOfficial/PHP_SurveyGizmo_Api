@@ -20,12 +20,15 @@ class Survey extends ApiResource
 	{
 		$this->type = empty($this->type) ? "survey" : $this->type;
 		return $this->_save(array(
-			'id' => $this->exists() ? $this->id : ''
+			'id' => $this->id
 		));
 	}
 	
 	public static function get($id)
 	{
+		if ($id < 1) {
+			throw new SurveyGizmoException(500, "ID required");
+		}
 		return self::_get(array(
 			'id' => $id
 		));
@@ -38,7 +41,7 @@ class Survey extends ApiResource
 		));
 	}
 
-	public static function fetch($filter, $options)
+	public static function fetch($filter = null, $options = null)
 	{
 		return self::_fetch(array('id' => ''), $filter, $options);
 	}
