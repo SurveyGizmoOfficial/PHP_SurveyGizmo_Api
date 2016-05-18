@@ -1,9 +1,14 @@
-<?php namespace SurveyGizmo;
+<?php
+namespace SurveyGizmo;
+
+use APIResponse;
 
 class Request
 {
 
 	private $baseuri = 'app.erik.devo.boulder.sgizmo.com/services/rest/v5';
+	private $request_return;
+	private $method;
 
 	public function __construct($method = "GET")
 	{
@@ -12,7 +17,6 @@ class Request
 
 	public function makeRequest()
 	{
-		$returnVal = null;
 		try {
 			//get creds
 			$creds = SurveyGizmoAPI::getAuth();
@@ -30,19 +34,17 @@ class Request
 				}
 				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
 				$buffer = curl_exec($ch);
-				if ($buffer === false) {
-					return false;
-				}
 				curl_close($ch);
-				return json_decode($buffer);
 
+				if ($buffer !== false) {
+					$this->request_return = json_decode($buffer);
+				}
 			}
 		} catch (Exception $ex) {
 			//throw our custom excpetion
 		}
-		return $returnVal;
+		return $this->request_return;
 	}
 
 	private function buildPayload()
@@ -67,5 +69,20 @@ class Request
 			}
 		}
 		return $uri;
+	}
+
+	public function getResponse () {
+		$response = new APIResponse();
+		if (is_object($this->request_return)) {
+			//add meta data
+			if (isset($this->request_return->total_count)) {
+				$response->total_count = $this->request_return->total_count;
+				$response->page = $this->request_return->page;
+				$response->total_pages = $this->request_return->total_pages;
+				$response->results_per_page = $this->request_return->results_per_page;
+			}
+			$response->data = $this->request_return->data;
+		}
+		return $response;
 	}
 }
