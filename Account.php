@@ -18,20 +18,9 @@ class Account extends ApiResource
 	public static function get()
 	{
 		if (!self::$_instance) {
-			self::$_instance = parent::_get(__CLASS__);
-			// self::$_instance = self::_get();
+			self::$_instance = self::_get();
 		}
 		return self::$_instance;
-	}
-	
-	public function delete()
-	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
-	}
-
-	public static function fetch()
-	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 	}
 
 	public static function getPath($append = "")

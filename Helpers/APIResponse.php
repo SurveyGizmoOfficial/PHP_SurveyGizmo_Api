@@ -1,4 +1,4 @@
 <?php
 namespace SurveyGizmo;
-class APIResponse{}
+class APIResponse {}
 ?>
