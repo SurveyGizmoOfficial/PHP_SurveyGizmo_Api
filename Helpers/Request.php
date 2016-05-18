@@ -51,6 +51,10 @@ class Request
 	{
 		if ($this->data) {
 			$post_data = http_build_query(get_object_vars($this->data));
+			if(get_class($this->data) == "SurveyGizmo\\Response"){
+				var_dump(get_object_vars($this->data));
+				var_export(urldecode($post_data));die;
+			}
 			return $post_data;
 		} else {
 			return "";
