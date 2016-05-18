@@ -40,6 +40,7 @@ try {
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
 
+
 testLog("Getting Surveys");
 $filter = new SurveyGizmo\Filter();
 $filter_item = new SurveyGizmo\FilterItem();
@@ -82,10 +83,12 @@ $survey = new SurveyGizmo\Survey();
 $survey->title = "NEW FROM API";
 $results = $survey->save();
 testLog("Survey created",$results->data);
+testLog("Survey created 2",$survey);
 
 testLog("Deleting our new survey " . $survey->id);
 $results = $survey->delete();
 testDump($results);
+
 
 testLog("Getting account");
 $account = SurveyGizmo\Account::get();
