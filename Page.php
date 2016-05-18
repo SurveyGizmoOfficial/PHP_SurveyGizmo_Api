@@ -24,9 +24,9 @@ class Page extends ApiResource {
 		return parent::_fetch(get_class($this),$filter);
 	}
 
-	public static function getPath($append = ""){
-		return parent::_getPath(self::$path,$append);
-	}
+	// public static function getPath($append = ""){
+	// 	return parent::_getPath(self::$path,$append);
+	// }
 
 	private static function setPath($options){
 		self::$path = parent::_mergePath(self::$path,$options);

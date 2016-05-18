@@ -24,6 +24,7 @@ class Request
 			// TODO: look at moving to guzzle at some point
 			if (!empty($this->uri) && $this->AuthToken && $this->AuthSecret) {
 				$ch = curl_init();
+				// var_dump($this->uri);
 				curl_setopt($ch, CURLOPT_URL, $this->uri);
 				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
 				curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -31,6 +32,7 @@ class Request
 				if ($this->method == "PUT" || $this->method == "POST") {
 					curl_setopt($ch, CURLOPT_POST, 1);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->buildPayload());
+					// var_dump($this->buildPayload());
 				}
 				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -75,6 +77,8 @@ class Request
 		$response = new APIResponse();
 		if (is_object($this->request_return)) {
 			$response->result_ok = $this->request_return->result_ok;
+			$response->code = $this->request_return->code;
+			$response->message = $this->request_return->message;
 			//add meta data
 			if (isset($this->request_return->total_count)) {
 				$response->total_count = $this->request_return->total_count;
