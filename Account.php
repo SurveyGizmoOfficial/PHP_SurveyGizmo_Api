@@ -3,10 +3,8 @@ namespace SurveyGizmo;
 
 use SurveyGizmo\ApiResource;
 
-
 class Account extends ApiResource 
 {
-
 	static $path = "/account";
 
 	// Account::get is a singleton

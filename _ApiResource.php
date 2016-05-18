@@ -4,22 +4,6 @@ namespace SurveyGizmo;
 class ApiResource
 {
 
-	// public static $obj;
-
-	// CRUD methods
-	public static function fetch () {
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_IMPLEMENTED);
-	}
-	public function save() {
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_IMPLEMENTED);
-	}
-	public static function get () {
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_IMPLEMENTED);
-	}
-	public function delete () {
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_IMPLEMENTED);
-	}
-
 	public static function _getPath($path, $append = "")
 	{
 		$path = !empty($append) ? $path . "/" . $append : $path;
@@ -160,4 +144,23 @@ class ApiResource
 	{
 		return $this->id > 0;
 	}
+
+	//BASE FUNCTIONS
+	public static function fetch()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public static function get()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public function save()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+	public function delete()
+	{
+		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+	}
+
 }
