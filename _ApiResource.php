@@ -1,46 +1,53 @@
 <?php namespace SurveyGizmo;
-class ApiResource{
+
+class ApiResource
+{
 
 	public static $obj;
 
-	public static function _getPath($path, $append = ""){
+	public static function _getPath($path, $append = "")
+	{
 		$path = !empty($append) ? $path . "/" . $append : $path;
 		return $path;
 	}
 
-	public static function _mergePath($path, $options){
-		if(!is_array($options)){
-			$options = (array)$options;
+	public static function _mergePath($path, $options)
+	{
+		if (!is_array($options)) {
+			$options = (array) $options;
 		}
-		foreach($options as $key => $value) {
-			$path = str_replace("{". $key ."}", $value, $path);
+		foreach ($options as $key => $value) {
+			$path = str_replace("{" . $key . "}", $value, $path);
 		}
 		return $path;
 	}
 
-	public static function _fetch($type, $filter){
+	public static function _fetch($type, $filter)
+	{
 		$path = $type::getPath();
 		$response = self::_makeRequest($path, $filter);
-		if(isset($response)){
-			$response->data = self::_parseObjects($type,$response->data);
+		if (isset($response)) {
+			$response->data = self::_parseObjects($type, $response->data);
 			return $response;
-		}else{
+		} else {
 			return null;
 		}
 	}
 
-	public static function _get($type, $id){
+	public static function _get($type, $id)
+	{
 		$path = $type::getPath($id);
 		$response = self::_makeRequest($path);
-		if(isset($response)){
+		if (isset($response)) {
 			return self::_formatObject($type, $response->data);
-		}else{
+		} else {
 			return null;
 		}
 	}
 
-	public function _save(){
-		$response =  new APIResponse();
+	public function _save()
+	{
+		$response = new APIResponse();
 		//determine save method
 		$method = isset($this->id) ? "POST" : "PUT";
 		$request = new Request($method);
@@ -51,12 +58,14 @@ class ApiResource{
 		$response->results = $results->result_ok;
 		$response->code = $results->code;
 		$response->message = $results->message;
-		$response->data = $this->_formatObject(get_class($this), $results->data);
+		// Saving an object should update the instance
+		$response->data = $this->_formatObject($this, $results->data);
 		return $response;
 	}
 
-	public function _delete(){
-		$response =  new APIResponse();
+	public function _delete()
+	{
+		$response = new APIResponse();
 		//determine save method
 		$method = "DELETE";
 		$request = new Request($method);
@@ -70,9 +79,10 @@ class ApiResource{
 		return $response;
 	}
 
-	private static function _parseObjects($type, $data){
+	private static function _parseObjects($type, $data)
+	{
 		$return = array();
-		if(is_array($data)){
+		if (is_array($data)) {
 			foreach ($data as $item) {
 				$obj = self::_formatObject($type, $item);
 				$return[] = $obj;
@@ -81,24 +91,26 @@ class ApiResource{
 		return $return;
 	}
 
-	protected static function _formatObject($type, $item){
-		$obj = new $type;
+	protected static function _formatObject($type, $item)
+	{
+		$obj = is_string($type) ? new $type : $type;
 		foreach ($item as $property => $value) {
-		   $obj->$property = $value;
+			$obj->$property = $value;
 		}
 		return $obj;
 	}
 
-	protected static function _makeRequest($path, $filter){
+	protected static function _makeRequest($path, $filter)
+	{
 		$request = new Request("get");
 		$response = null;
 		$request->path = $path;
 		$request->filter = $filter;
 		$data = $request->makeRequest();
-		if(isset($data)){
-			$response = new APIResponse();		
+		if (isset($data)) {
+			$response = new APIResponse();
 			//add meta data
-			if(isset($data->total_count)){
+			if (isset($data->total_count)) {
 				$response->total_count = $data->total_count;
 				$response->page = $data->page;
 				$response->total_pages = $data->total_pages;
@@ -108,5 +120,9 @@ class ApiResource{
 		}
 		return $response;
 	}
+
+	public function isValid()
+	{
+		return $this->id > 0;
+	}
 }
-?>
