@@ -2,9 +2,9 @@
 namespace SurveyGizmo;
 
 use SurveyGizmo\ApiResource;
-use SurveyGizmo\iBaseInterface;
 
-class Report extends ApiResource implements iBaseInterface
+
+class Report extends ApiResource 
 {
 
 	static $path = "/survey/{survey_id}/surveyreport";
