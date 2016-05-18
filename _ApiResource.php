@@ -4,14 +4,15 @@ namespace SurveyGizmo;
 class ApiResource
 {
 
-	public static function _getPath($path, $append = "")
-	{
-		$path = !empty($append) ? $path . "/" . $append : $path;
-		return $path;
-	}
+	// public static function _getPath($path, $append = "")
+	// {
+	// 	$path = !empty($append) ? $path . "/" . $append : $path;
+	// 	return $path;
+	// }
 
 	public static function _mergePath($path, $options)
 	{
+		// preg_match_all('/\{([^\{\}\/]+)\}/', $path, $matches, PREG_SET_ORDER);
 		if (!is_array($options)) {
 			$options = (array) $options;
 		}
@@ -56,11 +57,18 @@ class ApiResource
 
 		$response = $request->getResponse();
 
+		// Ensure get returns one response
+		if (is_array($response->data)) {
+			$response->data = $response->data[0];
+		}
+
 		$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
 
 		$object = self::_formatObject($class_name, $response->data);
 
-		if (is_array($params)) {
+		// Add extra parameters to the instance if the resource was found
+		// E.g. survey_id
+		if ($object->exists() && is_array($params)) {
 			foreach ($params as $key => $value) {
 				if (!empty($value) && !isset($object->{$key})) {
 					$object->{$key} = $value;

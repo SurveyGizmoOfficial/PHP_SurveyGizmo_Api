@@ -10,6 +10,7 @@ class ApiResourceTest extends TestCase
     }
 
 
+    /*
     public function test_getPath()
     {
         $expected = "this/is-a-path/that-looks-somewhat/normal/it-sure-looks-normal/to-me";
@@ -29,6 +30,7 @@ class ApiResourceTest extends TestCase
         $this->assertEquals($expected, $actual);
 
     }
+    */
 
     public function test_mergePath()
     {

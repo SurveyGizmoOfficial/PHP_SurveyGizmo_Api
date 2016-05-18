@@ -12,7 +12,7 @@ class Report extends ApiResource
 	{
 		return $this->_save(array(
 			'survey_id' => $this->survey_id,
-			'id' => $this->exists() ? $this->id : ''
+			'id' => $this->id
 		));
 	}
 
