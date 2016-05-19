@@ -20,8 +20,8 @@ $api_key = "987d89c9904b1600b61f2c8b97dae737d1afdf643a2f91871d";
 $api_secret = "A9Ns5Cac0G6Dk";
 
 // G's account
-$api_key = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
-$api_secret = "A9SByZ3cS/qpE";
+// $api_key = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
+// $api_secret = "A9SByZ3cS/qpE";
 
 //authetnicate
 testLog("Authenticating");
@@ -40,6 +40,12 @@ try {
 // $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
 // $filter->add($filterItem);
 
+// testLog("Getting surveys with paging");
+// testDump(SurveyGizmo\Survey::fetch(null, array(
+// 	'page' => 3,
+// 	'limit' => 100
+// )));
+
 testLog("Getting Surveys");
 $filter = new SurveyGizmo\Filter();
 $filter_item = new SurveyGizmo\FilterItem();
@@ -57,14 +63,18 @@ testLog("Updating Survey " . $sid);
 $survey->title = "TEST from API";
 $survey->save();
 
-$sid = 1098763;
+$sid = 1078944;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
-testLog("got Survey",$survey);
+// testLog("got Survey",$survey);
 
 testLog("Getting Responses for survey " . $sid);
-$responses = $survey->getResponses();
-testLog("got Responses ",array_pop($responses->data));
+// $responses = $survey->getResponses();
+$response = $survey->getResponse(3118);
+testLog("got Response ", $response);
+$response->survey_data[2]['answer'] = 'BOB';
+$ret = $response->save();
+testLog("saved Response ", $ret);
 
 testLog("Getting Reports for survey " . $sid);
 $reports = $survey->getReports();
@@ -107,4 +117,16 @@ testDump($account);
 // $user->username = 'Works?';
 // $user->team = 223388;
 // var_dump($user->save());
+
+// testLog("Getting teams");
+// $team = SurveyGizmo\Team::get(224885);
+// testDump(SurveyGizmo\Team::fetch());
+// testDump($team);
+// $team->delete();
+// $team = new SurveyGizmo\Team();
+// $team = SurveyGizmo\Team::get(235681);
+// $team->teamname = 'Team Awesome';
+// $team->description = 'Team Awesome is awesome too';
+// testDump($team);
+// $team->save();
 ?>

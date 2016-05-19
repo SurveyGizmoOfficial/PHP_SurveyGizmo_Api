@@ -58,6 +58,12 @@ class Survey extends ApiResource
 		return $type::fetch($this->id, $filter, $options);
 	}
 
+	/*HELPERS*/
+	private function getSubObject($type, $id)
+	{
+		return $type::get($this->id, $id);
+	}
+
 	/*PAGES*/
 	public function getPages()
 	{
@@ -82,7 +88,7 @@ class Survey extends ApiResource
 
 	public function getResponse($id)
 	{
-
+		return $this->getSubObject("SurveyGizmo\\Response", $id);
 	}
 
 	/*REPORTS*/
