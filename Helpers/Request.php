@@ -7,8 +7,10 @@ class Request
 {
 
 	private $baseuri = 'app.erik.devo.boulder.sgizmo.com/services/rest/v5';
-	private $request_return;
-	private $method;
+	private $request_return,
+		$method,
+		$page,
+		$limit;
 
 	public function __construct($method = "GET")
 	{
@@ -24,7 +26,6 @@ class Request
 			// TODO: look at moving to guzzle at some point
 			if (!empty($this->uri) && $this->AuthToken && $this->AuthSecret) {
 				$ch = curl_init();
-				// var_dump($this->uri);
 				curl_setopt($ch, CURLOPT_URL, $this->uri);
 				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
 				curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -32,7 +33,6 @@ class Request
 				if ($this->method == "PUT" || $this->method == "POST") {
 					curl_setopt($ch, CURLOPT_POST, 1);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->buildPayload());
-					// var_dump($this->buildPayload());
 				}
 				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -64,7 +64,16 @@ class Request
 		if ($this->path && $creds['AuthToken'] && $creds['AuthSecret']) {
 			$this->AuthToken = $creds['AuthToken'];
 			$this->AuthSecret = $creds['AuthSecret'];
-			$uri = $this->baseuri . $this->path . ".json?api_token=" . urlencode($this->AuthToken) . "&api_token_secret=" . urlencode($this->AuthSecret) . "&_method=" . $this->method;
+
+			$params = array(
+				'api_token'        => $this->AuthToken,
+				'api_token_secret' => $this->AuthSecret,
+				'_method'          => $this->method,
+				'page'             => $this->page,
+				'resultsperpage'   => $this->limit
+			);
+			$uri = $this->baseuri . $this->path . ".json?" . http_build_query($params);
+
 			//add filters if they exist
 			if ($this->filter) {
 				$uri .= $this->filter->buildRequestQuery();
@@ -89,5 +98,21 @@ class Request
 			$response->data = $this->request_return->data;
 		}
 		return $response;
+	}
+
+	public function setOptions (array $options = null) {
+		// Page #
+		if ($options['page'] >= 1) {
+			$this->page = $options['page'];
+		} else {
+			$this->page = 1;
+		}
+
+		// Results per page
+		if ($options['limit'] >= 1) {
+			$this->limit = $options['limit'];
+		} else {
+			$this->limit = 50;
+		}
 	}
 }

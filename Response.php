@@ -14,21 +14,36 @@ class Response extends ApiResource {
 			$this->{$name} = $value;
 		}
 	}
- 	// static $regex_pattern = '/\\[(question|url|variable|calc|comment)\\(("(?:\\\\"|[^"])+"|\d+)\\)(?:\\s?,\\s?option\\(("(?:\\\\"|[^"]){0,}"|\d{0,})\\))?(?:\\s?,\\s?question_pipe\\(("(?:\\\\"|[^"]){0,}"|\d{0,})\\))?(?:\\s?,\\s?page_pipe\\(("(?:\\\\"|[^"]){0,}"|\d{0,})\\))?\\]/';
+
+	/**
+	 * Saves current Response Object
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 */
 	public function save(){
-		// return parent::_save();
+		$this->buildSaveDataPayload();
 		return $this->_save(array(
 			'survey_id' => $this->survey_id,
 			'id' => $this->exists() ? $this->id : ''
 		));
 	}
+
+	/**
+	 * Get response object by response ID
+	 * @param int $id - response id
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 */
 	public static function get($survey_id, $id){
-		// return parent::_get(get_class($this),$id);
 		return self::_get(array(
 			'survey_id' => $survey_id,
 			'id' => $id
 		));
 	}
+	
+
+	/**
+	 * Delete current Response Object
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 */
 	public function delete(){
 		// return parent::_delete();
 		return self::_delete(array(
@@ -37,58 +52,52 @@ class Response extends ApiResource {
 		));
 	}
 
+	/**
+	 * Return a list of Response Objects
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
 		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
 		return $response;
-		// if(!$options['survey_id']){
-		// 	return new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
-		// }
-		// self::setPath($options);
-		// $path = self::getPath();
-		// $response = parent::_makeRequest($path, $filter);
-		// if(isset($response)){
-		// 	$type = get_class($this);
-		// 	$response->data = self::_parseResponse($type,$response->data);
-		// 	return $response;
-		// }else{
-		// 	return null;
-		// }
 	}
 
-	//helpers
-	// private static function _parseResponse($type, $data){
-	// 	$return = array();
-	// 	if(is_array($data)){
-	// 		foreach ($data as $item) {
-	// 			$obj = self::_formatData($type, $item);
-	// 			$return[] = $obj;
-	// 		}
-	// 	}
-	// 	return $return;
-	// }
+	private function processSurveyData($survey_data){
+		$payload_data = array();
+		foreach ($survey_data as $question_sku => $question_data) {
+			if(isset($question_data['subquestions'])){
+				foreach ($question_data['subquestions'] as $sub_question_sku => $sub_question_data) {
+					if(!isset($sub_question_data['sku'])){
+						$data_to_process = array($sub_question_sku => array('options' => $sub_question_data));
+					}
+					else{
+						$data_to_process = array($sub_question_sku => $sub_question_data);
+					}
+					$process_sub_data = $this->processSurveyData($data_to_process);
+					$payload_data[$sub_question_sku] = array_pop($process_sub_data);
+				}
+			}
+			elseif (isset($question_data['options'])) {
+				foreach ($question_data['options'] as $option_sku => $option_data) {
+					$payload_data[$question_sku][$option_sku] = isset($option_data['answer']) ? $option_data['answer'] : null;
+				}
+			}
+			else{
+				$payload_data[$question_sku] = isset($question_data['answer']) ? $question_data['answer'] : null;
+			}
+		}
+		return $payload_data;
+	}
 
-	// private static function _formatData($type, $item){
-	// 	$obj = new $type;
-	// 	foreach ($item as $property => $value) {
-	// 		if($property == 'survey_data'){
-	// 			$obj->$property = json_decode(json_encode($value),1);
-	// 		}
-	// 		else{
-	// 	   		$obj->$property = $value;
-	// 	   	}
-	// 	}
-	// 	return $obj;
-	// }
+	private function buildSaveDataPayload()
+	{
+		$data = $this->survey_data;
+		$payload_data = $this->processSurveyData($data);
+		unset($this->survey_data);
+		$this->data = $payload_data;
+	}
 
-	// public static function getPath($append = ""){
-	// 	return parent::_getPath(self::$path,$append);
-	// }
-
-	// private static function setPath($options){
-	// 	self::$path = parent::_mergePath(self::$path,$options);
-	// }
 }
 ?>
