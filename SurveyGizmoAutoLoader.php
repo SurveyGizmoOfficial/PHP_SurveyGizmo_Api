@@ -10,6 +10,7 @@ $sg_autoload_mapping = array(
 	"SurveyGizmo\Page" => __DIR__ . "/Page.php",
 	"SurveyGizmo\Question" => __DIR__ . "/Question.php",
 	"SurveyGizmo\QuestionOption" => __DIR__ . "/QuestionOption.php",
+	"SurveyGizmo\Statistics" => __DIR__ . "/Statistics.php",
 	"SurveyGizmo\Response" => __DIR__ . "/Response.php",
 	"SurveyGizmo\User" => __DIR__ . "/User.php",
 	"SurveyGizmo\Team" => __DIR__ . "/Team.php",
