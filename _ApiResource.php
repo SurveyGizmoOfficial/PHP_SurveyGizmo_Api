@@ -238,6 +238,7 @@ class ApiResource
 	 * Extend in order to change behavior.
 	 * @access public
 	 * @static
+	 * @param (ID's to request resources)
 	 * @return mixed
 	 */
 	public static function get()
