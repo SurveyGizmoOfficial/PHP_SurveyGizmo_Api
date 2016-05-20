@@ -7,14 +7,6 @@ class Team extends ApiResource
 {
 	static $path = "/accountteams/{id}";
 
-	public function __set($name, $value)
-	{
-		$this->{$name} = $value;
-		if ($name == 'TeamID') {
-			$this->id = (int) $value;
-		}
-	}
-
 	public function save()
 	{
 		return $this->_save(array(

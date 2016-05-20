@@ -44,28 +44,42 @@ try {
 // dump($account);
 // dump($result);
 
-testLog("Getting single list");
-$account = SurveyGizmo\ContactList::get(31);
+// testLog("Getting single list");
+// $account = SurveyGizmo\ContactList::get(31);
 // dump($account);
 
-testLog("Getting first contact");
-$account = $account->contacts[0];
+// testLog("Getting first contact");
+// $account = $account->contacts[0];
 
-testLog("Updating first contact");
-$account->semailaddress = 'garrett@sgizmo.com';
-$account->sfirstname = 'garrett2';
-$account->slastname = 'g-man';
-$result = $account->save();
-dump($account);
-dump($result);
+// testLog("Updating first contact");
+// $account->semailaddress = 'garrett@sgizmo.com';
+// $account->sfirstname = 'garrett2';
+// $account->slastname = 'g-man';
+// $result = $account->save();
+// dump($account);
+// dump($result);
 
-testLog("Creating contact");
-$account = new SurveyGizmo\Contact();
-$account->iGroupID = 31;
-$account->semailaddress = 'garrett+pleasework2@sgizmo.com';
-$account->sfirstname = 'garrett5';
-$account->slastname = 'g-man-2';
-$result = $account->save();
-dump($account);
-dump($result);
+// testLog("Creating contact");
+// $account = new SurveyGizmo\Contact();
+// $account->iGroupID = 31;
+// $account->semailaddress = 'garrett+pleasework2@sgizmo.com';
+// $account->sfirstname = 'garrett5';
+// $account->slastname = 'g-man-2';
+// $result = $account->save();
+// dump($account);
+// dump($result);
+
+// --------------------------- Teams ---------------------------
+// testLog("Getting teams");
+// dump(SurveyGizmo\Team::fetch());
+// $team = SurveyGizmo\Team::get(235682);
+// $team = new SurveyGizmo\Team();
+// $team = SurveyGizmo\Team::get(235681);
+// $team->team_name = 'Team Awesome NOW';
+// $team->description = 'Team Awesome is awesome too - API';
+// dump($team);
+// $result = $team->save();
+// $result = $team->delete();
+// dump($team);
+// dump($result);
 ?>
