@@ -59,34 +59,40 @@ testLog("Updating Survey " . $sid);
 $survey->title = "TEST from API";
 $survey->save();
 
-$sid = 1078944;
+$sid = 1098599;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
 // testLog("got Survey",$survey);
+
+$question = $survey->getQuestion(10);
+$question->title->English = "API TEST";
+$ret = $question->save();
+testLog('Updated Question 10', $ret);
+
 $stats = $survey->getStatistics();
-testLog("Statistics!", $stats);
+// testLog("Statistics!", $stats);
 
 testLog("Getting Responses for survey " . $sid);
 // $responses = $survey->getResponses();
 $response = $survey->getResponse(3118);
-testLog("got Response ", $response);
+// testLog("got Response ", $response);
 $response->survey_data[2]['answer'] = 'BOB';
 $ret = $response->save();
-testLog("saved Response ", $ret);
+// testLog("saved Response ", $ret);
 
 testLog("Getting Reports for survey " . $sid);
 $reports = $survey->getReports();
-testLog("got Reports ",$reports);
+// testLog("got Reports ",$reports);
 
 testLog("Getting one report for survey " . $sid);
 $report = SurveyGizmo\Report::get($sid, 450421);
-testLog("got report",$report);
+// testLog("got report",$report);
 
 testLog("Updating Survey Page 1 title for survey " . $sid);
 $page = $survey->pages[0];
 $page->title = "API PAGE TITLE";
 $page->save();
-
+die;
 testLog("Creating a new survey");
 $survey = new SurveyGizmo\Survey();
 $survey->title = "NEW FROM API";
