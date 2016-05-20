@@ -46,11 +46,6 @@ class Survey extends ApiResource
 		return self::_fetch(array('id' => ''), $filter, $options);
 	}
 
-	// public static function getPath($append = "")
-	// {
-	// 	return parent::_getPath(self::$path, $append);
-	// }
-
 	/*HELPERS*/
 	private function getSubObjects($type, $filter = null, $options = null)
 	{
