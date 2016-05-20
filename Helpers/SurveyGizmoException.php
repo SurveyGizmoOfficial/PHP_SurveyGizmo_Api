@@ -5,7 +5,6 @@ use \Exception;
 
 class SurveyGizmoException extends Exception
 {
-
 	const NOT_IMPLEMENTED = 404;
 	const NOT_SUPPORTED = 405;
 	const NOT_AUTHORIZED = 401;
@@ -17,6 +16,7 @@ class SurveyGizmoException extends Exception
 	public function __construct($code = 0, $message, Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
 
+		// Default the message based on code (if empty)
 		if (!$this->message) {
 			switch ($this->code) {
 				case self::NOT_IMPLEMENTED:
@@ -34,37 +34,4 @@ class SurveyGizmoException extends Exception
 			}
 		}
 	}
-
-	/*
-	public function __construct($type = null)
-	{
-		$this->type = $type;
-	}
-
-	public function getMessage()
-	{
-		$type = $this->type;
-		$response = new APIResponse();
-		$response->results = false;
-		$message = 'An Error has Occurred.';
-
-		switch ($type) {
-			case self::NOT_IMPLEMENTED:
-				$message = 'Method not implemented';
-				break;
-			case self::NOT_SUPPORTED:
-				$message = 'Method not supported';
-				break;
-			case self::NOT_AUTHORIZED:
-				$message = 'Not Authorized';
-				break;
-			default:
-				$type = 500;
-				break;
-		}
-		$response->code = $type;
-		$response->message = $message;
-		return $response;
-	}
-	*/
 }
