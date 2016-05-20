@@ -75,6 +75,16 @@ class Survey extends ApiResource
 		return false;
 	}
 
+	/*QUESTIONS*/
+	public function getQuestions()
+	{
+		return $this->getSubObjects("SurveyGizmo\\Question");
+	}
+
+	public function getQuestion($id)
+	{
+		return $this->getSubObject("SurveyGizmo\\Question", $id);
+	}
 	/*RESPONSES*/
 	public function getResponses($filter = null)
 	{
