@@ -97,6 +97,11 @@ class Survey extends ApiResource
 
 	}
 
+	public function getStatistics()
+	{
+		return $this->getSubObjects("SurveyGizmo\\Statistics");
+	}
+
 	/*FORMATERS*/
 	private function formatPages()
 	{

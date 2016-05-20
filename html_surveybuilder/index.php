@@ -16,8 +16,8 @@ testLog("TESTING Library");
 //Require autoloader
 require_once "../SurveyGizmoAutoLoader.php";
 //set token & secret
-$api_key = "987d89c9904b1600b61f2c8b97dae737d1afdf643a2f91871d";
-$api_secret = "A9Ns5Cac0G6Dk";
+$api_key = "e0f82ba3c6c1e769ad3eb8eb4a4457e2d3085a86ef3739b134";
+$api_secret = "A9Nx6SYE7dr56";
 
 //authetnicate
 testLog("Authenticating");
@@ -63,6 +63,8 @@ $sid = 1078944;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
 // testLog("got Survey",$survey);
+$stats = $survey->getStatistics();
+testLog("Statistics!", $stats);
 
 testLog("Getting Responses for survey " . $sid);
 // $responses = $survey->getResponses();

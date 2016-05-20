@@ -76,7 +76,12 @@ class Response extends ApiResource {
 						$data_to_process = array($sub_question_sku => $sub_question_data);
 					}
 					$process_sub_data = $this->processSurveyData($data_to_process);
-					$payload_data[$sub_question_sku] = array_pop($process_sub_data);
+					if($sub_question_sku > 10000){
+						$payload_data[$question_sku][$sub_question_sku] = array_pop($process_sub_data);
+					}
+					else{
+						$payload_data[$sub_question_sku] = array_pop($process_sub_data);
+					}
 				}
 			}
 			elseif (isset($question_data['options'])) {
