@@ -7,31 +7,29 @@ class Page extends ApiResource {
 	static $path = "/survey/{survey_id}/surveypage";
 
 	public function save(){
-		return parent::_save();
+		return parent::_save(array(
+			'id' => $this->id,
+		));
 	}
 	public static function get($id){
-		return parent::_get(get_class($this),$id);
+		if ($id < 1) {
+			throw new SurveyGizmoException(500, "ID required");
+		}
+		return self::_get(array(
+			'id' => $id,
+		));
 	}
 	public function delete(){
-		return parent::_delete();
+		return self::_delete(array(
+			'id' => $this->id,
+		));
 	}
 
 	public static function fetch($filters=null, $options=null){
 		if(!$options['survey_id']){
 			return new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 		}
-		self::setPath($options);
-		return parent::_fetch(get_class($this),$filter);
-	}
-
-	// public static function getPath($append = ""){
-	// 	return parent::_getPath(self::$path,$append);
-	// }
-
-	private static function setPath($options){
-		self::$path = parent::_mergePath(self::$path,$options);
-		echo "setting path";
-		var_dump(self::$path);
+		return parent::_fetch(array('id' => ''),get_class($this),$filter);
 	}
 
 }
