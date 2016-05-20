@@ -82,4 +82,18 @@ try {
 // $result = $team->delete();
 // dump($team);
 // dump($result);
+
+// --------------------------- Users ---------------------------
+testLog("Getting users");
+dump(SurveyGizmo\User::fetch());
+// $user = SurveyGizmo\User::get(141104);
+// $user = new SurveyGizmo\User();
+// $user->email = 'garrett+pleaseapiwork@sgizmo.com';
+// $user->username = 'Honey Beam';
+// $user->password = '123qwe';
+// dump($user);
+// $result = $user->save();
+// $result = $user->delete();
+// dump($user);
+// dump($result);
 ?>
