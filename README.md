@@ -30,6 +30,16 @@ $filter->addFilterItem($filter_item);
 $surveys = SurveyGizmo\Survey::fetch($filter);
 ```
 
+###### Getting a single Survey
+```php
+$survey_id = <SURVEY_ID>;
+$survey = SurveyGizmo\Survey::get(survey_id);
+```
+###### Deleting a Survey
+```php
+$survey = $survey->delete();
+```
+
 ###### Updating a Survey
 ```php
 $survey = $surveys->data[0];
