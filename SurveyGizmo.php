@@ -6,7 +6,6 @@ class SurveyGizmoAPI
 	/***PROPERTIES***/
 	static $AuthToken;
 	static $AuthSecret;
-	static $config;
 	/***FUNCTIONS***/
 
 	public static function auth($api_key, $api_secret)
