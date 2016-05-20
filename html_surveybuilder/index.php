@@ -63,6 +63,8 @@ $sid = 1078944;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
 // testLog("got Survey",$survey);
+$stats = $survey->getStatistics();
+testLog("Statistics!", $stats);
 
 testLog("Getting Responses for survey " . $sid);
 // $responses = $survey->getResponses();
