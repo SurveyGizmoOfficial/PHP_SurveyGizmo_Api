@@ -29,7 +29,7 @@ class Page extends ApiResource {
 		if(!$options['survey_id']){
 			return new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
 		}
-		return parent::_fetch(array('id' => ''),get_class($this),$filter);
+		return parent::_fetch(array('id' => ''),$filters,$options);
 	}
 
 }

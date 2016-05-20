@@ -9,29 +9,6 @@ class ApiResourceTest extends TestCase
         $this->assertSame(1, 1);
     }
 
-
-    /*
-    public function test_getPath()
-    {
-        $expected = "this/is-a-path/that-looks-somewhat/normal/it-sure-looks-normal/to-me";
-        $tester = new ApiResource();
-        $path = "this/is-a-path/that-looks-somewhat/normal";
-        $append = "it-sure-looks-normal/to-me";
-        $actual = $tester->_getPath($path, $append);
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function test_getPathNoAppend()
-    {
-        $expected = "this/is-a-path/that-looks-somewhat/normal";
-        $tester = new ApiResource();
-        $path = "this/is-a-path/that-looks-somewhat/normal";
-        $actual = $tester->_getPAth($path);
-        $this->assertEquals($expected, $actual);
-
-    }
-    */
-
     public function test_mergePath()
     {
       $expected = '/survey/1234/surveyresponse';

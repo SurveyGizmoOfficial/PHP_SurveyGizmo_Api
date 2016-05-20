@@ -39,9 +39,4 @@ class Report extends ApiResource
 		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
 		return $response;
 	}
-
-	// public static function getPath($append = "")
-	// {
-	// 	return parent::_getPath(self::$path, $append);
-	// }
 }
