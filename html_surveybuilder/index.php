@@ -19,10 +19,6 @@ require_once "../SurveyGizmoAutoLoader.php";
 $api_key = "987d89c9904b1600b61f2c8b97dae737d1afdf643a2f91871d";
 $api_secret = "A9Ns5Cac0G6Dk";
 
-// G's account
-// $api_key = "e87c03fc320ab9fd509a9d32505491262d133987bdfa64af53";
-// $api_secret = "A9SByZ3cS/qpE";
-
 //authetnicate
 testLog("Authenticating");
 
