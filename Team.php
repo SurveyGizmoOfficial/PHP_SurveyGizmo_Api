@@ -17,7 +17,7 @@ class Team extends ApiResource
 	public static function get($id)
 	{
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "ID required");
+			throw new SurveyGizmoException(500, "Team ID required");
 		}
 		return self::_get(array(
 			'id' => $id,

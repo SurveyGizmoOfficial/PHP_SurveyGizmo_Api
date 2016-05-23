@@ -33,9 +33,10 @@ try {
 // $account = SurveyGizmo\Account::get();
 // dump($account);
 
-// testLog("Getting contact lists");
-// $account = SurveyGizmo\ContactList::fetch();
-// dump($account);
+// --------------------------- Contact Lists ---------------------------
+testLog("Getting contact lists");
+$lists  = SurveyGizmo\ContactList::fetch();
+dump($lists);
 
 // testLog("Creating contact list");
 // $account = new SurveyGizmo\ContactList();
@@ -44,9 +45,9 @@ try {
 // dump($account);
 // dump($result);
 
-// testLog("Getting single list");
-// $account = SurveyGizmo\ContactList::get(31);
-// dump($account);
+testLog("Getting single list");
+$list = SurveyGizmo\ContactList::get(31);
+dump($list);
 
 // testLog("Getting first contact");
 // $account = $account->contacts[0];
@@ -84,8 +85,8 @@ try {
 // dump($result);
 
 // --------------------------- Users ---------------------------
-testLog("Getting users");
-dump(SurveyGizmo\User::fetch());
+// testLog("Getting users");
+// dump(SurveyGizmo\User::fetch());
 // $user = SurveyGizmo\User::get(141104);
 // $user = new SurveyGizmo\User();
 // $user->email = 'garrett+pleaseapiwork@sgizmo.com';
