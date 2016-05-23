@@ -5,7 +5,7 @@
 
 ## Code Examples
 
-###### Authenticating
+###### Auto Loading & Authenticating
 ```php
 require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
 //set your key & secret
