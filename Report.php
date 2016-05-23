@@ -18,6 +18,9 @@ class Report extends ApiResource
 
 	public static function get($survey_id, $id)
 	{
+		if ($survey_id < 1 || $id < 1) {
+                        throw new SurveyGizmoException(500, "Missing survey ID and/or report ID");
+                }
 		return self::_get(array(
 			'survey_id' => $survey_id,
 			'id' => $id
