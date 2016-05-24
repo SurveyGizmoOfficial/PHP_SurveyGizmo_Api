@@ -4,7 +4,7 @@ use SurveyGizmo\ApiResource;
 
 class Question extends ApiResource {
 
-	static $path = "/survey/{survey_id}/surveyquestion";
+	static $path = "/survey/{survey_id}/surveyquestion/{id}";
 
 	public function save(){
 		return $this->_save(array(
