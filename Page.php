@@ -2,35 +2,71 @@
 namespace SurveyGizmo;
 use SurveyGizmo\ApiResource;
 
+/**
+ * Class for Survey Page API objects
+ * Page is a sub-object of Surveys
+ */
 class Page extends ApiResource {
 
-	static $path = "/survey/{survey_id}/surveypage";
+	/**
+	 * API call path 
+	 */
+	static $path = "/survey/{survey_id}/surveypage/{id}";
 
-	public function save(){
-		return parent::_save(array(
-			'id' => $this->id,
-		));
+	/**
+	 * Fetch list of SurveyGizmo Page Objects
+	 * @access public
+	 * @param int $survey_id - Survey ID
+	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param Array $options
+	 * @return SurveyGizmo\APIResponse object
+	 */
+	public static function fetch($survey_id, $filters = null, $options = null) {
+		if ($survey_id < 1) {
+			throw new SurveyGizmoException(500, "Missing survey ID");
+		}
+		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
+		return $response;
 	}
-	public static function get($id){
-		if ($id < 1) {
-			throw new SurveyGizmoException(500, "ID required");
+
+	/**
+	 * Get Page Obj by survey id and page sku
+	 * @access public
+	 * @param int $survey_id - survey id
+	 * @param int $id - page sku
+	 * @return SurveyGizmo\Page object
+	 */
+	public static function get($survey_id, $id){
+		if ($id < 1 && $survey_id < 1) {
+			throw new SurveyGizmoException(500, "IDs required");
 		}
 		return self::_get(array(
+			'survey_id' => $survey_id,
 			'id' => $id,
 		));
 	}
+
+	/**
+	 * Save current Page Obj
+	 * @access public
+	 * @return SurveyGizmo\APIResponse object
+	 */
+	public function save(){
+		return $this->_save(array(
+			'survey_id' => $this->survey_id,
+			'id' => $this->exists() ? $this->id : ''
+		));
+	}
+	
+	/**
+	 * Delete current Page Obj
+	 * @access public
+	 * @return SurveyGizmo\APIResponse object
+	 */
 	public function delete(){
 		return self::_delete(array(
 			'id' => $this->id,
 		));
 	}
-
-	public static function fetch($filters=null, $options=null){
-		if(!$options['survey_id']){
-			return new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
-		}
-		return parent::_fetch(array('id' => ''),$filters,$options);
-	}
-
 }
 ?>
