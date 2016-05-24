@@ -3,7 +3,7 @@
 ## Summary
 The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are support via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Survey).
 
-####Supported Objects
+##### Supported Objects
 - Survey
   - Responses
   - Questions
@@ -15,27 +15,28 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
   - Teams
 - Contacts
 - Contact Lists
+	- Contacts
 
 
 ####All objects use the following standard functions:
 
 ```
-OBJECT::fetch(<FILTERS>,<OPTIONS>)
+<OBJECT>::fetch(<FILTERS>,<OPTIONS>);
 ```
 > Returns an array of objects based on filter and paging options.
 
 ```
-OBJECT::get($id)
+<OBJECT>::get($id);
 ```
 > Returns a single object based on id
 
 ```
-OBJECT->save()
+<OBJECT>->save();
 ```
 > Saves a newly created or updated instance of an object
 
 ```
-OBJECT->delete()
+<OBJECT>->delete();
 ```
 > Deletes an instance of an object
 
@@ -57,34 +58,32 @@ try {
 ```
 ### Surveys
 
-#### Fetching Surveys
+###### Fetching Surveys
 See filter and paging below.
 ```php
 $surveys = SurveyGizmo\Survey::fetch(<FILTER>,<OPTIONS>);
 ```
 
-#### Getting a single Survey
+###### Getting a Single Survey
 ```php
 $survey_id = <SURVEY_ID>;
 $survey = SurveyGizmo\Survey::get(survey_id);
 ```
 
-#### Updating a Survey
+###### Updating a Survey
 ```php
-$survey = $surveys->data[0];
-$sid = $survey->id;
 $survey->title = "TEST UPDATE FROM API LIBRARY";
 $survey->save();
 ```
 
-#### Creating a Survey
+###### Creating a Survey
 ```php
 $survey = new SurveyGizmo\Survey();
 $survey->title = "NEW SURVEY";
 $results = $survey->save();
 ```
 
-#### Deleting a Survey
+###### Deleting a Survey
 ```php
 $survey = $survey->delete();
 ```
@@ -129,7 +128,7 @@ To access the responses for a survey you'll need an instance of a SurveyGizmo\Su
 $responses = $survey->getResponses(<FILTER>,<OPTIONS>);
 ```
 
-###### Get a single Responses
+###### Get a Single Responses
 ```php
 $responses = $survey->getResponse(<RESPONSE_ID);
 ```
@@ -155,7 +154,7 @@ $filter->addFilterItem($filter_item);
 $surveys = SurveyGizmo\Survey::fetch($filter);
 ```
 
-###### Paging collections
+###### Paging Collections
 Sometimes you will need to page through collecitons of objects.  To accomidate this use tha optional $options agrument on any fetch method;
 ```php
 $options = array( 'page' => 3, 'limit' => 100 );
@@ -164,9 +163,11 @@ $surveys = SurveyGizmo\Survey::fetch($filter,$options);
 
 ### ERROR Message & Responses
 In the case of an error we will return the following responses and status codes:
-###### Method not implemented (404)
-###### Method not supported (405)
-###### Not Authorized (401)
+```
+Method not implemented (404)
+Method not supported (405)
+Not Authorized (401)
+```
 
 ## Dependencies
 
@@ -198,6 +199,6 @@ This Library uses the version 5 SurveyGizmo API.  [API Documentation](https://ap
 
 
 ## Contributors
-The library was developed and is maintained by the SurveyGizmo Product Development Team.
+The library was developed and is maintained by the [SurveyGizmo](http://www.surveygizmo.com) Product Development Team.
 
 ## License
