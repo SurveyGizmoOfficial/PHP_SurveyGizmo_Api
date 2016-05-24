@@ -84,16 +84,23 @@ class Response extends ApiResource {
 	 */
 	private function processSurveyData($survey_data){
 		$payload_data = array();
+		//loop through each question 
 		foreach ($survey_data as $question_sku => $question_data) {
+
+			//Sub-questions (Tables, Custom Groups, etc.)
 			if(isset($question_data['subquestions'])){
 				foreach ($question_data['subquestions'] as $sub_question_sku => $sub_question_data) {
+					//Account for slight differences in subquestion formatting
 					if(!isset($sub_question_data['sku'])){
 						$data_to_process = array($sub_question_sku => array('options' => $sub_question_data));
 					}
 					else{
 						$data_to_process = array($sub_question_sku => $sub_question_data);
 					}
+					//process subquestions as if they are normal questions
 					$process_sub_data = $this->processSurveyData($data_to_process);
+
+					//certain complex questions (like some tables) will have sub_question that should be grouped on the parent sku
 					if($sub_question_sku > 10000){
 						$payload_data[$question_sku][$sub_question_sku] = array_pop($process_sub_data);
 					}
@@ -102,6 +109,7 @@ class Response extends ApiResource {
 					}
 				}
 			}
+			//Options (checkbox, list of textbox, etc.)
 			elseif (isset($question_data['options'])) {
 				foreach ($question_data['options'] as $option_sku => $option_data) {
 					$payload_data[$question_sku][$option_sku] = isset($option_data['answer']) ? $option_data['answer'] : null;
