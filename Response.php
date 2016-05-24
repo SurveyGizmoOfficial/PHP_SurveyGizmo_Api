@@ -2,8 +2,15 @@
 namespace SurveyGizmo;
 use SurveyGizmo\ApiResource;
 
+/**
+ * Class for Survey Response API objects
+ * Response is a sub-object of Surveys
+ */
 class Response extends ApiResource {
 
+	/**
+	 * API call path 
+	 */
 	static $path = "/survey/{survey_id}/surveyresponse/{id}";
 
 	/**
@@ -42,7 +49,7 @@ class Response extends ApiResource {
 	 * @access public
 	 * @param int $survey_id - survey id
 	 * @param int $id - response id
-	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 * @return SurveyGizmo\Response Object
 	 */
 	public static function get($survey_id, $id){
 		return self::_get(array(
@@ -67,7 +74,7 @@ class Response extends ApiResource {
 	/**
 	 * Delete current Response Object
 	 * @access public
-	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 * @return SurveyGizmo\APIResponse
 	 */
 	public function delete(){
 		return self::_delete(array(

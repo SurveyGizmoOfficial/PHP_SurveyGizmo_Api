@@ -1,13 +1,24 @@
 <?php
 namespace SurveyGizmo;
-
 use SurveyGizmo\ApiResource;
 
+/**
+ * Class for Survey API objects - the blood and soul of SurveyGizmo!
+ */
 class Survey extends ApiResource 
 {
 
+	/**
+	 * API call path 
+	 */
 	static $path = "/survey/{id}";
 
+	/**
+	 * set magic function to keep pages formatted the way we want
+	 * @access public
+	 * @param String $name - property name
+	 * @param Mixed $value - property value
+	 */
 	public function __set($name, $value)
 	{
 		$this->{$name} = $value;
@@ -16,14 +27,24 @@ class Survey extends ApiResource
 		}
 	}
 
-	public function save()
+	/**
+	 * Fetch list of SurveyGizmo Survey Objects
+	 * @access public
+	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param Array $options
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Survey Objects
+	 */
+	public static function fetch($filter = null, $options = null)
 	{
-		$this->type = empty($this->type) ? "survey" : $this->type;
-		return $this->_save(array(
-			'id' => $this->id
-		));
+		return self::_fetch(array('id' => ''), $filter, $options);
 	}
 	
+	/**
+	 * Get Survey object by survey id
+	 * @access public
+	 * @param int $id - survey id
+	 * @return SurveyGizmo\Survey Object
+	 */
 	public static function get($id)
 	{
 		if ($id < 1) {
@@ -34,29 +55,29 @@ class Survey extends ApiResource
 		));
 	}
 
+	/**
+	 * Saves current Survey Object
+ 	 * @access public
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Survey Object
+	 */
+	public function save()
+	{
+		$this->type = empty($this->type) ? "survey" : $this->type;
+		return $this->_save(array(
+			'id' => $this->id
+		));
+	}
+
+	/**
+	 * Delete current Survey Object
+	 * @access public
+	 * @return SurveyGizmo\APIResponse
+	 */
 	public function delete()
 	{
 		return self::_delete(array(
 			'id' => $this->id
 		));
-	}
-
-	public static function fetch($filter = null, $options = null)
-	{
-		return self::_fetch(array('id' => ''), $filter, $options);
-	}
-
-	/*HELPERS*/
-	private function getSubObjects($type, $filter = null, $options = null)
-	{
-		$options = array("survey_id" => $this->id);
-		return $type::fetch($this->id, $filter, $options);
-	}
-
-	/*HELPERS*/
-	private function getSubObject($type, $id)
-	{
-		return $type::get($this->id, $id);
 	}
 
 	/*PAGES*/
@@ -121,6 +142,19 @@ class Survey extends ApiResource
 	public function getCampaign($id)
 	{
 		return $this->getSubObject("SurveyGizmo\\Campaign", $id);
+	}
+
+	/*HELPERS*/
+	private function getSubObjects($type, $filter = null, $options = null)
+	{
+		$options = array("survey_id" => $this->id);
+		return $type::fetch($this->id, $filter, $options);
+	}
+
+	/*HELPERS*/
+	private function getSubObject($type, $id)
+	{
+		return $type::get($this->id, $id);
 	}
 
 	/*FORMATERS*/

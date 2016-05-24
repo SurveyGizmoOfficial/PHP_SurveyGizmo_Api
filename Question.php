@@ -61,7 +61,7 @@ class Question extends ApiResource {
 	/**
 	 * Delete current Question Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Question Object
+	 * @return SurveyGizmo\APIResponse Object
 	 */
 	public function delete(){
 		return self::_delete(array(
