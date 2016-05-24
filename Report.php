@@ -64,7 +64,7 @@ class Report extends ApiResource
 	/**
 	 * Delete current Report Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Report Object
+	 * @return SurveyGizmo\APIResponse Object
 	 */
 	public function delete()
 	{
