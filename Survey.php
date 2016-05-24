@@ -112,6 +112,17 @@ class Survey extends ApiResource
 		return $this->getSubObjects("SurveyGizmo\\Statistics");
 	}
 
+	/*CAMPAIGNS*/
+	public function getCampaigns($filter = null)
+	{
+		return $this->getSubObjects("SurveyGizmo\\Campaign");
+	}
+
+	public function getCampaign($id)
+	{
+		return $this->getSubObject("SurveyGizmo\\Campaign", $id);
+	}
+
 	/*FORMATERS*/
 	private function formatPages()
 	{
