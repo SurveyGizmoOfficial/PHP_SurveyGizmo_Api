@@ -1,6 +1,7 @@
 <?php
-//error_reporting(E_ERROR | E_WARNING | E_PARSE);
-
+/**
+ * SurveyGizmo api library autoloader
+ */
 $sg_autoload_mapping = array(
 	"SurveyGizmo\SurveyGizmoAPI" 		=> __DIR__ . "/SurveyGizmo.php",
 	"SurveyGizmo\ApiResource" 			=> __DIR__ . "/_ApiResource.php",
@@ -28,7 +29,6 @@ $sg_autoload_mapping = array(
 
 spl_autoload_register(function ($class_name) {
 	global $sg_autoload_mapping;
-	//var_dump($class_name,$sg_autoload_mapping[$class_name]);
     if (isset($sg_autoload_mapping[$class_name])) {
         require $sg_autoload_mapping[$class_name];
     }

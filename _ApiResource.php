@@ -1,6 +1,8 @@
 <?php
 namespace SurveyGizmo;
-
+/**
+ * Base class for all API objects, builds requests and formats responses.
+ */
 class ApiResource
 {
 
