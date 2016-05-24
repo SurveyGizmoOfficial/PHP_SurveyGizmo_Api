@@ -19,16 +19,24 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 
 ####All objects use the following standard functions:
 
-######OBJECT::fetch(<FILTERS>,<OPTIONS>)
+```
+OBJECT::fetch(<FILTERS>,<OPTIONS>)
+```
 > Returns an array of objects based on filter and paging options.
 
-######OBJECT::get($id)
+```
+OBJECT::get($id)
+```
 > Returns a single object based on id
 
-######OBJECT->save()
+```
+OBJECT->save()
+```
 > Saves a newly created or updated instance of an object
 
-######OBJECT->delete()
+```
+OBJECT->delete()
+```
 > Deletes an instance of an object
 
 
