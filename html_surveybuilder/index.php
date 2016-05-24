@@ -59,10 +59,15 @@ testLog("Updating Survey " . $sid);
 $survey->title = "TEST from API";
 $survey->save();
 
-$sid = 1098599;
+$sid = 1035186;
 testLog("Getting Survey " . $sid);
 $survey = SurveyGizmo\Survey::get($sid);
 // testLog("got Survey",$survey);
+$campaign = $survey->getCampaign(140308);
+
+testLog("got Campaign", $campaign);
+$email = $campaign->getEmailMessage(128073);
+testLog("got Email Message", $email);
 
 $question = $survey->getQuestion(10);
 $question->title->English = "API TEST";
@@ -133,4 +138,5 @@ testDump($account);
 // $team->description = 'Team Awesome is awesome too';
 // testDump($team);
 // $team->save();
+
 ?>
