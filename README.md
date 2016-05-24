@@ -6,11 +6,7 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 ####Supported Objects
 - Survey
   - Responses
-  > $survey->getResponses(<FILTER>,<OPTIONS>);
-  > $survey->getResponse($id);
   - Questions
-  > $survey->getQuestions(<FILTER>,<OPTIONS>);
-  > $survey->getQuestion($sku);
   - Pages 
   - Statistics
   - Reports
@@ -23,16 +19,16 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 
 ####All objects use the following standard functions:
 
-######<OBJECT>::fetch(<FILTERS>,<OPTIONS>)
+######OBJECT::fetch(<FILTERS>,<OPTIONS>)
 > Returns an array of objects based on filter and paging options.
 
-######<OBJECT>::get($id)
+######OBJECT::get($id)
 > Returns a single object based on id
 
-######<OBJECT>->save()
+######OBJECT->save()
 > Saves a newly created or updated instance of an object
 
-######<OBJECT>->delete()
+######OBJECT->delete()
 > Deletes an instance of an object
 
 
@@ -83,6 +79,23 @@ $results = $survey->save();
 #### Deleting a Survey
 ```php
 $survey = $survey->delete();
+```
+### Survey Helper Functions
+The Survey object provides a few help functions to easily access related collections and objects.
+
+```php
+	//get questions
+	$survey->getQuestions(<FILTER>,<PAGE>);
+	$survey->getQuestion($sku);
+	//get responses
+	$survey->getResponses(<FILTER>,<PAGE>);
+	$survey->getResponse($id);
+	//get reports
+	$survey->getReports(<FILTER>,<PAGE>);
+	$survey->getReport($id);
+	//get statistics
+	$survey->getStatistics();
+	$survey->getQuestionStatistics($sku);
 ```
 
 ### Questions
