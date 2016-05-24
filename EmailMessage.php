@@ -20,7 +20,7 @@ class EmailMessage extends ApiResource
 	 * @param int $campaign_id - parent Survey Campaign ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\EmailMessage Objects
 	 */
 	public static function fetch($survey_id, $campaign_id, $filters = null, $options = null) {
 		if ($campaign_id < 1 && $survey_id < 1) {
@@ -36,7 +36,7 @@ class EmailMessage extends ApiResource
 	 * @param int $survey_id - survey id
 	 * @param int $campaign_id - campaign id
 	 * @param int $id - email id
-	 * @return SurveyGizmo\EmailMessage object
+	 * @return SurveyGizmo\EmailMessage Object
 	 */
 	public static function get($survey_id, $campaign_id, $id){
 		if ($id < 1 && $survey_id < 1 && $campaign_id < 1) {
@@ -52,7 +52,7 @@ class EmailMessage extends ApiResource
 	/**
 	 * Save current EmailMessage Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\EmailMessage Object
 	 */
 	public function save()
 	{
@@ -66,7 +66,7 @@ class EmailMessage extends ApiResource
 	/**
 	 * Delete current EmailMessage Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\EmailMessage Object
 	 */
 	public function delete(){
 		return self::_delete(array(
