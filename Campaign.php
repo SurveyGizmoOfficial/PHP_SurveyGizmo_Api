@@ -19,7 +19,7 @@ class Campaign extends ApiResource
 	 * @param int $survey_id - Survey ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Campaign Object
 	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
@@ -34,7 +34,7 @@ class Campaign extends ApiResource
 	 * @access public
 	 * @param int $survey_id - survey id
 	 * @param int $id - campaign id
-	 * @return SurveyGizmo\Campaign object
+	 * @return SurveyGizmo\Campaign Object
 	 */
 	public static function get($survey_id, $id){
 		if ($id < 1 && $survey_id < 1) {
@@ -49,7 +49,7 @@ class Campaign extends ApiResource
 	/**
 	 * Save current Campaign Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Campaign Object
 	 */
 	public function save()
 	{
@@ -62,7 +62,7 @@ class Campaign extends ApiResource
 	/**
 	 * Delete current Campaign Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Campaign Object
 	 */
 	public function delete(){
 		return self::_delete(array(
@@ -75,7 +75,7 @@ class Campaign extends ApiResource
 	 * Fetch list of SurveyGizmo EmailMessage Objects by Campaign
 	 * @access public
 	 * @param SurveyGizmo\Filter $filter - SG Filter Object
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\EmailMessage Objects
 	 */
 	public function getEmailMessages($filter = null)
 	{
@@ -86,7 +86,7 @@ class Campaign extends ApiResource
 	 * Get SurveyGizmo EmailMessage by id and Campaign
 	 * @access public
 	 * @param Int $email_id - email message id
-	 * @return SurveyGizmo\EmailMessage object 
+	 * @return SurveyGizmo\EmailMessage Object with SurveyGizmo\EmailMessage Object
 	 */
 	public function getEmailMessage($email_id)
 	{
@@ -99,7 +99,7 @@ class Campaign extends ApiResource
 	 * @param String $type - class name of object requested
 	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse Object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\{$type} Object
 	 */
 	private function getSubObjects($type, $filter = null, $options = null)
 	{

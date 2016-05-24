@@ -19,7 +19,7 @@ class Question extends ApiResource {
 	 * @param int $survey_id - Survey ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Question Objects
 	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
@@ -34,7 +34,7 @@ class Question extends ApiResource {
 	 * @access public
 	 * @param int $survey_id - survey id
 	 * @param int $id - question sku
-	 * @return SurveyGizmo\Question object
+	 * @return SurveyGizmo\Question Object
 	 */
 	public static function get($survey_id, $id){
 		if ($id < 1 && $survey_id < 1) {
@@ -49,7 +49,7 @@ class Question extends ApiResource {
 	/**
 	 * Save current Question Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Question Object
 	 */
 	public function save(){
 		return $this->_save(array(
@@ -61,7 +61,7 @@ class Question extends ApiResource {
 	/**
 	 * Delete current Question Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse object
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Question Object
 	 */
 	public function delete(){
 		return self::_delete(array(
