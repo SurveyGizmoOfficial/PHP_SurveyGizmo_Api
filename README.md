@@ -10,11 +10,13 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
   - Pages 
   - Statistics
   - Reports
+  - Campaigns
+    - EmailMessages
 - Account
   - Users
   - Teams
 - Contacts
-- Contact Lists
+- ContactLists
 	- Contacts
 
 
@@ -103,6 +105,12 @@ The Survey object provides a few help functions to easily access related collect
 	//get statistics
 	$survey->getStatistics();
 	$survey->getQuestionStatistics($sku);
+	//get campaigns
+	$survey->getCampaigns();
+	$survey->getCampaign($id);
+	//get email messages
+	$survey->getCampaign($id)->getEmailMessages();
+	$survey->getCampaign($id)->getEmailMessage($email_id);
 ```
 
 ### Questions
@@ -155,7 +163,7 @@ $surveys = SurveyGizmo\Survey::fetch($filter);
 ```
 
 ###### Paging Collections
-Sometimes you will need to page through collecitons of objects.  To accomidate this use tha optional $options agrument on any fetch method;
+Sometimes you will need to page through collections of objects.  To accommodate this use the optional $options argument on any fetch method;
 ```php
 $options = array( 'page' => 3, 'limit' => 100 );
 $surveys = SurveyGizmo\Survey::fetch($filter,$options);
@@ -170,11 +178,16 @@ Not Authorized (401)
 ```
 
 ## Dependencies
-
+```
+PHP 5.3+
+CURL
+Active SurveyGizmo Account
+Imagination, Determination and Common Sense!
+```
 
 ## Installation
-1. Download the Lirbary and add it to your project.
-2. Include the Autoloader.php file
+1. Download the Library and add it to your project.
+2. Include the SurveyGizmoAutoLoader.php file
 ```php
 require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
 ```
@@ -196,9 +209,13 @@ This Library uses the version 5 SurveyGizmo API.  [API Documentation](https://ap
 
 
 ## Tests
-
+Unit tests are included under the /Tests directory.  They can be executed by running:
+```bash
+$ phpunit -c bootstrap.xml.
+```
 
 ## Contributors
 The library was developed and is maintained by the [SurveyGizmo](http://www.surveygizmo.com) Product Development Team.
 
 ## License
+This project is licensed under the terms of the MIT license.
