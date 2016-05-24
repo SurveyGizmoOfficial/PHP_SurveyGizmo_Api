@@ -4,6 +4,7 @@ use SurveyGizmo\ApiResource;
 
 /**
  * Class for SurveyCampaign API objects
+ * Campaign is a subobject of Surveys
  */
 class Campaign extends ApiResource
 {
