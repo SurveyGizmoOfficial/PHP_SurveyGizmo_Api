@@ -1,26 +1,10 @@
 <?php
 namespace SurveyGizmo;
-
+/**
+ * Base class for all API objects, builds requests and formats responses.
+ */
 class ApiResource
 {
-
-	/**
-	 * Replaces the merge codes in a URL with the value from $options.
-	 * @access public
-	 * @static
-	 * @param $path string (the URL)
-	 * @param $options array (the array of merge code keys to value)
-	 * @return string
-	 */
-	public static function _mergePath($path, array $options = null)
-	{
-		if (is_array($options)) {
-			foreach ($options as $key => $value) {
-				$path = str_replace('{' . $key . '}', $value, $path);
-			}
-		}
-		return $path;
-	}
 
 	/**
 	 * Fetches a list of resources using a HTTP GET request.
@@ -171,6 +155,24 @@ class ApiResource
 
 		// Return APIResponse
 		return $request->getResponse();
+	}
+
+	/**
+	 * Replaces the merge codes in a URL with the value from $options.
+	 * @access public
+	 * @static
+	 * @param $path string (the URL)
+	 * @param $options array (the array of merge code keys to value)
+	 * @return string
+	 */
+	public static function _mergePath($path, array $options = null)
+	{
+		if (is_array($options)) {
+			foreach ($options as $key => $value) {
+				$path = str_replace('{' . $key . '}', $value, $path);
+			}
+		}
+		return $path;
 	}
 
 	/**
