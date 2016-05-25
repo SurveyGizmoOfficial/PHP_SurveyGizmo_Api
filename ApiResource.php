@@ -30,7 +30,7 @@ class ApiResource
 		// Add options such as `page`, `limit` to request
 		$request->setOptions($options);
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
 		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
@@ -73,7 +73,7 @@ class ApiResource
 		$request = new ApiRequest("GET");
 		$request->path = $path;
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
 		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
@@ -119,9 +119,9 @@ class ApiResource
 		$request = new ApiRequest($this->exists() ? 'POST' : 'PUT');
 		$request->path = $path;
 		// The request class pulls the data from this reference
-		$request->data = $this;
+		$request->data = get_object_vars($this);
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
 		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
@@ -154,7 +154,7 @@ class ApiResource
 		$request = new ApiRequest('DELETE');
 		$request->path = $path;
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
 		// Return ApiResponse
 		return $request->getResponse();
