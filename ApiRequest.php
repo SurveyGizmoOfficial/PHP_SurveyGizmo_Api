@@ -17,6 +17,12 @@ class ApiRequest
 	public $filter;
 
 	/**
+	 * Data that will be sent to the API.
+	 * @var Array/stdClass null
+	 */
+	public $data;
+
+	/**
 	 * URL string of the SurveyGizmo REST API.
 	 * @var string
 	 */
@@ -235,5 +241,26 @@ class ApiRequest
 	public static function setBaseURI($path)
 	{
 		self::$API_URL = $path;
+	}
+
+	/**
+	 * Helper method for quick calls to the API. Creates a request, executes it, and
+	 * returns the response object.
+	 * @access public
+	 * @static
+	 * @param $path string
+	 * @param $data null
+	 * @param $options array null
+	 * @param $filter null
+	 * @return SurveyGizmo\ApiResponse
+	 */
+	public static function call ($path, $data = null, array $options = null, $filter = null) {
+		$request = new ApiRequest;
+		$request->path = '/' . $path;
+		$request->data = $data;
+		$request->filter = $filter;
+		$request->setOptions($options);
+		$request->execute();
+		return $request->getResponse();
 	}
 }
