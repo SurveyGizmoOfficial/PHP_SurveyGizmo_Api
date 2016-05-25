@@ -1,7 +1,7 @@
 # Official PHP library for SurveyGizmo API
 
 ## Summary
-The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are support via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Survey).
+The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Survey).
 
 ##### Supported Objects
 - Survey
@@ -95,7 +95,7 @@ The Survey object provides a few help functions to easily access related collect
 ```php
 	//get questions
 	$survey->getQuestions(<FILTER>,<PAGE>);
-	$survey->getQuestion($sku);
+	$survey->getQuestion($question_id);
 	//get responses
 	$survey->getResponses(<FILTER>,<PAGE>);
 	$survey->getResponse($id);
@@ -104,7 +104,7 @@ The Survey object provides a few help functions to easily access related collect
 	$survey->getReport($id);
 	//get statistics
 	$survey->getStatistics();
-	$survey->getQuestionStatistics($sku);
+	$survey->getQuestionStatistics($question_id);
 	//get campaigns
 	$survey->getCampaigns();
 	$survey->getCampaign($id);
@@ -123,7 +123,7 @@ $questions = $survey->getQuestions();
 
 ###### Getting and Updating a Survey Question
 ```php
-$question = $survey->getQuestion(<QUESTION SKU>);
+$question = $survey->getQuestion(<QUESTION question_id>);
 $question->title->English = "LIBRARY TEST";
 $ret = $question->save();
 ```
@@ -143,7 +143,7 @@ $responses = $survey->getResponse(<RESPONSE_ID);
 
 ###### Update a Responses
 ```php
-$response->survey_data[2]['answer'] = 'YES';
+$response->survey_data[$question_id]['answer'] = 'YES';
 $ret = $response->save();
 ```
 
