@@ -117,7 +117,7 @@ class Survey extends ApiResource
 	 */
 	public function getQuestions()
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Question");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Question");
 	}
 	
 	/**
@@ -128,7 +128,7 @@ class Survey extends ApiResource
 	 */
 	public function getQuestion($id)
 	{
-		return $this->getSubObject("SurveyGizmo\\Resources\\Question", $id);
+		return $this->getSubObject("SurveyGizmo\\Resources\\Survey\\Question", $id);
 	}
 
 	/*RESPONSES*/
@@ -139,7 +139,7 @@ class Survey extends ApiResource
 	 */
 	public function getResponses($filter = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Response");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Response");
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Survey extends ApiResource
 	 */
 	public function getResponse($id)
 	{
-		return $this->getSubObject("SurveyGizmo\\Resources\\Response", $id);
+		return $this->getSubObject("SurveyGizmo\\Resources\\Survey\\Response", $id);
 	}
 
 	/*REPORTS*/
@@ -161,7 +161,7 @@ class Survey extends ApiResource
 	 */
 	public function getReports($filter = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Report");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Report");
 	}
 
 	/**
@@ -182,7 +182,7 @@ class Survey extends ApiResource
 	 */
 	public function getStatistics()
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Statistics");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Statistics");
 	}
 
 	/*CAMPAIGNS*/
@@ -193,7 +193,7 @@ class Survey extends ApiResource
 	 */
 	public function getCampaigns($filter = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Campaign");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Campaign");
 	}
 
 	/**
@@ -204,7 +204,7 @@ class Survey extends ApiResource
 	 */
 	public function getCampaign($id)
 	{
-		return $this->getSubObject("SurveyGizmo\\Resources\\Campaign", $id);
+		return $this->getSubObject("SurveyGizmo\\Resources\\Survey\\Campaign", $id);
 	}
 
 	/*HELPERS*/
@@ -261,7 +261,7 @@ class Survey extends ApiResource
 	 */
 	private static function formatPage($page_obj)
 	{
-		$page = parent::_formatObject("SurveyGizmo\\Resources\\Page", $page_obj);
+		$page = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Page", $page_obj);
 		$page->questions = self::formatQuestions($page);
 		return $page;
 	}
@@ -277,7 +277,7 @@ class Survey extends ApiResource
 		$return = array();
 		$raw_questions = $page->questions;
 		foreach ($raw_questions as $obj) {
-			$question = parent::_formatObject("SurveyGizmo\\Resources\\Question", $obj);
+			$question = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Question", $obj);
 			//format options
 			$question->options = self::formatQuestionOptions($question);
 			$return[] = $question;
@@ -296,7 +296,7 @@ class Survey extends ApiResource
 		$return = array();
 		$raw_options = $question->options;
 		foreach ($raw_options as $obj) {
-			$option = parent::_formatObject("SurveyGizmo\\Resources\\QuestionOption", $obj);
+			$option = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\QuestionOption", $obj);
 			//format options
 			$return[] = $option;
 		}

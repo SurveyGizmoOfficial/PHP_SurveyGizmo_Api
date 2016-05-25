@@ -1,5 +1,5 @@
 <?php
-namespace SurveyGizmo\Resources;
+namespace SurveyGizmo\Resources\Survey;
 
 use SurveyGizmo\ApiResource;
 use SurveyGizmo\Helpers\SurveyGizmoException;
