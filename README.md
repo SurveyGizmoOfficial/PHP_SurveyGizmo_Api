@@ -177,6 +177,12 @@ Method not supported (405)
 Not Authorized (401)
 ```
 
+### Simple API request
+To perform a API call without going through a specific resource class, use SurveyGizmo\ApiRequest::call.
+```php
+$response = SurveyGizmo\ApiRequest::call('contactlist', null, null, null);
+```
+
 ## Dependencies
 ```
 PHP 5.3+
