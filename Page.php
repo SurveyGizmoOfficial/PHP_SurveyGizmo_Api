@@ -61,7 +61,7 @@ class Page extends ApiResource {
 	/**
 	 * Delete current Page Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Page Object
+	 * @return SurveyGizmo\APIResponse Object
 	 */
 	public function delete(){
 		return self::_delete(array(

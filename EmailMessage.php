@@ -66,7 +66,7 @@ class EmailMessage extends ApiResource
 	/**
 	 * Delete current EmailMessage Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\EmailMessage Object
+	 * @return SurveyGizmo\APIResponse Object
 	 */
 	public function delete(){
 		return self::_delete(array(
