@@ -234,6 +234,7 @@ class ApiRequest
 
 	/**
 	 * Method to change the URL of the REST API domain for development purposes.
+	 * SurveyGizmo\ApiRequest::setBaseURI('<DEV environment>/services/rest/v5');
 	 * @access public
 	 * @static
 	 * @return void
