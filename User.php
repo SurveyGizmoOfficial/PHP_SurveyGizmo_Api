@@ -1,30 +1,34 @@
 <?php
 namespace SurveyGizmo;
-
 use SurveyGizmo\ApiResource;
 
+/**
+ * Class for User API object
+ */
 class User extends ApiResource
 {
-
+	/**
+	 * API call path 
+	 */
 	static $path = "/accountuser/{id}";
 
+	/**
+	 * Saves the user instance. Performs an update/insert.
+	 * @access public
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\User Object
+	 */
 	public function save()
 	{
 		return $this->_save(array(
-			'id' => $this->id,
+			'id' => $this->id
 		));
 	}
 
-	public static function get($id)
-	{
-		if ($id < 1) {
-			throw new SurveyGizmoException(500, "User ID required");
-		}
-		return self::_get(array(
-			'id' => $id,
-		));
-	}
-
+	/**
+	 * Deletes the user instance. Requires an existing object.
+	 * @access public
+	 * @return SurveyGizmo\APIResponse Object
+	 */
 	public function delete()
 	{
 		return self::_delete(array(
@@ -32,8 +36,36 @@ class User extends ApiResource
 		));
 	}
 
+	/**
+	 * Fetches a single user instance. Requires a positive integer ID.
+	 * @access public
+	 * @static
+	 * @param $id int - User ID
+	 * @return SurveyGizmo\User Object
+	 */
+	public static function get($id)
+	{
+		$id = (int) $id;
+		if ($id < 1) {
+			throw new SurveyGizmoException(500, "User ID required");
+		}
+		return self::_get(array(
+			'id' => $id
+		));
+	}
+
+	/**
+	 * Fetches a collection of users belonging to the account.
+	 * @access public
+	 * @static
+	 * @param $filters SurveyGizmo\Filter - filter instance
+	 * @param $options array
+	 * @return SurveyGizmo\APIResponse
+	 */
 	public static function fetch($filter = null, $options = null)
 	{
-		return self::_fetch(array('id' => ''), $filter, $options);
+		return self::_fetch(array(
+			'id' => ''
+		), $filter, $options);
 	}
 }
