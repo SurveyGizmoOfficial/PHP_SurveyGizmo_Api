@@ -1,5 +1,5 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Helpers;
 
 use \Exception;
 

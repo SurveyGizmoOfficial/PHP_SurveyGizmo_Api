@@ -3,35 +3,35 @@
  * SurveyGizmo api library autoloader
  */
 $sg_autoload_mapping = array(
-	"SurveyGizmo\SurveyGizmoAPI" 		=> __DIR__ . "/SurveyGizmo.php",
-	"SurveyGizmo\ApiResource" 			=> __DIR__ . "/_ApiResource.php",
-	"SurveyGizmo\iBaseInterface" 		=> __DIR__ . "/_BaseInterface.php",
-	"SurveyGizmo\Account" 				=> __DIR__ . "/Account.php",
-	"SurveyGizmo\Survey" 				=> __DIR__ . "/Survey.php",
-	"SurveyGizmo\Page" 					=> __DIR__ . "/Page.php",
-	"SurveyGizmo\Question" 				=> __DIR__ . "/Question.php",
-	"SurveyGizmo\QuestionOption" 		=> __DIR__ . "/QuestionOption.php",
-	"SurveyGizmo\Statistics" 			=> __DIR__ . "/Statistics.php",
-	"SurveyGizmo\Response" 				=> __DIR__ . "/Response.php",
-	"SurveyGizmo\User" 					=> __DIR__ . "/User.php",
-	"SurveyGizmo\Team" 					=> __DIR__ . "/Team.php",
-	"SurveyGizmo\ContactList" 			=> __DIR__ . "/ContactList.php",
-	"SurveyGizmo\ContactListContact" 	=> __DIR__ . "/ContactListContact.php",
-	"SurveyGizmo\Campaign" 				=> __DIR__ . "/Campaign.php",
-	"SurveyGizmo\EmailMessage" 			=> __DIR__ . "/EmailMessage.php",
-	"SurveyGizmo\Report" 				=> __DIR__ . "/Report.php",
-	"SurveyGizmo\Filter" 				=> __DIR__ . "/Helpers/Filter.php",
-	"SurveyGizmo\FilterItem" 			=> __DIR__ . "/Helpers/FilterItem.php",
-	"SurveyGizmo\Request" 				=> __DIR__ . "/Helpers/Request.php",
-	"SurveyGizmo\APIResponse" 			=> __DIR__ . "/Helpers/APIResponse.php",
-	"SurveyGizmo\SurveyGizmoException" 	=> __DIR__ . "/Helpers/SurveyGizmoException.php"
+    "SurveyGizmo\SurveyGizmoAPI" => __DIR__ . "/SurveyGizmo.php",
+    
+    "SurveyGizmo\ApiResource" => __DIR__ . "/ApiResource.php",
+    "SurveyGizmo\ApiRequest" => __DIR__ . "/ApiRequest.php",
+    "SurveyGizmo\ApiResponse" => __DIR__ . "/ApiResponse.php",
+
+    "SurveyGizmo\Helpers\Filter" => __DIR__ . "/Helpers/Filter.php",
+    "SurveyGizmo\Helpers\FilterItem" => __DIR__ . "/Helpers/FilterItem.php",
+    "SurveyGizmo\Helpers\SurveyGizmoException" => __DIR__ . "/Helpers/SurveyGizmoException.php",
+
+    "SurveyGizmo\Resources\Account" => __DIR__ . "/Resources/Account.php",
+    "SurveyGizmo\Resources\Survey" => __DIR__ . "/Resources/Survey.php",
+    "SurveyGizmo\Resources\Page" => __DIR__ . "/Resources/Page.php",
+    "SurveyGizmo\Resources\Question" => __DIR__ . "/Resources/Question.php",
+    "SurveyGizmo\Resources\QuestionOption" => __DIR__ . "/Resources/QuestionOption.php",
+    "SurveyGizmo\Resources\Statistics" => __DIR__ . "/Resources/Statistics.php",
+    "SurveyGizmo\Resources\Response" => __DIR__ . "/Resources/Response.php",
+    "SurveyGizmo\Resources\User" => __DIR__ . "/Resources/User.php",
+    "SurveyGizmo\Resources\Team" => __DIR__ . "/Resources/Team.php",
+    "SurveyGizmo\Resources\ContactList" => __DIR__ . "/Resources/ContactList.php",
+    "SurveyGizmo\Resources\ContactListContact" => __DIR__ . "/Resources/ContactListContact.php",
+    "SurveyGizmo\Resources\Campaign" => __DIR__ . "/Resources/Campaign.php",
+    "SurveyGizmo\Resources\EmailMessage" => __DIR__ . "/Resources/EmailMessage.php",
+    "SurveyGizmo\Resources\Report" => __DIR__ . "/Resources/Report.php",
 );
 
 spl_autoload_register(function ($class_name) {
-	global $sg_autoload_mapping;
+    global $sg_autoload_mapping;
     if (isset($sg_autoload_mapping[$class_name])) {
         require $sg_autoload_mapping[$class_name];
     }
 });
-
-?>

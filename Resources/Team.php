@@ -1,21 +1,23 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
 
 /**
- * Class for User API object
+ * Class for Team API object
  */
-class User extends ApiResource
+class Team extends ApiResource
 {
 	/**
 	 * API call path 
 	 */
-	static $path = "/accountuser/{id}";
+	static $path = "/accountteams/{id}";
 
 	/**
-	 * Saves the user instance. Performs an update/insert.
+	 * Saves the team instance. Performs an update/insert.
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\User Object
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Team Object
 	 */
 	public function save()
 	{
@@ -25,9 +27,9 @@ class User extends ApiResource
 	}
 
 	/**
-	 * Deletes the user instance. Requires an existing object.
+	 * Deletes the team instance. Requires an existing object.
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object
+	 * @return SurveyGizmo\ApiResponse Object
 	 */
 	public function delete()
 	{
@@ -37,17 +39,17 @@ class User extends ApiResource
 	}
 
 	/**
-	 * Fetches a single user instance. Requires a positive integer ID.
+	 * Fetches a single team instance. Requires a positive integer ID.
 	 * @access public
 	 * @static
-	 * @param $id int - User ID
-	 * @return SurveyGizmo\User Object
+	 * @param $id int - Team ID
+	 * @return SurveyGizmo\Team Object
 	 */
 	public static function get($id)
 	{
 		$id = (int) $id;
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "User ID required");
+			throw new SurveyGizmoException(500, "Team ID required");
 		}
 		return self::_get(array(
 			'id' => $id
@@ -55,12 +57,12 @@ class User extends ApiResource
 	}
 
 	/**
-	 * Fetches a collection of users belonging to the account.
+	 * Fetches a collection of teams belonging to the account.
 	 * @access public
 	 * @static
 	 * @param $filters SurveyGizmo\Filter - filter instance
 	 * @param $options array
-	 * @return SurveyGizmo\APIResponse
+	 * @return SurveyGizmo\ApiResponse
 	 */
 	public static function fetch($filter = null, $options = null)
 	{

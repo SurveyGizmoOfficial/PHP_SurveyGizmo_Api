@@ -1,6 +1,9 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
+use SurveyGizmo\Resources\ContactListContact;
 
 /**
  * Class for ContactList API object
@@ -15,7 +18,7 @@ class ContactList extends ApiResource
 	/**
 	 * Saves the contact list instance. Performs an update/insert.
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\ContactList Object
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\ContactList Object
 	 */
 	public function save()
 	{
@@ -27,7 +30,7 @@ class ContactList extends ApiResource
 	/**
 	 * Deletes the contact list instance. Requires an existing object.
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object
+	 * @return SurveyGizmo\ApiResponse Object
 	 */
 	public function delete()
 	{
@@ -60,7 +63,7 @@ class ContactList extends ApiResource
 	 * @static
 	 * @param $filters SurveyGizmo\Filter - filter instance
 	 * @param $options array
-	 * @return SurveyGizmo\APIResponse with SurveyGizmo\ContactList objects
+	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactList objects
 	 */
 	public static function fetch($filter = null, $options = null)
 	{
@@ -75,7 +78,7 @@ class ContactList extends ApiResource
 	 * @static
 	 * @param $filters SurveyGizmo\Filter - filter instance
 	 * @param $options array
-	 * @return SurveyGizmo\APIResponse with SurveyGizmo\ContactListContact objects
+	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactListContact objects
 	 */
 	public function getContacts ($filter = null, $options = null)
 	{

@@ -30,30 +30,30 @@ try {
 }
 
 testLog("Getting account");
-$account = SurveyGizmo\Account::get();
+$account = SurveyGizmo\Resources\Account::get();
 dump($account);
 
 // --------------------------- Contact Lists ---------------------------
 testLog("Getting contact lists");
-$lists  = SurveyGizmo\ContactList::fetch();
+$lists  = SurveyGizmo\Resources\ContactList::fetch();
 dump($lists);
 
 // testLog("Creating contact list");
-// $account = new SurveyGizmo\ContactList();
+// $account = new SurveyGizmo\Resources\ContactList();
 // $account->list_name = 'Test from API';
 // $result = $account->save();
 // dump($account);
 // dump($result);
 
 testLog("Getting single list");
-$list = SurveyGizmo\ContactList::get(31);
+$list = SurveyGizmo\Resources\ContactList::get(31);
 dump($list);
 
 testLog("Getting list contacts");
 dump($list->getContacts());
 
 testLog("Getting one contact");
-$contact = SurveyGizmo\ContactListContact::get(31, 100039746);
+$contact = SurveyGizmo\Resources\ContactListContact::get(31, 100039746);
 dump($contact);
 
 testLog("Updating one contact");
@@ -61,7 +61,7 @@ $contact->first_name = 'works 2?';
 dump($contact->save());
 
 testLog("Creating contact");
-$contact = new SurveyGizmo\ContactListContact();
+$contact = new SurveyGizmo\Resources\ContactListContact();
 $g = uniqid();
 $contact->first_name = 'Garrett ' . $g;
 $contact->email_address = 'garrett' . $g . '@sgizmo.com';
@@ -75,10 +75,10 @@ dump($contact->delete());
 return;
 // --------------------------- Teams ---------------------------
 testLog("Getting teams");
-dump(SurveyGizmo\Team::fetch());
-$team = SurveyGizmo\Team::get(235682);
-// $team = new SurveyGizmo\Team();
-// $team = SurveyGizmo\Team::get(235681);
+dump(SurveyGizmo\Resources\Team::fetch());
+$team = SurveyGizmo\Resources\Team::get(235682);
+// $team = new SurveyGizmo\Resources\Team();
+// $team = SurveyGizmo\Resources\Team::get(235681);
 // $team->team_name = 'Team Awesome NOW';
 // $team->description = 'Team Awesome is awesome too - API';
 dump($team);
@@ -89,9 +89,9 @@ dump($team);
 
 // --------------------------- Users ---------------------------
 testLog("Getting users");
-dump(SurveyGizmo\User::fetch());
-$user = SurveyGizmo\User::get(141104);
-// $user = new SurveyGizmo\User();
+dump(SurveyGizmo\Resources\User::fetch());
+$user = SurveyGizmo\Resources\User::get(141104);
+// $user = new SurveyGizmo\Resources\User();
 // $user->email = 'garrett+pleaseapiwork@sgizmo.com';
 // $user->username = 'Honey Beam';
 // $user->password = '123qwe';

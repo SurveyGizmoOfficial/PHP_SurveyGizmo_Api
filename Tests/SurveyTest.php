@@ -1,6 +1,5 @@
 <?php
-
-namespace SurveyGizmo;
+namespace SurveyGizmo\Tests;
 
 class SurveyTest extends TestCase
 {
