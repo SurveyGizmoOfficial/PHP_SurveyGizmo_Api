@@ -1,13 +1,22 @@
 <?php
 namespace SurveyGizmo;
-
 use SurveyGizmo\ApiResource;
 
+/**
+ * Class for ContactList API object
+ */
 class ContactList extends ApiResource
 {
-
+	/**
+	 * API call path 
+	 */
 	static $path = "/contactlist/{id}";
 
+	/**
+	 * Saves the contact list instance. Performs an update/insert.
+	 * @access public
+	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\ContactList Object
+	 */
 	public function save()
 	{
 		return $this->_save(array(
@@ -15,6 +24,11 @@ class ContactList extends ApiResource
 		));
 	}
 
+	/**
+	 * Deletes the contact list instance. Requires an existing object.
+	 * @access public
+	 * @return SurveyGizmo\APIResponse Object
+	 */
 	public function delete()
 	{
 		return self::_delete(array(
@@ -22,26 +36,54 @@ class ContactList extends ApiResource
 		));
 	}
 
+	/**
+	 * Fetches a single contact list instance. Requires a positive integer ID.
+	 * @access public
+	 * @static
+	 * @param $id int - Contact list ID
+	 * @return SurveyGizmo\ContactList Object
+	 */
 	public static function get($id)
 	{
 		$id = (int) $id;
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "ID required");
+			throw new SurveyGizmoException(500, "Contact List ID required");
 		}
 		return self::_get(array(
-			'id' => $id,
+			'id' => $id
 		));
 	}
 
+	/**
+	 * Fetches a collection of contact lists belonging to the account.
+	 * @access public
+	 * @static
+	 * @param $filters SurveyGizmo\Filter - filter instance
+	 * @param $options array
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\ContactList objects
+	 */
 	public static function fetch($filter = null, $options = null)
 	{
-		return self::_fetch(array('id' => ''), $filter, $options);
+		return self::_fetch(array(
+			'id' => ''
+		), $filter, $options);
 	}
 
+	/**
+	 * Fetches a collection of contacts belonging to this contact list.
+	 * @access public
+	 * @static
+	 * @param $filters SurveyGizmo\Filter - filter instance
+	 * @param $options array
+	 * @return SurveyGizmo\APIResponse with SurveyGizmo\ContactListContact objects
+	 */
 	public function getContacts ($filter = null, $options = null)
 	{
 		if ($this->exists()) {
-			$options = array("list_id" => $this->id);
+			if (!is_array($options)) {
+				$options = array();
+			}
+			$options['list_id'] = $this->id;
 			return ContactListContact::fetch($this->id, $filter, $options);
 		}
 		return false;
