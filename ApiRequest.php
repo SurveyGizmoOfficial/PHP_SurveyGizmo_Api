@@ -2,93 +2,196 @@
 namespace SurveyGizmo;
 
 use SurveyGizmo\ApiResponse;
+use SurveyGizmo\Helpers\SurveyGizmoException;
+use SurveyGizmo\Helpers\Filter;
 
+/**
+ * ApiRequest class: performs the CURL requests to the API.
+ */
 class ApiRequest
 {
+	/**
+	 * Optional instance of Filter.
+	 * @var SurveyGizmo\Helpers\Filter null
+	 */
+	public $filter;
 
-	private $baseuri = 'app.garrett.devo.boulder.sgizmo.com/services/rest/v5';
-	private $request_return,
-		$method,
-		$page,
-		$limit;
+	/**
+	 * URL string of the SurveyGizmo REST API.
+	 * @var string
+	 */
+	private static $API_URL = 'restapi.surveygizmo.com/v5';
 
+	/**
+	 * The JSON decoded return from the API.
+	 * @var stdClass null
+	 */
+	private $request_return;
+
+	/**
+	 * Method type to use: GET, POST, PUT, DELETE.
+	 * @var string null
+	 */
+	private $method;
+
+	/**
+	 * The result page number.
+	 * @var int null
+	 */
+	private $page;
+
+	/**
+	 * The number of results to return.
+	 * @var int null
+	 */
+	private $limit;
+
+	/**
+	 * Complete URL string.
+	 * @var string null
+	 */
+	private $_url;
+
+	/**
+	 * Serialized data to be POSTed to the API.
+	 * @var string null
+	 */
+	private $_post_data;
+
+	/**
+	 * Constructor: defaults the method type
+	 * @access public
+	 * @param $method string "GET"
+	 * @return void
+	 */
 	public function __construct($method = "GET")
 	{
 		$this->method = $method;
 	}
 
-	public function makeRequest()
+	/**
+	 * Sets the URL and optional post data that will be sent to the API. Then calls
+	 * the transport method to make the request.
+	 * @access public
+	 * @return void
+	 */
+	public function execute()
 	{
+		// The complete URL string
+		$this->_url = $this->getCompleteUrl();
+		// String of POST data
+		$this->_post_data = $this->getPostData();
+
+		// TODO: add option for transport type (CURL, Guzzle)
+		// Default to CURL
+		$this->requestByCURL();
+	}
+
+	/**
+	 * Executes the CURL request to the API. Sets the results of the API call 
+	 * on this instance.
+	 * @access private
+	 * @return void
+	 */
+	private function requestByCURL () {
 		try {
-			//get creds
-			$creds = SurveyGizmoAPI::getAuth();
-			$this->uri = $this->buildURI($creds);
-			// TODO: look at moving to guzzle at some point
-			if (!empty($this->uri) && $this->AuthToken && $this->AuthSecret) {
-				$ch = curl_init();
-				curl_setopt($ch, CURLOPT_URL, $this->uri);
-				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
-				curl_setopt($ch, CURLOPT_VERBOSE, 0);
-				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-				if ($this->method == "PUT" || $this->method == "POST") {
-					curl_setopt($ch, CURLOPT_POST, 1);
-					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->buildPayload());
-				}
-				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-				$buffer = curl_exec($ch);
-				curl_close($ch);
-
-				if ($buffer !== false) {
-					$this->request_return = json_decode($buffer);
-				}
+			$ch = curl_init();
+			var_dump($this->_url);
+			curl_setopt($ch, CURLOPT_URL, $this->_url);
+			curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
+			curl_setopt($ch, CURLOPT_VERBOSE, 0);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+			if ($this->method == "PUT" || $this->method == "POST") {
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
 			}
-		} catch (Exception $ex) {
-			//throw our custom excpetion
+			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$buffer = curl_exec($ch);
+			curl_close($ch);
+
+			if ($buffer !== false) {
+				$this->request_return = json_decode($buffer);
+			}
+		} catch (Exception $e) {
+			new SurveyGizmoException(500, "CURL error", $e);
 		}
-		return $this->request_return;
 	}
 
-	private function buildPayload()
-	{
+	/**
+	 * Returns the serialized data that will be sent to the API by a POST/PUT request.
+	 * @access private
+	 * @return string
+	 */
+	private function getPostData () {
+		$data = '';
+		// Expects an array or stdClass
 		if ($this->data) {
-			$post_data = http_build_query(get_object_vars($this->data));
-			return $post_data;
-		} else {
-			return "";
+			$data = http_build_query($this->data);
 		}
+		return $data;
 	}
 
-	private function buildURI(array $creds)
+	/**
+	 * Constructs the complete URL for the API call using the API URL, the resource
+	 * path, and the authentication credentials. Validates all parts of the URL are available first.
+	 * @access private
+	 * @param $creds array
+	 * @return string
+	 */
+	private function getCompleteUrl()
 	{
-		if ($this->path && $creds['AuthToken'] && $creds['AuthSecret']) {
-			$this->AuthToken = $creds['AuthToken'];
-			$this->AuthSecret = $creds['AuthSecret'];
-
-			$params = array(
-				'api_token'        => $this->AuthToken,
-				'api_token_secret' => $this->AuthSecret,
-				'_method'          => $this->method,
-				'page'             => $this->page,
-				'resultsperpage'   => $this->limit
-			);
-			$uri = $this->baseuri . $this->path . ".json?" . http_build_query($params);
-
-			//add filters if they exist
-			if ($this->filter) {
-				$uri .= $this->filter->buildRequestQuery();
-			}
+		// The API URL must be set
+		if (!self::$API_URL) {
+			new SurveyGizmoException(500, "ApiRequest: API URL required");
 		}
+		// The API resource URL must be set
+		if (!$this->path) {
+			new SurveyGizmoException(500, "ApiRequest: resource URL required");
+		}
+		// The request must be one of the 4 types
+		if (!in_array($this->method, array('GET', 'POST', 'PUT', 'DELETE'))) {
+			new SurveyGizmoException(500, "ApiRequest: invalid method type");
+		}
+		// The API credentials must be set prior to making a request
+		$creds = SurveyGizmoAPI::getAuth();
+		if (!$creds['AuthToken'] || !$creds['AuthSecret']) {
+			new SurveyGizmoException(500, "ApiRequest: API credentials are required");
+		}
+
+		// Construct the array of parameters
+		$params = array(
+			'api_token' => $creds['AuthToken'],
+			'api_token_secret' => $creds['AuthSecret'],
+			'_method' => $this->method,
+			'page' => $this->page,
+			'resultsperpage' => $this->limit,
+		);
+
+		$uri = self::$API_URL . $this->path . ".json?" . http_build_query($params);
+
+		// Add filter parameters if available
+		if ($this->filter instanceof Filter) {
+			$uri .= $this->filter->buildRequestQuery();
+		}
+
+		// Return the full URL
 		return $uri;
 	}
 
-	public function getResponse () {
+	/**
+	 * Returns a new ApiResponse instance using the data returned from this request.
+	 * @access public
+	 * @return SurveyGizmo\ApiResponse
+	 */
+	public function getResponse()
+	{
 		$response = new ApiResponse();
 		if (is_object($this->request_return)) {
 			$response->result_ok = $this->request_return->result_ok;
 			$response->code = $this->request_return->code;
 			$response->message = $this->request_return->message;
-			//add meta data
+			// Add meta data
 			if (isset($this->request_return->total_count)) {
 				$response->total_count = $this->request_return->total_count;
 				$response->page = $this->request_return->page;
@@ -100,19 +203,37 @@ class ApiRequest
 		return $response;
 	}
 
-	public function setOptions (array $options = null) {
-		// Page #
+	/**
+	 * Sets misc. options on the request, such as the page number and results per page for the API.
+	 * Uses the same array that would be passed to a fetch method (e.g. Survey::fetch(null, array()))
+	 * @access public
+	 * @return void
+	 */
+	public function setOptions(array $options = null)
+	{
+		// Page # (default to first)
 		if ($options['page'] >= 1) {
 			$this->page = $options['page'];
 		} else {
 			$this->page = 1;
 		}
 
-		// Results per page
+		// Results per page (default to 50)
 		if ($options['limit'] >= 1) {
 			$this->limit = $options['limit'];
 		} else {
 			$this->limit = 50;
 		}
+	}
+
+	/**
+	 * Method to change the URL of the REST API domain for development purposes.
+	 * @access public
+	 * @static
+	 * @return void
+	 */
+	public static function setBaseURI($path)
+	{
+		self::$API_URL = $path;
 	}
 }
