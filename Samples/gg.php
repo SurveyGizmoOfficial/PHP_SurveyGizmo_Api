@@ -53,7 +53,7 @@ testLog("Getting list contacts");
 dump($list->getContacts());
 
 testLog("Getting one contact");
-$contact = SurveyGizmo\Resources\ContactListContact::get(31, 100039746);
+$contact = SurveyGizmo\Resources\ContactList\Contact::get(31, 100039746);
 dump($contact);
 
 testLog("Updating one contact");
@@ -61,7 +61,7 @@ $contact->first_name = 'works 2?';
 dump($contact->save());
 
 testLog("Creating contact");
-$contact = new SurveyGizmo\Resources\ContactListContact();
+$contact = new SurveyGizmo\Resources\ContactList\Contact();
 $g = uniqid();
 $contact->first_name = 'Garrett ' . $g;
 $contact->email_address = 'garrett' . $g . '@sgizmo.com';
