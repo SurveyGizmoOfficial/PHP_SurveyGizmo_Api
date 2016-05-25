@@ -1,27 +1,28 @@
 <?php
-namespace SurveyGizmo\Resources;
+namespace SurveyGizmo\Resources\Survey;
 
 use SurveyGizmo\ApiResource;
 use SurveyGizmo\Helpers\SurveyGizmoException;
 
 /**
- * Class for Survey Question API objects
- * Question is a sub-object of Surveys
+ * Class for Survey Report API objects
+ * Report is a sub-object of Surveys
  */
-class Question extends ApiResource {
+class Report extends ApiResource
+{
 
 	/**
 	 * API call path 
 	 */
-	static $path = "/survey/{survey_id}/surveyquestion/{id}";
+	static $path = "/survey/{survey_id}/surveyreport/{id}";
 
 	/**
-	 * Fetch list of SurveyGizmo Question Objects by survey id
+	 * Fetch list of SurveyGizmo Report Objects by survey id
 	 * @access public
 	 * @param int $survey_id - Survey ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Question Objects
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Report Objects
 	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
@@ -32,44 +33,46 @@ class Question extends ApiResource {
 	}
 
 	/**
-	 * Get Question Obj by survey id and question sku
+	 * Get Report Obj by survey id and report id
 	 * @access public
 	 * @param int $survey_id - survey id
 	 * @param int $id - question sku
-	 * @return SurveyGizmo\Question Object
+	 * @return SurveyGizmo\Report Object
 	 */
-	public static function get($survey_id, $id){
-		if ($id < 1 && $survey_id < 1) {
-			throw new SurveyGizmoException(500, "IDs required");
-		}
+	public static function get($survey_id, $id)
+	{
+		if ($survey_id < 1 || $id < 1) {
+                        throw new SurveyGizmoException(500, "Missing survey ID and/or report ID");
+                }
 		return self::_get(array(
 			'survey_id' => $survey_id,
-			'id' => $id,
+			'id' => $id
 		));
 	}
 
 	/**
-	 * Save current Question Obj
+	 * Save current Report Obj
 	 * @access public
-	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Question Object
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Report Object
 	 */
-	public function save(){
+	public function save()
+	{
 		return $this->_save(array(
 			'survey_id' => $this->survey_id,
-			'id' => $this->exists() ? $this->id : ''
+			'id' => $this->id
 		));
 	}
 
 	/**
-	 * Delete current Question Obj
+	 * Delete current Report Obj
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse Object
 	 */
-	public function delete(){
+	public function delete()
+	{
 		return self::_delete(array(
-			'survey_id' => $survey_id,
-			'id' => $this->id,
+			'survey_id' => $this->survey_id,
+			'id' => $this->id
 		));
 	}
 }
-?>

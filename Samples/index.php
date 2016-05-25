@@ -91,7 +91,7 @@ $reports = $survey->getReports();
 // testLog("got Reports ",$reports);
 
 testLog("Getting one report for survey " . $sid);
-$report = SurveyGizmo\Resources\Report::get($sid, 450421);
+$report = SurveyGizmo\Resources\Survey\Report::get($sid, 450421);
 // testLog("got report",$report);
 
 testLog("Updating Survey Page 1 title for survey " . $sid);

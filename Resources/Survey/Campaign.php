@@ -1,5 +1,5 @@
 <?php
-namespace SurveyGizmo\Resources;
+namespace SurveyGizmo\Resources\Survey;
 
 use SurveyGizmo\ApiResource;
 use SurveyGizmo\Helpers\SurveyGizmoException;
@@ -81,7 +81,7 @@ class Campaign extends ApiResource
 	 */
 	public function getEmailMessages($filter = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\EmailMessage", $filter);
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\EmailMessage", $filter);
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Campaign extends ApiResource
 	 */
 	public function getEmailMessage($email_id)
 	{
-		return $this->getSubObject("SurveyGizmo\\Resources\\EmailMessage", $email_id);
+		return $this->getSubObject("SurveyGizmo\\Resources\\Survey\\EmailMessage", $email_id);
 	}
 
 	/**
