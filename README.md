@@ -217,7 +217,7 @@ This Library uses the version 5 SurveyGizmo API.  [API Documentation](https://ap
 ## Tests
 Unit tests are included under the /Tests directory.  They can be executed by running:
 ```bash
-$ phpunit -c bootstrap.xml.
+$ phpunit -c bootstrap.xml
 ```
 
 ## Contributors
