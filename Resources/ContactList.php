@@ -3,7 +3,7 @@ namespace SurveyGizmo\Resources;
 
 use SurveyGizmo\ApiResource;
 use SurveyGizmo\Helpers\SurveyGizmoException;
-use SurveyGizmo\Resources\ContactListContact;
+use SurveyGizmo\Resources\ContactList\Contact;
 
 /**
  * Class for ContactList API object
@@ -78,7 +78,7 @@ class ContactList extends ApiResource
 	 * @static
 	 * @param $filters SurveyGizmo\Filter - filter instance
 	 * @param $options array
-	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactListContact objects
+	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactList\Contact objects
 	 */
 	public function getContacts ($filter = null, $options = null)
 	{
@@ -87,7 +87,7 @@ class ContactList extends ApiResource
 				$options = array();
 			}
 			$options['list_id'] = $this->id;
-			return ContactListContact::fetch($this->id, $filter, $options);
+			return Contact::fetch($this->id, $filter, $options);
 		}
 		return false;
 	}

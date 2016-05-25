@@ -15,7 +15,7 @@ $sg_autoload_mapping = array(
 
     "SurveyGizmo\Resources\Account" => __DIR__ . "/Resources/Account.php",
     "SurveyGizmo\Resources\ContactList" => __DIR__ . "/Resources/ContactList.php",
-    "SurveyGizmo\Resources\ContactListContact" => __DIR__ . "/Resources/ContactListContact.php",
+    "SurveyGizmo\Resources\ContactList\Contact" => __DIR__ . "/Resources/ContactList/Contact.php",
     "SurveyGizmo\Resources\User" => __DIR__ . "/Resources/User.php",
     "SurveyGizmo\Resources\Team" => __DIR__ . "/Resources/Team.php",
     "SurveyGizmo\Resources\Survey" => __DIR__ . "/Resources/Survey.php",
