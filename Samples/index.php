@@ -32,8 +32,8 @@ try {
 // 	testLog("Error Authenticating",$sg);
 // 	die;
 // }
-// $filter = new SurveyGizmo\Filter();
-// $fiterItem = new SurveyGizmo\FilterItem('field','=','x');
+// $filter = new SurveyGizmo\Helpers\Filter();
+// $fiterItem = new SurveyGizmo\Helpers\FilterItem('field','=','x');
 // $filter->add($filterItem);
 
 // testLog("Getting surveys with paging");
@@ -43,13 +43,14 @@ try {
 // )));
 
 testLog("Getting Surveys");
-$filter = new SurveyGizmo\Filter();
-$filter_item = new SurveyGizmo\FilterItem();
+$filter = new SurveyGizmo\Helpers\Filter();
+$filter_item = new SurveyGizmo\Helpers\FilterItem();
 $filter_item->setField('title');
 $filter_item->setOperator('=');
 $filter_item->setCondition('TEST from API');
 $filter->addFilterItem($filter_item);
-$surveys = SurveyGizmo\Survey::fetch($filter);
+testLog("Getting Surveys 2");
+$surveys = SurveyGizmo\Resources\Survey::fetch($filter);
 
 // testLog("got Surveys",$surveys);
 
@@ -61,7 +62,7 @@ $survey->save();
 
 $sid = 1035186;
 testLog("Getting Survey " . $sid);
-$survey = SurveyGizmo\Survey::get($sid);
+$survey = SurveyGizmo\Resources\Survey::get($sid);
 // testLog("got Survey",$survey);
 $campaign = $survey->getCampaign(140308);
 
@@ -90,16 +91,16 @@ $reports = $survey->getReports();
 // testLog("got Reports ",$reports);
 
 testLog("Getting one report for survey " . $sid);
-$report = SurveyGizmo\Report::get($sid, 450421);
+$report = SurveyGizmo\Resources\Report::get($sid, 450421);
 // testLog("got report",$report);
 
 testLog("Updating Survey Page 1 title for survey " . $sid);
 $page = $survey->pages[0];
 $page->title = "API PAGE TITLE";
 $page->save();
-die;
+
 testLog("Creating a new survey");
-$survey = new SurveyGizmo\Survey();
+$survey = new SurveyGizmo\Resources\Survey();
 $survey->title = "NEW FROM API";
 $results = $survey->save();
 testLog("Survey created",$results->data);
@@ -109,18 +110,18 @@ $results = $survey->delete();
 testDump($results);
 
 testLog("Getting account");
-$account = SurveyGizmo\Account::get();
+$account = SurveyGizmo\Resources\Account::get();
 testDump($account);
 
 // testLog("Getting account users");
-// $response = SurveyGizmo\User::fetch();
+// $response = SurveyGizmo\Resources\User::fetch();
 // testDump($response);
 
 // testLog("Getting one user");
-// $user = SurveyGizmo\User::get(126904);
+// $user = SurveyGizmo\Resources\User::get(126904);
 // testDump($user);
 
-// $user = new SurveyGizmo\User();
+// $user = new SurveyGizmo\Resources\User();
 // $user->email = 'garrett+apitest@sgizmo.com';
 // $user->password = '123qwe';
 // $user->username = 'Works?';
@@ -128,12 +129,12 @@ testDump($account);
 // var_dump($user->save());
 
 // testLog("Getting teams");
-// $team = SurveyGizmo\Team::get(224885);
-// testDump(SurveyGizmo\Team::fetch());
+// $team = SurveyGizmo\Resources\Team::get(224885);
+// testDump(SurveyGizmo\Resources\Team::fetch());
 // testDump($team);
 // $team->delete();
-// $team = new SurveyGizmo\Team();
-// $team = SurveyGizmo\Team::get(235681);
+// $team = new SurveyGizmo\Resources\Team();
+// $team = SurveyGizmo\Resources\Team::get(235681);
 // $team->teamname = 'Team Awesome';
 // $team->description = 'Team Awesome is awesome too';
 // testDump($team);

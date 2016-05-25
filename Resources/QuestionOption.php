@@ -1,6 +1,8 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
 
 class QuestionOption extends ApiResource {
 

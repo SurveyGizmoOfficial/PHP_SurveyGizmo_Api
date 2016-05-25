@@ -1,6 +1,7 @@
 <?php
+namespace SurveyGizmo\Tests;
 
-namespace SurveyGizmo;
+use SurveyGizmo\ApiResource;
 
 class ApiResourceTest extends TestCase
 {

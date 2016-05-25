@@ -1,5 +1,9 @@
 <?php
 namespace SurveyGizmo;
+
+use SurveyGizmo\Helpers\SurveyGizmoException;
+use SurveyGizmo\Resources\Account;
+
 /**
  * Simple class to store auth credentials for SG API and authorize API use. 
  */

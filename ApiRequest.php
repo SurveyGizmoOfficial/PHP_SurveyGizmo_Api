@@ -1,9 +1,9 @@
 <?php
 namespace SurveyGizmo;
 
-use SurveyGizmo\APIResponse;
+use SurveyGizmo\ApiResponse;
 
-class Request
+class ApiRequest
 {
 
 	private $baseuri = 'app.erik.devo.boulder.sgizmo.com/services/rest/v5';
@@ -83,7 +83,7 @@ class Request
 	}
 
 	public function getResponse () {
-		$response = new APIResponse();
+		$response = new ApiResponse();
 		if (is_object($this->request_return)) {
 			$response->result_ok = $this->request_return->result_ok;
 			$response->code = $this->request_return->code;

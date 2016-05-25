@@ -1,6 +1,8 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
 
 /**
  * Class for Account API object
@@ -21,7 +23,7 @@ class Account extends ApiResource
 	/**
 	 * Saves the account singleton instance.
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Page Object
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Object
 	 */
 	public function save()
 	{

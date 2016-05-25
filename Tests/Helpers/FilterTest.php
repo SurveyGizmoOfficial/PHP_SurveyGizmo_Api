@@ -1,5 +1,8 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Tests;
+
+use SurveyGizmo\Helpers\Filter;
+use SurveyGizmo\Helpers\FilterItem;
 
 class FilterTest extends TestCase
 {
@@ -51,7 +54,7 @@ class FilterTest extends TestCase
       $this->assertTrue($query);
       $addeds = $filter->returnItems();
       $addeds = $addeds[0];
-      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $this->assertInstanceOf('SurveyGizmo\Helpers\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals($expected, $actual);
 
@@ -72,7 +75,7 @@ class FilterTest extends TestCase
       $this->assertTrue($query);
       $addeds = $filter->returnItems();
       $addeds = $addeds[0];
-      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $this->assertInstanceOf('SurveyGizmo\Helpers\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals($expected, $actual);
 
@@ -87,7 +90,7 @@ class FilterTest extends TestCase
       $this->assertTrue($query);
       $addeds = $filter->returnItems();
       $addeds = $addeds[0];
-      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $this->assertInstanceOf('SurveyGizmo\Helpers\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals('&', $actual);
     }

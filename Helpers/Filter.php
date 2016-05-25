@@ -1,5 +1,7 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Helpers;
+
+use SurveyGizmo\Helpers\FilterItem;
 
 class Filter
 {

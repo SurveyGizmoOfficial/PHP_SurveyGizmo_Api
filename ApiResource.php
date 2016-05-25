@@ -1,11 +1,14 @@
 <?php
 namespace SurveyGizmo;
+
+use SurveyGizmo\ApiRequest;
+use SurveyGizmo\Helpers\SurveyGizmoException;
+
 /**
  * Base class for all API objects, builds requests and formats responses.
  */
 class ApiResource
 {
-
 	/**
 	 * Fetches a list of resources using a HTTP GET request.
 	 * @access public
@@ -13,7 +16,7 @@ class ApiResource
 	 * @param $params array (the parameters for the path, default null)
 	 * @param $filter SurveyGizmo\Helpers\Filter (optional)
 	 * @param $options array ('class' => class name to instantiate, optional)
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public static function _fetch($params = null, $filter = null, $options = null)
 	{
@@ -21,7 +24,7 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New request instance
-		$request = new Request("GET");
+		$request = new ApiRequest("GET");
 		$request->path = $path;
 		$request->filter = $filter;
 		// Add options such as `page`, `limit` to request
@@ -29,7 +32,7 @@ class ApiResource
 		// Execute request
 		$request->makeRequest();
 
-		// Instance of SurveyGizmo\Helpers\APIResponse
+		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
 
 		// Process the return
@@ -49,7 +52,7 @@ class ApiResource
 				}
 			}
 		}
-		// Return the modified APIResponse
+		// Return the modified ApiResponse
 		return $response;
 	}
 	
@@ -67,12 +70,12 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New GET request
-		$request = new Request("GET");
+		$request = new ApiRequest("GET");
 		$request->path = $path;
 		// Execute request
 		$request->makeRequest();
 
-		// Instance of SurveyGizmo\Helpers\APIResponse
+		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
 
 		// If the API returns an array of resources, fetch the first one
@@ -105,7 +108,7 @@ class ApiResource
 	 * Method is called on a instance.
 	 * @access public
 	 * @param $params array (the parameters for the path, default null)
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function _save($params = null)
 	{
@@ -113,20 +116,20 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New request (POST if update, PUT if insert)
-		$request = new Request($this->exists() ? 'POST' : 'PUT');
+		$request = new ApiRequest($this->exists() ? 'POST' : 'PUT');
 		$request->path = $path;
 		// The request class pulls the data from this reference
 		$request->data = $this;
 		// Execute request
 		$request->makeRequest();
 
-		// Instance of SurveyGizmo\Helpers\APIResponse
+		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
 
 		// Update the current instance with the data from the API
 		$this->_formatObject($this, $response->data);
 
-		// Return the APIResponse
+		// Return the ApiResponse
 		return $response;
 	}
 
@@ -135,7 +138,7 @@ class ApiResource
 	 * Method is called on a instance.
 	 * @access public
 	 * @param $params array (the parameters for the path, default null)
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function _delete($params = null)
 	{
@@ -148,12 +151,12 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New request HTTP DELETE
-		$request = new Request('DELETE');
+		$request = new ApiRequest('DELETE');
 		$request->path = $path;
 		// Execute request
 		$request->makeRequest();
 
-		// Return APIResponse
+		// Return ApiResponse
 		return $request->getResponse();
 	}
 
@@ -228,7 +231,7 @@ class ApiResource
 	 * Extend in order to change behavior.
 	 * @access public
 	 * @static
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public static function fetch()
 	{
@@ -252,7 +255,7 @@ class ApiResource
 	 * Save the instance of this resource. By default this method is not supported.
 	 * Extend in order to change behavior. 
 	 * @access public
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function save()
 	{
@@ -263,7 +266,7 @@ class ApiResource
 	 * Deletes the instance of this resource. By default this method is not supported.
 	 * Extend in order to change behavior. 
 	 * @access public
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function delete()
 	{
