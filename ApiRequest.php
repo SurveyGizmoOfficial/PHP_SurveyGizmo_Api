@@ -35,6 +35,12 @@ class ApiRequest
 	private $request_return;
 
 	/**
+	 * HTTP code from API.
+	 * @var int null
+	 */
+	private $request_http_code;
+
+	/**
 	 * Method type to use: GET, POST, PUT, DELETE.
 	 * @var string null
 	 */
@@ -101,6 +107,7 @@ class ApiRequest
 	 */
 	private function requestByCURL () {
 		try {
+			// Open CURL handle
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $this->_url);
 			curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
@@ -112,7 +119,14 @@ class ApiRequest
 			}
 			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+			// Execute CURL request
 			$buffer = curl_exec($ch);
+
+			// Check HTTP status code
+			$this->request_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+			// Close CURL handle
 			curl_close($ch);
 
 			if ($buffer !== false) {
@@ -193,6 +207,7 @@ class ApiRequest
 	{
 		$response = new ApiResponse();
 		$response->parseBuffer($this->request_return);
+		$response->http_code = $this->request_http_code;
 		return $response;
 	}
 
