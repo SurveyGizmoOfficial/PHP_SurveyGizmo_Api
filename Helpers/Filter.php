@@ -8,6 +8,14 @@ use SurveyGizmo\Helpers\FilterItem;
 class Filter
 {
 
+
+	public function __construct($field = null, $operator = null, $condition = null)
+	{
+		if(!is_null($field) && !is_null($operator) && !is_null($condition)){
+			$this->addFilterItem(new FilterItem($field, $operator, $condition));
+		}
+	}
+
 	/**
 	 * Array of SurveyGizmo\Helpers\FilterItem
 	 */
