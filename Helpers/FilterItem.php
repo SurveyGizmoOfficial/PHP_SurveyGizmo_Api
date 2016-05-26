@@ -1,107 +1,115 @@
 <?php
 namespace SurveyGizmo\Helpers;
 
-class FilterItem{
-
-	private $Field;
-	private $Operator;
-	private $Condition;
-	
-	public function __construct($filterJson){
-		$this->setLogic($filterJson);
-	}	
+/**
+ * FilterItem class. Used with the Filter class to filter fetch requests.
+ */
+class FilterItem
+{
 
 	/**
-	 * setLogic
-	 * set logic properties from json string
-	 * @param $filterJson string json string for logic
-	 * @return boolean 
+	 * Field value.
+	 * @var string
 	 */
-	public function setLogic($filterJson)
+	private $field;
+
+	/**
+	 * Operator value.
+	 * @var string
+	 */
+	private $operator;
+
+	/**
+	 * Condition value.
+	 * @var string
+	 */
+	private $condition;
+
+	/**
+	 * Constructor: optionally pass the values here for simplicity.
+	 * @param $field string null
+	 * @param $operator string null
+	 * @param $condition string null
+	 * @return void
+	 */
+	public function __construct ($field = null, $operator = null, $condition = null) {
+		$this->setField($field);
+		$this->setOperator($operator);
+		$this->setCondition($condition);
+	}
+
+	/**
+	 * Set the field value.
+	 * @param $field string
+	 * @return void
+	 */
+	public function setField($field)
 	{
-		$FilterParts = json_decode($filterJson);
-		$this->setField($FilterParts->Field);
-		$this->setOperator($FilterParts->Operator);
-		$this->setCondition($FilterParts->Condition);
-		return $this->isValid();
+		$this->field = $field;
 	}
 
 	/**
-	 * setter for field property
-	 * @param String $field
+	 * Set the operator value.
+	 * @param $operator string
+	 * @return void
 	 */
-	public function setField($field){
-		$this->Field = $field;
-	}
-
-	/**
-	 * setter for operator property
-	 * @param String $operator
-	 */
-	public function setOperator($operator){
-		$this->Operator = $operator;
-	}
-
-	/**
-	 * setter for condition property
-	 * @param String $condition
-	 */
-	public function setCondition($condition){
-		$this->Condition = $condition;
-	}
-
-	/**
-	 * getter for field property
-	 */
-	public function getField(){
-		return $this->Field;
-	}
-
-	/**
-	 * getter for operator property
-	 */
-	public function getOperator(){
-		return $this->Operator;
-	}
-
-	/**
-	 * getter for condition property
-	 */
-	public function getCondition(){
-		return $this->Condition;
-	}
-
-	/**
-	 * check if filter is a valid filter
-	 * @return boolean
-	 */
-	public function checkIsValid()
+	public function setOperator($operator)
 	{
-		return $this->isValid();
+		$this->operator = $operator;
 	}
 
 	/**
-	 * prepare filter item for request
-	 * @param $index int filter index
-	 * @return string 
+	 * Set the condition value.
+	 * @param $condition string
+	 * @return void
 	 */
-	public function toQueryString($index = 0){
-		$filterPrefix = 'filter';
-		$filterPostfix = '[' . $index . ']';
+	public function setCondition($condition)
+	{
+		$this->condition = $condition;
+	}
+
+	/**
+	 * Getter for field property
+	 * @return string
+	 */
+	public function getField()
+	{
+		return $this->field;
+	}
+
+	/**
+	 * Getter for operator property
+	 * @return string
+	 */
+	public function getOperator()
+	{
+		return $this->operator;
+	}
+
+	/**
+	 * Getter for condition property
+	 * @return string
+	 */
+	public function getCondition()
+	{
+		return $this->condition;
+	}
+
+	/**
+	 * Serialize filter item for request. Used by SurveyGizmo\Helpers\Filter.
+	 * @param $index int - filter index
+	 * @return string
+	 */
+	public function toQueryString($index)
+	{
+		$filter_prefix = 'filter';
+		$filter_postfix = '[' . $index . ']';
 		$parts = array(
-						$filterPrefix . '[field]' . $filterPostfix		=> $this->getField(),
-						$filterPrefix . '[operator]' . $filterPostfix	=> $this->getOperator(),
-						$filterPrefix . '[value]' . $filterPostfix		=> $this->getCondition()
-					);
+			$filter_prefix . '[field]' . $filter_postfix => $this->getField(),
+			$filter_prefix . '[operator]' . $filter_postfix => $this->getOperator(),
+			$filter_prefix . '[value]' . $filter_postfix => $this->getCondition(),
+		);
+		var_dump(http_build_query($parts));
 		return http_build_query($parts);
 	}
-
-	/**
-	 * check if items are valid
-	 */
-	private function isValid(){
-		//check for valid items?
-		return true;
-	}
 }
-?>
