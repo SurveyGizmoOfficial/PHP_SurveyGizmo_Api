@@ -102,7 +102,6 @@ class ApiRequest
 	private function requestByCURL () {
 		try {
 			$ch = curl_init();
-			var_dump($this->_url);
 			curl_setopt($ch, CURLOPT_URL, $this->_url);
 			curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
 			curl_setopt($ch, CURLOPT_VERBOSE, 0);
@@ -193,19 +192,7 @@ class ApiRequest
 	public function getResponse()
 	{
 		$response = new ApiResponse();
-		if (is_object($this->request_return)) {
-			$response->result_ok = $this->request_return->result_ok;
-			$response->code = $this->request_return->code;
-			$response->message = $this->request_return->message;
-			// Add meta data
-			if (isset($this->request_return->total_count)) {
-				$response->total_count = $this->request_return->total_count;
-				$response->page = $this->request_return->page;
-				$response->total_pages = $this->request_return->total_pages;
-				$response->results_per_page = $this->request_return->results_per_page;
-			}
-			$response->data = $this->request_return->data;
-		}
+		$response->parseBuffer($this->request_return);
 		return $response;
 	}
 

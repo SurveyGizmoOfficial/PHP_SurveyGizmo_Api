@@ -1,8 +1,10 @@
 <?php
 namespace SurveyGizmo\Helpers;
-
 use \Exception;
 
+/**
+ * SurveyGizmo custom exception.
+ */
 class SurveyGizmoException extends Exception
 {
 	const NOT_IMPLEMENTED = 404;
@@ -29,7 +31,7 @@ class SurveyGizmoException extends Exception
 					$this->message = 'Not Authorized';
 					break;
 				default:
-					$this->message = 'An Error has Occurred.';
+					$this->message = 'An error has occurred.';
 					break;
 			}
 		}

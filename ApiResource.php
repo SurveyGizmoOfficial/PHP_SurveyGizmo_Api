@@ -62,7 +62,7 @@ class ApiResource
 	 * @static
 	 * @param $params array (the parameters for the path, default null)
 	 * @param $options array ('class' => class name to instantiate, optional)
-	 * @return mixed (instance of the called class)
+	 * @return mixed (instance of the called class or false if not found)
 	 */
 	public static function _get($params = null, $options = null)
 	{
@@ -86,21 +86,26 @@ class ApiResource
 		// Determine the name of class from the static function call
 		$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
 
-		// Create the resouce instance
+		// Create the resource instance
 		$object = self::_formatObject($class_name, $response->data);
 
-		// Add extra parameters to the instance if the resource was found
-		// E.g. survey_id
-		if ($object->exists() && is_array($params)) {
-			foreach ($params as $key => $value) {
-				if (!empty($value) && !isset($object->{$key})) {
-					$object->{$key} = $value;
+		// If the resource was found, add extra parameters on the instance
+		if ($object->exists()) {
+			// Add extra parameters to the instance if the resource was found
+			// E.g. survey_id
+			if (is_array($params)) {
+				foreach ($params as $key => $value) {
+					if (!empty($value) && !isset($object->{$key})) {
+						$object->{$key} = $value;
+					}
 				}
 			}
-		}
 
-		// Return resource instance
-		return $object;
+			// Return resource instance
+			return $object;
+		}
+		// Resource not found
+		return false;
 	}
 
 	/**
@@ -202,14 +207,16 @@ class ApiResource
 	 * @access protected
 	 * @static
 	 * @param $type mixed (name/instance of class)
-	 * @param $item array (data source)
+	 * @param $attrs array/stdClass (data source)
 	 * @return mixed (class instance)
 	 */
-	protected static function _formatObject($type, $item)
+	protected static function _formatObject($type, $attrs)
 	{
 		$obj = is_string($type) ? new $type : $type;
-		foreach ($item as $property => $value) {
-			$obj->$property = $value;
+		if (is_object($attrs) || is_array($attrs)) {
+			foreach ($attrs as $property => $value) {
+				$obj->{$property} = $value;
+			}
 		}
 		return $obj;
 	}
@@ -221,7 +228,7 @@ class ApiResource
 	 */
 	public function exists()
 	{
-		return $this->id > 0;
+		return isset($this->id) && $this->id > 0;
 	}
 
 	//BASE FUNCTIONS
