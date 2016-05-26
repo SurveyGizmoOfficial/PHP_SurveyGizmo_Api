@@ -56,6 +56,12 @@ class ApiResponse
 	public $data;
 
 	/**
+	 * Response HTTP code.
+	 * @var int
+	 */
+	public $http_code;
+
+	/**
 	 * Takes the JSON decoded response from the ApiRequest class and sets the data
 	 * on this instance.
 	 * @access public
