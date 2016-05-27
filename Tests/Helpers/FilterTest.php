@@ -87,11 +87,9 @@ class FilterTest extends TestCase
  */
 public function invokeMethod(&$object, $methodName, array $parameters = array())
 {
-    //var_dump($parameters); die;
     $reflection = new \ReflectionClass(get_class($object));
     $method = $reflection->getMethod($methodName);
     $method->setAccessible(true);
-    //var_dump($parameters); die;
     return $method->invokeArgs($object, array($parameters));
 }
 

@@ -109,7 +109,6 @@ class FilterItem
 			$filter_prefix . '[operator]' . $filter_postfix => $this->getOperator(),
 			$filter_prefix . '[value]' . $filter_postfix => $this->getCondition(),
 		);
-		var_dump(http_build_query($parts));
 		return http_build_query($parts);
 	}
 }
