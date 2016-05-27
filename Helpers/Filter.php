@@ -1,76 +1,55 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Helpers;
+use SurveyGizmo\Helpers\FilterItem;
 
+/**
+ * Filter class. Used to filter fetch requests.
+ */
 class Filter
 {
 
+
+	public function __construct($field = null, $operator = null, $condition = null)
+	{
+		if(!is_null($field) && !is_null($operator) && !is_null($condition)){
+			$this->addFilterItem(new FilterItem($field, $operator, $condition));
+		}
+	}
+
 	/**
-	 * array of FilterItem
+	 * Array of SurveyGizmo\Helpers\FilterItem
 	 */
-	private $Items;
-
-	public function __construct($FilterJson = false)
-	{
-		if ($filter_json) {
-			$filter_items = $this->parseJson($FilterJson);
-		}
-	}
-
-	public function parseJson($FilterJson)
-	{
-		$parts = json_decode($FilterJson);
-
-		reset($parts);
-		$key = key($parts);
-
-		if (is_int($key)) {
-			foreach ($parts as $key => $filter_json) {
-				$this->addFilterItem(new FilterItem(json_encode($filter_json)));
-			}
-		} else {
-			$this->addFilterItem(new FilterItem($FilterJson));
-		}
-	}
+	private $items;
 
 	/**
-	 * Add FilterItem to Items Array
-	 * @param $filterItem FilterItem
-	 * @return boolean
+	 * Add FilterItem to items collection.
+	 * @param $filterItem SurveyGizmo\Helpers\FilterItem
+	 * @return void
 	 */
-	public function addFilterItem(FilterItem $filterItem)
+	public function addFilterItem(FilterItem $filter_item)
 	{
-		if ($filterItem instanceof FilterItem) {
-			$this->Items[] = $filterItem;
-		} else {
-			return false;
-		}
-		return true;
+		$this->items[] = $filter_item;
 	}
 
 	/**
-	 * Return the items properties
+	 * Return the collection of filter items.
 	 * @return Array $items
 	 */
 	public function returnItems()
 	{
-		return $this->Items;
+		return is_array($this->items) ? $this->items : array();
 	}
 
 	/**
-	 * build query string for request
+	 * Build query string for request.
 	 * @return string
 	 */
 	public function buildRequestQuery()
 	{
-		$QueryString = '';
-		$index = 0;
-		foreach ($this->returnItems() as $key => $item) {
-			//ignore invalid objects
-			if ($item instanceof FilterItem) {
-				$QueryString .= '&' . $item->toQueryString($index);
-				$index++;
-			}
+		$query_string = '';
+		foreach ($this->returnItems() as $index => $item) {
+			$query_string .= '&' . $item->toQueryString($index++);
 		}
-		return $QueryString;
+		return $query_string;
 	}
 }

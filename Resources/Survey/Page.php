@@ -1,25 +1,27 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources\Survey;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
 
 /**
- * Class for Survey Question API objects
- * Question is a sub-object of Surveys
+ * Class for Survey Page API objects
+ * Page is a sub-object of Surveys
  */
-class Question extends ApiResource {
+class Page extends ApiResource {
 
 	/**
 	 * API call path 
 	 */
-	static $path = "/survey/{survey_id}/surveyquestion/{id}";
+	static $path = "/survey/{survey_id}/surveypage/{id}";
 
 	/**
-	 * Fetch list of SurveyGizmo Question Objects by survey id
+	 * Fetch list of SurveyGizmo Page Objects
 	 * @access public
 	 * @param int $survey_id - Survey ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Question Objects
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Objects
 	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
@@ -30,11 +32,11 @@ class Question extends ApiResource {
 	}
 
 	/**
-	 * Get Question Obj by survey id and question sku
+	 * Get Page Obj by survey id and page sku
 	 * @access public
 	 * @param int $survey_id - survey id
-	 * @param int $id - question sku
-	 * @return SurveyGizmo\Question Object
+	 * @param int $id - page sku
+	 * @return SurveyGizmo\Page Object 
 	 */
 	public static function get($survey_id, $id){
 		if ($id < 1 && $survey_id < 1) {
@@ -47,9 +49,9 @@ class Question extends ApiResource {
 	}
 
 	/**
-	 * Save current Question Obj
+	 * Save current Page Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Question Object
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Object
 	 */
 	public function save(){
 		return $this->_save(array(
@@ -57,15 +59,14 @@ class Question extends ApiResource {
 			'id' => $this->exists() ? $this->id : ''
 		));
 	}
-
+	
 	/**
-	 * Delete current Question Obj
+	 * Delete current Page Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object
+	 * @return SurveyGizmo\ApiResponse Object
 	 */
 	public function delete(){
 		return self::_delete(array(
-			'survey_id' => $survey_id,
 			'id' => $this->id,
 		));
 	}

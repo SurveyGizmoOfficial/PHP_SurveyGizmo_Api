@@ -1,11 +1,14 @@
 <?php
 namespace SurveyGizmo;
+
+use SurveyGizmo\ApiRequest;
+use SurveyGizmo\Helpers\SurveyGizmoException;
+
 /**
  * Base class for all API objects, builds requests and formats responses.
  */
 class ApiResource
 {
-
 	/**
 	 * Fetches a list of resources using a HTTP GET request.
 	 * @access public
@@ -13,7 +16,7 @@ class ApiResource
 	 * @param $params array (the parameters for the path, default null)
 	 * @param $filter SurveyGizmo\Helpers\Filter (optional)
 	 * @param $options array ('class' => class name to instantiate, optional)
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public static function _fetch($params = null, $filter = null, $options = null)
 	{
@@ -21,15 +24,15 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New request instance
-		$request = new Request("GET");
+		$request = new ApiRequest("GET");
 		$request->path = $path;
 		$request->filter = $filter;
 		// Add options such as `page`, `limit` to request
 		$request->setOptions($options);
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
-		// Instance of SurveyGizmo\Helpers\APIResponse
+		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
 
 		// Process the return
@@ -49,7 +52,7 @@ class ApiResource
 				}
 			}
 		}
-		// Return the modified APIResponse
+		// Return the modified ApiResponse
 		return $response;
 	}
 	
@@ -59,7 +62,7 @@ class ApiResource
 	 * @static
 	 * @param $params array (the parameters for the path, default null)
 	 * @param $options array ('class' => class name to instantiate, optional)
-	 * @return mixed (instance of the called class)
+	 * @return mixed (instance of the called class or false if not found)
 	 */
 	public static function _get($params = null, $options = null)
 	{
@@ -67,12 +70,12 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New GET request
-		$request = new Request("GET");
+		$request = new ApiRequest("GET");
 		$request->path = $path;
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
-		// Instance of SurveyGizmo\Helpers\APIResponse
+		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
 
 		// If the API returns an array of resources, fetch the first one
@@ -83,21 +86,26 @@ class ApiResource
 		// Determine the name of class from the static function call
 		$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
 
-		// Create the resouce instance
+		// Create the resource instance
 		$object = self::_formatObject($class_name, $response->data);
 
-		// Add extra parameters to the instance if the resource was found
-		// E.g. survey_id
-		if ($object->exists() && is_array($params)) {
-			foreach ($params as $key => $value) {
-				if (!empty($value) && !isset($object->{$key})) {
-					$object->{$key} = $value;
+		// If the resource was found, add extra parameters on the instance
+		if ($object->exists()) {
+			// Add extra parameters to the instance if the resource was found
+			// E.g. survey_id
+			if (is_array($params)) {
+				foreach ($params as $key => $value) {
+					if (!empty($value) && !isset($object->{$key})) {
+						$object->{$key} = $value;
+					}
 				}
 			}
-		}
 
-		// Return resource instance
-		return $object;
+			// Return resource instance
+			return $object;
+		}
+		// Resource not found
+		return false;
 	}
 
 	/**
@@ -105,7 +113,7 @@ class ApiResource
 	 * Method is called on a instance.
 	 * @access public
 	 * @param $params array (the parameters for the path, default null)
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function _save($params = null)
 	{
@@ -113,20 +121,20 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New request (POST if update, PUT if insert)
-		$request = new Request($this->exists() ? 'POST' : 'PUT');
+		$request = new ApiRequest($this->exists() ? 'POST' : 'PUT');
 		$request->path = $path;
 		// The request class pulls the data from this reference
-		$request->data = $this;
+		$request->data = get_object_vars($this);
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
-		// Instance of SurveyGizmo\Helpers\APIResponse
+		// Instance of SurveyGizmo\Helpers\ApiResponse
 		$response = $request->getResponse();
 
 		// Update the current instance with the data from the API
 		$this->_formatObject($this, $response->data);
 
-		// Return the APIResponse
+		// Return the ApiResponse
 		return $response;
 	}
 
@@ -135,7 +143,7 @@ class ApiResource
 	 * Method is called on a instance.
 	 * @access public
 	 * @param $params array (the parameters for the path, default null)
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function _delete($params = null)
 	{
@@ -148,12 +156,12 @@ class ApiResource
 		$path = self::_mergePath(static::$path, $params);
 
 		// New request HTTP DELETE
-		$request = new Request('DELETE');
+		$request = new ApiRequest('DELETE');
 		$request->path = $path;
 		// Execute request
-		$request->makeRequest();
+		$request->execute();
 
-		// Return APIResponse
+		// Return ApiResponse
 		return $request->getResponse();
 	}
 
@@ -199,14 +207,16 @@ class ApiResource
 	 * @access protected
 	 * @static
 	 * @param $type mixed (name/instance of class)
-	 * @param $item array (data source)
+	 * @param $attrs array/stdClass (data source)
 	 * @return mixed (class instance)
 	 */
-	protected static function _formatObject($type, $item)
+	protected static function _formatObject($type, $attrs)
 	{
 		$obj = is_string($type) ? new $type : $type;
-		foreach ($item as $property => $value) {
-			$obj->$property = $value;
+		if (is_object($attrs) || is_array($attrs)) {
+			foreach ($attrs as $property => $value) {
+				$obj->{$property} = $value;
+			}
 		}
 		return $obj;
 	}
@@ -218,7 +228,7 @@ class ApiResource
 	 */
 	public function exists()
 	{
-		return $this->id > 0;
+		return isset($this->id) && $this->id > 0;
 	}
 
 	//BASE FUNCTIONS
@@ -228,7 +238,7 @@ class ApiResource
 	 * Extend in order to change behavior.
 	 * @access public
 	 * @static
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public static function fetch()
 	{
@@ -252,7 +262,7 @@ class ApiResource
 	 * Save the instance of this resource. By default this method is not supported.
 	 * Extend in order to change behavior. 
 	 * @access public
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function save()
 	{
@@ -263,7 +273,7 @@ class ApiResource
 	 * Deletes the instance of this resource. By default this method is not supported.
 	 * Extend in order to change behavior. 
 	 * @access public
-	 * @return SurveyGizmo\Helpers\APIResponse
+	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
 	public function delete()
 	{

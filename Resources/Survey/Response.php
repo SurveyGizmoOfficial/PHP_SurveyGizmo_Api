@@ -1,6 +1,8 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources\Survey;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
 
 /**
  * Class for Survey Response API objects
@@ -34,7 +36,7 @@ class Response extends ApiResource {
 	 * @param int $survey_id - Survey ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Response Object
 	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
@@ -61,7 +63,7 @@ class Response extends ApiResource {
 	/**
 	 * Saves current Response Object
  	 * @access public
-	 * @return SurveyGizmo\APIResponse with SurveyGizmo\Response Object
+	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Response Object
 	 */
 	public function save(){
 		$this->buildSaveDataPayload();
@@ -74,7 +76,7 @@ class Response extends ApiResource {
 	/**
 	 * Delete current Response Object
 	 * @access public
-	 * @return SurveyGizmo\APIResponse
+	 * @return SurveyGizmo\ApiResponse
 	 */
 	public function delete(){
 		return self::_delete(array(
