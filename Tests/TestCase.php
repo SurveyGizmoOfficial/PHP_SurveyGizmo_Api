@@ -1,5 +1,5 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Tests;
 require_once(__DIR__ . '/../SurveyGizmoAutoLoader.php');
 /**
  * test cases base class

@@ -1,5 +1,8 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Tests;
+
+use SurveyGizmo\Helpers\Filter;
+use SurveyGizmo\Helpers\FilterItem;
 
 class FilterTest extends TestCase
 {
@@ -13,22 +16,6 @@ class FilterTest extends TestCase
         $this->assertSame(1, 1);
     }
 
-    public function testparseJson()
-    {
-      $expected = null;
-      $genericJSON = array(
-          "filter"=>"items",
-          "operator"=>"equals",
-          "condition"=>"eggs",
-          "result"=> "french toast"
-        );
-
-      $genericJSON = json_encode(array('item' => $genericJSON), JSON_FORCE_OBJECT);
-      $filter = new Filter();
-      $result = $filter->parseJson($genericJSON);
-      $this->assertEquals($expected, $result); // make sure json parsing doesn't error
-
-    }
     /*
     * technically more of an integration test - covers a bunch of stuff.
     *@covers addFilterItem
@@ -39,19 +26,14 @@ class FilterTest extends TestCase
     public function  testBuildRequestQuery()
     {
       $expected = "&filter%5Bfield%5D%5B0%5D=turtle&filter%5Boperator%5D%5B0%5D=equals&filter%5Bvalue%5D%5B0%5D=Donatello";
-      $param->Field = "turtle";
-      $param->Operator = "equals" ;
-      $param->Condition = "Donatello";
-      $param = json_encode($param);
 
       $filter = new Filter;
-      $filter->data = new FilterItem($param);
+      $filter->data = new FilterItem("turtle", "equals", "Donatello");
 
       $query = $filter->addFilterItem($filter->data);
-      $this->assertTrue($query);
       $addeds = $filter->returnItems();
       $addeds = $addeds[0];
-      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $this->assertInstanceOf('SurveyGizmo\Helpers\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals($expected, $actual);
 
@@ -60,19 +42,14 @@ class FilterTest extends TestCase
     public function  testBuildRequestQueryEmpty()
     {
       $expected = "&filter%5Bfield%5D%5B0%5D=&filter%5Boperator%5D%5B0%5D=&filter%5Bvalue%5D%5B0%5D=";
-      $param->Field = "";
-      $param->Operator = "" ;
-      $param->Condition = "";
-      $param = json_encode($param);
-
+      
       $filter = new Filter;
-      $filter->data = new FilterItem($param);
+      $filter->data = new FilterItem('', '', '');
 
       $query = $filter->addFilterItem($filter->data);
-      $this->assertTrue($query);
       $addeds = $filter->returnItems();
       $addeds = $addeds[0];
-      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $this->assertInstanceOf('SurveyGizmo\Helpers\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals($expected, $actual);
 
@@ -84,10 +61,9 @@ class FilterTest extends TestCase
       $filter = new Filter;
       $filter->data = new FilterItem();
       $query = $filter->addFilterItem($filter->data);
-      $this->assertTrue($query);
       $addeds = $filter->returnItems();
       $addeds = $addeds[0];
-      $this->assertInstanceOf('SurveyGizmo\FilterItem', $addeds);
+      $this->assertInstanceOf('SurveyGizmo\Helpers\FilterItem', $addeds);
       $actual = $filter->buildRequestQuery();
       $this->assertEquals('&', $actual);
     }
@@ -111,11 +87,9 @@ class FilterTest extends TestCase
  */
 public function invokeMethod(&$object, $methodName, array $parameters = array())
 {
-    //var_dump($parameters); die;
     $reflection = new \ReflectionClass(get_class($object));
     $method = $reflection->getMethod($methodName);
     $method->setAccessible(true);
-    //var_dump($parameters); die;
     return $method->invokeArgs($object, array($parameters));
 }
 

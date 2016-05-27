@@ -1,6 +1,8 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Resources\Survey;
+
 use SurveyGizmo\ApiResource;
+use SurveyGizmo\Helpers\SurveyGizmoException;
 
 /**
  * Class for Survey Report API objects
@@ -20,7 +22,7 @@ class Report extends ApiResource
 	 * @param int $survey_id - Survey ID
 	 * @param SurveyGizmo\Filter $filters - filter object
 	 * @param Array $options
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Report Objects
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Report Objects
 	 */
 	public static function fetch($survey_id, $filters = null, $options = null) {
 		if ($survey_id < 1) {
@@ -51,7 +53,7 @@ class Report extends ApiResource
 	/**
 	 * Save current Report Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object with SurveyGizmo\Report Object
+	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Report Object
 	 */
 	public function save()
 	{
@@ -64,7 +66,7 @@ class Report extends ApiResource
 	/**
 	 * Delete current Report Obj
 	 * @access public
-	 * @return SurveyGizmo\APIResponse Object
+	 * @return SurveyGizmo\ApiResponse Object
 	 */
 	public function delete()
 	{

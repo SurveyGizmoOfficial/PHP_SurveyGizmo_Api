@@ -1,5 +1,7 @@
 <?php
-namespace SurveyGizmo;
+namespace SurveyGizmo\Tests;
+
+use SurveyGizmo\ApiRequest;
 
 class RequestTest extends TestCase
 {
@@ -20,11 +22,11 @@ class RequestTest extends TestCase
     public function testBuildPayloadBasic()
     {
       $expected = "test=i+am+a+property&property=this+is+a+test";
-      $test = new Request();
+      $test = new ApiRequest();
       $test->data = new \stdClass();
       $test->data->test = "i am a property";
       $test->data->property = "this is a test";
-      $payload = $this->invokeMethod($test, 'buildPayload');
+      $payload = $this->invokeMethod($test, 'getPostData');
       $this->assertEquals($expected, $payload);
     }
     /*
@@ -34,9 +36,9 @@ class RequestTest extends TestCase
     public function testBuildPayloadEmpty()
     {
       $expected = "";
-      $test = new Request();
+      $test = new ApiRequest();
       $test->data = new \stdClass();
-      $payload = $this->invokeMethod($test, 'buildPayload');
+      $payload = $this->invokeMethod($test, 'getPostData');
       $this->assertEquals($expected, $payload);
     }
     /*
@@ -46,11 +48,11 @@ class RequestTest extends TestCase
     public function testBuildPayloadNotReturnEmpty()
     {
       $notExpected = "";
-      $test = new Request();
+      $test = new ApiRequest();
       $test->data = new \stdClass();
       $test->data->test = "i am a property";
       $test->data->property = "this is a test";
-      $payload = $this->invokeMethod($test, 'buildPayload');
+      $payload = $this->invokeMethod($test, 'getPostData');
       $this->assertNotEquals($notExpected, $payload);
     }
 
@@ -61,10 +63,10 @@ class RequestTest extends TestCase
      public function testBuildPayloadForeignCharacters()
      {
        $expected = "test=%C3%93%C3%98%CB%86%C2%A8%C3%81%CB%87%E2%80%B0%C2%B4%E2%80%9E%C3%85%C5%92%E2%80%9E%C2%B4";
-       $test = new Request();
+       $test = new ApiRequest();
        $test->data = new \stdClass();
        $test->data->test = "ÓØˆ¨Áˇ‰´„ÅŒ„´";
-       $payload = $this->invokeMethod($test, 'buildPayload');
+       $payload = $this->invokeMethod($test, 'getPostData');
        $this->assertEquals($expected, $payload);
      }
     /*
@@ -76,14 +78,14 @@ class RequestTest extends TestCase
 
       //$expected = "trunk.qa.devo.boulder.sgizmo.com/services/rest/v4this is a string.json?api_token=testing&api_token_secret=sauce&_method=GET";
 
-      $test = new Request();
+      $test = new ApiRequest();
       $test->data = new \stdClass();
       $test->path = 'this is a string';
       $creds = array(
         "AuthToken"=>"testing",
         "AuthSecret"=>"sauce"
         );
-      $uri = $this->invokeMethod($test, 'buildURI', $creds);
+      $uri = $this->invokeMethod($test, 'getCompleteUrl', $creds);
       //$this->assertEquals($expected, $uri);
 
     }
@@ -99,11 +101,9 @@ class RequestTest extends TestCase
  */
 public function invokeMethod(&$object, $methodName, array $parameters = array())
 {
-    //var_dump($parameters); die;
     $reflection = new \ReflectionClass(get_class($object));
     $method = $reflection->getMethod($methodName);
     $method->setAccessible(true);
-    //var_dump($parameters); die;
     return $method->invokeArgs($object, array($parameters));
 }
 

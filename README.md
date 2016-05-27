@@ -1,7 +1,7 @@
 # Official PHP library for SurveyGizmo API
 
 ## Summary
-The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Survey).
+The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Resources\Survey).
 
 ##### Supported Objects
 - Survey
@@ -63,13 +63,13 @@ try {
 ###### Fetching Surveys
 See filter and paging below.
 ```php
-$surveys = SurveyGizmo\Survey::fetch(<FILTER>,<OPTIONS>);
+$surveys = SurveyGizmo\Resources\Survey::fetch(<FILTER>,<OPTIONS>);
 ```
 
 ###### Getting a Single Survey
 ```php
 $survey_id = <SURVEY_ID>;
-$survey = SurveyGizmo\Survey::get(survey_id);
+$survey = SurveyGizmo\Resources\Survey::get(survey_id);
 ```
 
 ###### Updating a Survey
@@ -80,7 +80,7 @@ $survey->save();
 
 ###### Creating a Survey
 ```php
-$survey = new SurveyGizmo\Survey();
+$survey = new SurveyGizmo\Resources\Survey();
 $survey->title = "NEW SURVEY";
 $results = $survey->save();
 ```
@@ -114,7 +114,7 @@ The Survey object provides a few help functions to easily access related collect
 ```
 
 ### Questions
-To access the questions on a survey you'll need an instance of a SurveyGizmo\Survey object. 
+To access the questions on a survey you'll need an instance of a SurveyGizmo\Resources\Survey object. 
 
 ###### Get all Survey Questions
 ```php
@@ -129,7 +129,7 @@ $ret = $question->save();
 ```
 
 ### Responses
-To access the responses for a survey you'll need an instance of a SurveyGizmo\Survey object. See filter and paging below.
+To access the responses for a survey you'll need an instance of a SurveyGizmo\Resources\Survey object. See filter and paging below.
 
 ###### Get all Survey Responses
 ```php
@@ -153,20 +153,20 @@ All fetch methods take both optional $filter and $options arguments.
 
 ###### Filtering
 ```php
-$filter = new SurveyGizmo\Filter();
-$filter_item = new SurveyGizmo\FilterItem();
+$filter = new SurveyGizmo\Helpers\Filter();
+$filter_item = new SurveyGizmo\Helpers\FilterItem();
 $filter_item->setField('title');
 $filter_item->setOperator('=');
 $filter_item->setCondition('TEST from API');
 $filter->addFilterItem($filter_item);
-$surveys = SurveyGizmo\Survey::fetch($filter);
+$surveys = SurveyGizmo\Resources\Survey::fetch($filter);
 ```
 
 ###### Paging Collections
 Sometimes you will need to page through collections of objects.  To accommodate this use the optional $options argument on any fetch method;
 ```php
 $options = array( 'page' => 3, 'limit' => 100 );
-$surveys = SurveyGizmo\Survey::fetch($filter,$options);
+$surveys = SurveyGizmo\Resources\Survey::fetch($filter,$options);
 ```
 
 ### ERROR Message & Responses
@@ -175,6 +175,12 @@ In the case of an error we will return the following responses and status codes:
 Method not implemented (404)
 Method not supported (405)
 Not Authorized (401)
+```
+
+### Simple API request
+To perform a API call without going through a specific resource class, use SurveyGizmo\ApiRequest::call.
+```php
+$response = SurveyGizmo\ApiRequest::call('contactlist', null, null, null);
 ```
 
 ## Dependencies
@@ -211,7 +217,7 @@ This Library uses the version 5 SurveyGizmo API.  [API Documentation](https://ap
 ## Tests
 Unit tests are included under the /Tests directory.  They can be executed by running:
 ```bash
-$ phpunit -c bootstrap.xml.
+$ phpunit -c bootstrap.xml
 ```
 
 ## Contributors

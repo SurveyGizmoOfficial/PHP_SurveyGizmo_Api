@@ -1,6 +1,7 @@
 <?php
+namespace SurveyGizmo\Tests;
 
-namespace SurveyGizmo;
+use SurveyGizmo\ApiResource;
 
 class ApiResourceTest extends TestCase
 {
@@ -18,7 +19,6 @@ class ApiResourceTest extends TestCase
         'survey_id' => '1234'
       );
       $result = $tester->_mergePath($path, $options);
-      //var_dump($result); die;
       $this->assertEquals($expected, $result);
     }
 
@@ -33,7 +33,6 @@ class ApiResourceTest extends TestCase
         'bacon' => 'is_yummy'
       );
       $result = $tester->_mergePath($path, $options);
-      //var_dump($result); die;
       $this->assertEquals($expected, $result);
     }
 
@@ -48,26 +47,9 @@ class ApiResourceTest extends TestCase
         'bacon' => 'is_yummy'
       );
       $result = $tester->_mergePath($path, $options);
-      //var_dump($result); die;
       $this->assertEquals($expected, $result);
     }
-/*
-    public function test_parseObjects()
-        {
-          $type = 'survey';
-          $data = array (
-          $id = 123,
-          $title = "Example survey",
-          );
-          $resource = new ApiResource;
-          $test = array ($type, $data);
-          //var_dump($test);die;
-            //parseObjects requires $type, $data
-          $payload = $this->invokeMethod($resource, $test, '_parseObjects');
-          var_dump($payload);die;
 
-        }
-  */
     /**
     * Call protected/private method of a class.
     *
@@ -79,11 +61,9 @@ class ApiResourceTest extends TestCase
     */
     public function invokeMethod(&$object, $methodName, array $parameters = array())
     {
-    //var_dump($parameters); die;
     $reflection = new \ReflectionClass(get_class($object));
     $method = $reflection->getMethod($methodName);
     $method->setAccessible(true);
-    //var_dump($parameters); die;
     return $method->invokeArgs($object, array($parameters));
     }
 
