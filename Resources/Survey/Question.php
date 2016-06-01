@@ -32,10 +32,10 @@ class Question extends ApiResource {
 	}
 
 	/**
-	 * Get Question Obj by survey id and question sku
+	 * Get Question Obj by survey id and question id
 	 * @access public
 	 * @param int $survey_id - survey id
-	 * @param int $id - question sku
+	 * @param int $id - question id
 	 * @return SurveyGizmo\Question Object
 	 */
 	public static function get($survey_id, $id){

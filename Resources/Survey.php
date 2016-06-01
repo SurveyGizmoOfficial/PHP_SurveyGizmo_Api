@@ -94,15 +94,15 @@ class Survey extends ApiResource
 	}
 
 	/**
-	 * Return page array from current Survey by page sku
+	 * Return page array from current Survey by page id
 	 * @access public
-	 * @param Int $sku - page sku
+	 * @param Int $id - page id
 	 * @return SurveyGizmo\Page Object
 	 */
-	public function getPage($sku)
+	public function getPage($id)
 	{
 		foreach ($this->pages as $page) {
-			if ($page->id == $sku) {
+			if ($page->id == $id) {
 				return $page;
 			}
 		}
@@ -121,7 +121,7 @@ class Survey extends ApiResource
 	}
 	
 	/**
-	 * Return question from current Survey by question sku
+	 * Return question from current Survey by question id
 	 * @access public
 	 * @param Int $id - question id
 	 * @return SurveyGizmo\Question Object
@@ -143,7 +143,7 @@ class Survey extends ApiResource
 	}
 
 	/**
-	 * Return question from current Survey by question sku
+	 * Return question from current Survey by question id
 	 * @access public
 	 * @param Int $id - response id
 	 * @return SurveyGizmo\Question Object

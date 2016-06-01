@@ -32,10 +32,10 @@ class Page extends ApiResource {
 	}
 
 	/**
-	 * Get Page Obj by survey id and page sku
+	 * Get Page Obj by survey id and page id
 	 * @access public
 	 * @param int $survey_id - survey id
-	 * @param int $id - page sku
+	 * @param int $id - page id
 	 * @return SurveyGizmo\Page Object 
 	 */
 	public static function get($survey_id, $id){

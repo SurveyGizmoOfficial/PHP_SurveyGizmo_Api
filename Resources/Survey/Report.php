@@ -36,7 +36,7 @@ class Report extends ApiResource
 	 * Get Report Obj by survey id and report id
 	 * @access public
 	 * @param int $survey_id - survey id
-	 * @param int $id - question sku
+	 * @param int $id - question id
 	 * @return SurveyGizmo\Report Object
 	 */
 	public static function get($survey_id, $id)
