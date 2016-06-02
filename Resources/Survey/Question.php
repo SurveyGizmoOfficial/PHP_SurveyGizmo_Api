@@ -71,5 +71,19 @@ class Question extends ApiResource {
 			'id' => $this->id,
 		));
 	}
+
+	/**
+	 * Get current Question Option Obj by id
+	 * @access public
+	 * @param Int $id option ID
+	 * @return SurveyGizmo\Resource\QuestionOption Object
+	 */
+	public function getOption($id){
+		foreach ($this->options as $key => $option) {
+			if($option->id == $id){
+				return $option;
+			}
+		}
+	}
 }
 ?>
