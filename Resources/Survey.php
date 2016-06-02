@@ -24,6 +24,9 @@ class Survey extends ApiResource
 	public function __set($name, $value)
 	{
 		$this->{$name} = $value;
+		if ($name == 'team') {
+			$this->formatTeams();
+		}
 		if ($name == 'pages') {
 			$this->formatPages();
 		}
@@ -172,7 +175,7 @@ class Survey extends ApiResource
 	 */
 	public function getReport($id)
 	{
-
+		return $this->getSubObject("SurveyGizmo\\Resources\\Survey\\Report", $id);
 	}
 
 	/**
@@ -236,6 +239,24 @@ class Survey extends ApiResource
 
 	/*FORMATERS*/
 	/**
+	 * Format teams! We want to keep things useable and organized, 
+	 * hence the custom formatter for teams
+	 * Loops through teams, formats the team
+	 * @access private
+	 * @return void
+	 */
+	private function formatTeams()
+	{
+		$return = array();
+		$teams = $this->team;
+		foreach ($teams as $obj) {
+			$team = $this->formatTeam($obj);
+			$return[] = $team;
+		}
+		$this->team = $return;
+	}
+
+	/**
 	 * Format pages! We want to keep things useable and organized, 
 	 * hence the custom formatter for pages
 	 * Loops through pages, formats the page, and each page formats its questions. 
@@ -264,6 +285,18 @@ class Survey extends ApiResource
 		$page = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Page", $page_obj);
 		$page->questions = self::formatQuestions($page);
 		return $page;
+	}
+
+		/**
+	 * Format teams
+	 * @access private
+	 * @param object $team_info
+	 * @return SurveyGizmo\Team formatted page
+	 */
+	private function formatTeam($team_info)
+	{
+		$team = Team::get($team_info->id);
+		return $team;
 	}
 
 	/**
