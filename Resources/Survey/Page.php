@@ -70,5 +70,19 @@ class Page extends ApiResource {
 			'id' => $this->id,
 		));
 	}
+
+	/**
+	 * Get current Pages Question Obj by id
+	 * @access public
+	 * @param Int $id question ID
+	 * @return SurveyGizmo\Resource\Question Object
+	 */
+	public function getQuestion($id){
+		foreach ($this->questions as $key => $question) {
+			if($question->id == $id){
+				return $question;
+			}
+		}
+	}
 }
 ?>
