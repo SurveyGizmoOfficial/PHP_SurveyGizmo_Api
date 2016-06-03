@@ -179,13 +179,28 @@ class Survey extends ApiResource
 	}
 
 	/**
-	 * Return pages array from current Survey object
+	 * Return statistics array from current Survey object
 	 * @access public
-	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Page Objects
+	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Resources\Survey\Statistics Objects
 	 */
 	public function getStatistics()
 	{
 		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Statistics");
+	}
+
+	/**
+	 * Return stats object from current Survey object by question id
+	 * @access public
+	 * @return SurveyGizmo\Resources\Survey\Statistics Object
+	 */
+	public function getStatisticsByID($question_id)
+	{
+		$stats = $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Statistics");
+		foreach ($stats->data as $key => $question_stats) {
+			if($question_stats->id == $question_id){
+				return $question_stats;
+			}
+		}
 	}
 
 	/*CAMPAIGNS*/
