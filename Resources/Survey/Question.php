@@ -16,6 +16,21 @@ class Question extends ApiResource {
 	static $path = "/survey/{survey_id}/surveyquestion/{id}";
 
 	/**
+	 * set magic function to keep sub_questions formatted the way we want
+	 * @access public
+	 * @param String $name - property name
+	 * @param Mixed $value - property value
+	 */
+	public function __set($name, $value)
+	{
+		$this->{$name} = $value;
+		if ($name == 'sub_questions') {
+			$this->formatSubQuestions();
+		}
+		
+	}
+
+	/**
 	 * Fetch list of SurveyGizmo Question Objects by survey id
 	 * @access public
 	 * @param int $survey_id - Survey ID
@@ -84,6 +99,20 @@ class Question extends ApiResource {
 				return $option;
 			}
 		}
+	}
+
+	/**
+	 * Format sub questions
+	 * @access private
+	 * @return Array of SurveyGizmo\Question formatted sub questions
+	 */
+	private function formatSubQuestions(){
+		$return_questions = array();
+		foreach ($this->sub_questions as $key => $sub_question) {
+			$new_question = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Question", $sub_question);
+			$return_questions[$new_question->id] = $new_question;
+		}
+		$this->sub_questions = $return_questions; 
 	}
 }
 ?>
