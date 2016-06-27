@@ -51,7 +51,7 @@ class SurveyGizmoAPI
 	 */
 	private static function testCredentials()
 	{
-		if (!Account::get()->exists()) {
+		if (!Account::get() || !Account::get()->exists()) {
 			throw new SurveyGizmoException(SurveyGizmoException::NOT_AUTHORIZED);
 		}
 	}

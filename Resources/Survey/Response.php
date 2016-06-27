@@ -38,7 +38,7 @@ class Response extends ApiResource {
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Response Object
 	 */
-	public static function fetch($survey_id, $filters = null, $options = null) {
+	public static function fetch($survey_id, $filter = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
