@@ -118,9 +118,9 @@ class Survey extends ApiResource
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Question Objects
 	 */
-	public function getQuestions()
+	public function getQuestions($filter = null, $options = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Question");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Question", $filter, $options);
 	}
 	
 	/**
@@ -140,9 +140,9 @@ class Survey extends ApiResource
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Response Objects
 	 */
-	public function getResponses($filter = null)
+	public function getResponses($filter = null, $options = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Response");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Response", $filter, $options);
 	}
 
 	/**
@@ -162,9 +162,9 @@ class Survey extends ApiResource
 	 * @access public
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Reports Objects
 	 */
-	public function getReports($filter = null)
+	public function getReports($filter = null, $options = null)
 	{
-		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Report");
+		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Report", $filter, $options);
 	}
 
 	/**
