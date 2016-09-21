@@ -236,7 +236,8 @@ class Survey extends ApiResource
 	 */
 	private function getSubObjects($type, $filter = null, $options = null)
 	{
-		$options = array("survey_id" => $this->id);
+		$options = (isset($options))? $options: [];
+		$options["survey_id"] = $this->id;
 		return $type::fetch($this->id, $filter, $options);
 	}
 
