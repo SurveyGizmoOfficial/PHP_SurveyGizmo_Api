@@ -10,7 +10,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class Contact extends ApiResource
 {
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/contactlist/{list_id}/contactlistcontact/{id}";
 
@@ -58,7 +58,7 @@ class Contact extends ApiResource
 	 * @param $id int - Contact ID
 	 * @return SurveyGizmo\ContactList\Contact Object
 	 */
-	public static function get($list_id, $id)
+	public static function get($list_id = null, $id = null)
 	{
 		$list_id = (int) $list_id;
 		$id = (int) $id;
@@ -80,7 +80,7 @@ class Contact extends ApiResource
 	 * @param $options array
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactList\Contact objects
 	 */
-	public static function fetch($list_id, $filter = null, $options = null)
+	public static function fetch($list_id = null, $filter = null, $options = null)
 	{
 		$list_id = (int) $list_id;
 		if ($list_id < 1) {
