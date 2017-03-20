@@ -61,8 +61,8 @@ class ContactList extends ApiResource
 	 * Fetches a collection of contact lists belonging to the account.
 	 * @access public
 	 * @static
-	 * @param $filters SurveyGizmo\Filter - filter instance
-	 * @param $options array
+	 * @param SurveyGizmo\Filter $filter - Filter instance
+	 * @param array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactList objects
 	 */
 	public static function fetch($filter = null, $options = null)

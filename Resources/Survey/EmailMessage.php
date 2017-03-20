@@ -20,11 +20,11 @@ class EmailMessage extends ApiResource
 	 * @access public
 	 * @param int $survey_id - Survey ID
 	 * @param int $campaign_id - parent Survey Campaign ID
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\EmailMessage Objects
 	 */
-	public static function fetch($survey_id = null, $campaign_id = null, $filters = null, $options = null) {
+	public static function fetch($survey_id = null, $campaign_id = null, $filter = null, $options = null) {
 		if ($campaign_id < 1 && $survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing campaign or survey ID");
 		}

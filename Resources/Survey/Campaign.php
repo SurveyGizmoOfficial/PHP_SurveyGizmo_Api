@@ -19,11 +19,11 @@ class Campaign extends ApiResource
 	 * Fetch list of SurveyGizmoCampaign Objects
 	 * @access public
 	 * @param int $survey_id - Survey ID
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Campaign Object
 	 */
-	public static function fetch($survey_id = null, $filters = null, $options = null) {
+	public static function fetch($survey_id = null, $filter = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
