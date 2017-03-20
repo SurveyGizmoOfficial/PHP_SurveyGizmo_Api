@@ -29,6 +29,14 @@ class ApiRequest
 	private static $API_URL = 'restapi.surveygizmo.com/v5';
 
 	/**
+	 * If true the request will be repeated until request is not rate
+	 * limited.
+	 *
+	 * @var bool
+	 */
+	private static $repeat_rate_limited_request = false;
+
+	/**
 	 * The JSON decoded return from the API.
 	 * @var stdClass null
 	 */
@@ -107,30 +115,43 @@ class ApiRequest
 	 */
 	private function requestByCURL () {
 		try {
-			// Open CURL handle
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $this->_url);
-			curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
-			curl_setopt($ch, CURLOPT_VERBOSE, 0);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-			if ($this->method == "PUT" || $this->method == "POST") {
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
-			}
-			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$sendRequest = true;
+			while ($sendRequest === true) {
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $this->_url);
+				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
+				curl_setopt($ch, CURLOPT_VERBOSE, 0);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+				if ($this->method == "PUT" || $this->method == "POST") {
+					curl_setopt($ch, CURLOPT_POST, 1);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
+				}
+				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-			// Execute CURL request
-			$buffer = curl_exec($ch);
+				// Execute CURL request
+				$buffer = curl_exec($ch);
 
-			// Check HTTP status code
-			$this->request_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				// Check HTTP status code
+				$this->request_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-			// Close CURL handle
-			curl_close($ch);
+				// Close CURL handle
+				curl_close($ch);
 
-			if ($buffer !== false) {
-				$this->request_return = json_decode($buffer);
+				if ($buffer !== false) {
+					$this->request_return = json_decode($buffer);
+				}
+
+				// Do not repeat this request if request was not rate limited
+				// https://apihelp.surveygizmo.com/help/api-request-limits
+				if (
+					self::$repeat_rate_limited_request === false ||
+					( ! empty($this->request_return->code) && $this->request_return->code != 429)
+				) {
+					$sendRequest = false;
+				} else {
+					sleep(10);
+				}
 			}
 		} catch (Exception $e) {
 			new SurveyGizmoException(500, "CURL error", $e);
@@ -220,14 +241,14 @@ class ApiRequest
 	public function setOptions(array $options = null)
 	{
 		// Page # (default to first)
-		if ($options['page'] >= 1) {
+		if ( ! empty($options['page'])) {
 			$this->page = $options['page'];
 		} else {
 			$this->page = 1;
 		}
 
 		// Results per page (default to 50)
-		if ($options['limit'] >= 1) {
+		if ( ! empty($options['limit'])) {
 			$this->limit = $options['limit'];
 		} else {
 			$this->limit = 50;
@@ -244,6 +265,16 @@ class ApiRequest
 	public static function setBaseURI($path)
 	{
 		self::$API_URL = $path;
+	}
+
+	/**
+	 * Turn repeating of rate limited request on/off.
+	 *
+	 * @param bool $val
+	 */
+	public static function setRepeatRateLimitedRquest($val)
+	{
+		self::$repeat_rate_limited_request = boolval($val);
 	}
 
 	/**
