@@ -34,7 +34,7 @@ class Response extends ApiResource {
 	 * Fetch list of SurveyGizmo Response Objects by survey id
 	 * @access public
 	 * @param int $survey_id - Survey ID
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Response Object
 	 */

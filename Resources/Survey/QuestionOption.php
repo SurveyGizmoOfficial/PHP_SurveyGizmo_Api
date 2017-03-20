@@ -18,8 +18,8 @@ class QuestionOption extends ApiResource {
 		return parent::_delete();
 	}
 
-	public static function fetch($filters=null, $options=null){
-		return parent::_fetch(get_class($this), $filter);
+	public static function fetch($filter = null, $options = null){
+		return parent::_fetch(get_class($this), $filter, $options);
 	}
 }
 ?>

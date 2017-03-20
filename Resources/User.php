@@ -60,8 +60,8 @@ class User extends ApiResource
 	 * Fetches a collection of users belonging to the account.
 	 * @access public
 	 * @static
-	 * @param $filters SurveyGizmo\Filter - filter instance
-	 * @param $options array
+	 * @param SurveyGizmo\Filter $filter Filter instance
+	 * @param array $options
 	 * @return SurveyGizmo\ApiResponse
 	 */
 	public static function fetch($filter = null, $options = null)

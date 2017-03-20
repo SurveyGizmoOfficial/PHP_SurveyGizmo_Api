@@ -35,7 +35,7 @@ class Survey extends ApiResource
 	/**
 	 * Fetch list of SurveyGizmo Survey Objects
 	 * @access public
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - Filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Survey Objects
 	 */
