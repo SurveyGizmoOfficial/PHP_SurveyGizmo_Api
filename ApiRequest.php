@@ -100,7 +100,7 @@ class ApiRequest
 	}
 
 	/**
-	 * Executes the CURL request to the API. Sets the results of the API call 
+	 * Executes the CURL request to the API. Sets the results of the API call
 	 * on this instance.
 	 * @access private
 	 * @return void
@@ -257,8 +257,8 @@ class ApiRequest
 	 * @param $filter null
 	 * @return SurveyGizmo\ApiResponse
 	 */
-	public static function call ($path, $data = null, array $options = null, $filter = null) {
-		$request = new ApiRequest;
+	public static function call ($path, $data = null, array $options = null, $filter = null, $method = "GET") {
+		$request = new ApiRequest($method);
 		$request->path = '/' . $path;
 		$request->data = $data;
 		$request->filter = $filter;
