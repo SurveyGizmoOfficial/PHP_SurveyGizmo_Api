@@ -220,14 +220,14 @@ class ApiRequest
 	public function setOptions(array $options = null)
 	{
 		// Page # (default to first)
-		if ($options['page'] >= 1) {
+		if ( ! empty($options['page'])) {
 			$this->page = $options['page'];
 		} else {
 			$this->page = 1;
 		}
 
 		// Results per page (default to 50)
-		if ($options['limit'] >= 1) {
+		if ( ! empty($options['limit'])) {
 			$this->limit = $options['limit'];
 		} else {
 			$this->limit = 50;
