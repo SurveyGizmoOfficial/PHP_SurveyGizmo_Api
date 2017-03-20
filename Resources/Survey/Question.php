@@ -11,7 +11,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class Question extends ApiResource {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{survey_id}/surveyquestion/{id}";
 
@@ -27,18 +27,18 @@ class Question extends ApiResource {
 		if ($name == 'sub_questions') {
 			$this->formatSubQuestions();
 		}
-		
+
 	}
 
 	/**
 	 * Fetch list of SurveyGizmo Question Objects by survey id
 	 * @access public
 	 * @param int $survey_id - Survey ID
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Question Objects
 	 */
-	public static function fetch($survey_id, $filters = null, $options = null) {
+	public static function fetch($survey_id = null, $filter = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
@@ -53,7 +53,7 @@ class Question extends ApiResource {
 	 * @param int $id - question id
 	 * @return SurveyGizmo\Question Object
 	 */
-	public static function get($survey_id, $id){
+	public static function get($survey_id = null, $id = null){
 		if ($id < 1 && $survey_id < 1) {
 			throw new SurveyGizmoException(500, "IDs required");
 		}
@@ -112,7 +112,7 @@ class Question extends ApiResource {
 			$new_question = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Question", $sub_question);
 			$return_questions[$new_question->id] = $new_question;
 		}
-		$this->sub_questions = $return_questions; 
+		$this->sub_questions = $return_questions;
 	}
 }
 ?>

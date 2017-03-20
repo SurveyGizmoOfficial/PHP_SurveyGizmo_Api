@@ -100,7 +100,7 @@ class ApiRequest
 	}
 
 	/**
-	 * Executes the CURL request to the API. Sets the results of the API call 
+	 * Executes the CURL request to the API. Sets the results of the API call
 	 * on this instance.
 	 * @access private
 	 * @return void
@@ -220,14 +220,14 @@ class ApiRequest
 	public function setOptions(array $options = null)
 	{
 		// Page # (default to first)
-		if ($options['page'] >= 1) {
+		if ( ! empty($options['page'])) {
 			$this->page = $options['page'];
 		} else {
 			$this->page = 1;
 		}
 
 		// Results per page (default to 50)
-		if ($options['limit'] >= 1) {
+		if ( ! empty($options['limit'])) {
 			$this->limit = $options['limit'];
 		} else {
 			$this->limit = 50;
@@ -257,8 +257,8 @@ class ApiRequest
 	 * @param $filter null
 	 * @return SurveyGizmo\ApiResponse
 	 */
-	public static function call ($path, $data = null, array $options = null, $filter = null) {
-		$request = new ApiRequest;
+	public static function call ($path, $data = null, array $options = null, $filter = null, $method = "GET") {
+		$request = new ApiRequest($method);
 		$request->path = '/' . $path;
 		$request->data = $data;
 		$request->filter = $filter;
