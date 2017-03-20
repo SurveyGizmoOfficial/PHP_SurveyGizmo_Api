@@ -11,7 +11,7 @@ use SurveyGizmo\Resources\ContactList\Contact;
 class ContactList extends ApiResource
 {
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/contactlist/{id}";
 
@@ -46,7 +46,7 @@ class ContactList extends ApiResource
 	 * @param $id int - Contact list ID
 	 * @return SurveyGizmo\ContactList Object
 	 */
-	public static function get($id)
+	public static function get($id = null)
 	{
 		$id = (int) $id;
 		if ($id < 1) {
@@ -61,8 +61,8 @@ class ContactList extends ApiResource
 	 * Fetches a collection of contact lists belonging to the account.
 	 * @access public
 	 * @static
-	 * @param $filters SurveyGizmo\Filter - filter instance
-	 * @param $options array
+	 * @param SurveyGizmo\Filter $filter - Filter instance
+	 * @param array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\ContactList objects
 	 */
 	public static function fetch($filter = null, $options = null)

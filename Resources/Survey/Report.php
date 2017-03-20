@@ -12,7 +12,7 @@ class Report extends ApiResource
 {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{survey_id}/surveyreport/{id}";
 
@@ -20,11 +20,11 @@ class Report extends ApiResource
 	 * Fetch list of SurveyGizmo Report Objects by survey id
 	 * @access public
 	 * @param int $survey_id - Survey ID
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Report Objects
 	 */
-	public static function fetch($survey_id, $filters = null, $options = null) {
+	public static function fetch($survey_id = null, $filter = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
@@ -39,7 +39,7 @@ class Report extends ApiResource
 	 * @param int $id - question id
 	 * @return SurveyGizmo\Report Object
 	 */
-	public static function get($survey_id, $id)
+	public static function get($survey_id = null, $id = null)
 	{
 		if ($survey_id < 1 || $id < 1) {
                         throw new SurveyGizmoException(500, "Missing survey ID and/or report ID");

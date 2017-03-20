@@ -10,7 +10,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class Team extends ApiResource
 {
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/accountteams/{id}";
 
@@ -45,7 +45,7 @@ class Team extends ApiResource
 	 * @param $id int - Team ID
 	 * @return SurveyGizmo\Team Object
 	 */
-	public static function get($id)
+	public static function get($id = null)
 	{
 		$id = (int) $id;
 		if ($id < 1) {
@@ -60,8 +60,8 @@ class Team extends ApiResource
 	 * Fetches a collection of teams belonging to the account.
 	 * @access public
 	 * @static
-	 * @param $filters SurveyGizmo\Filter - filter instance
-	 * @param $options array
+	 * @param SurveyGizmo\Filter $filter Filter instance
+	 * @param array $options
 	 * @return SurveyGizmo\ApiResponse
 	 */
 	public static function fetch($filter = null, $options = null)

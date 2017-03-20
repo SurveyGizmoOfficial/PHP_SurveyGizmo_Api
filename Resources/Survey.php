@@ -7,11 +7,11 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 /**
  * Class for Survey API objects - the blood and soul of SurveyGizmo!
  */
-class Survey extends ApiResource 
+class Survey extends ApiResource
 {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{id}";
 
@@ -35,7 +35,7 @@ class Survey extends ApiResource
 	/**
 	 * Fetch list of SurveyGizmo Survey Objects
 	 * @access public
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - Filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Survey Objects
 	 */
@@ -43,14 +43,14 @@ class Survey extends ApiResource
 	{
 		return self::_fetch(array('id' => ''), $filter, $options);
 	}
-	
+
 	/**
 	 * Get Survey object by survey id
 	 * @access public
 	 * @param int $id - survey id
 	 * @return SurveyGizmo\Survey Object
 	 */
-	public static function get($id)
+	public static function get($id = null)
 	{
 		if ($id < 1) {
 			throw new SurveyGizmoException(500, "ID required");
@@ -122,7 +122,7 @@ class Survey extends ApiResource
 	{
 		return $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Question", $filter, $options);
 	}
-	
+
 	/**
 	 * Return question from current Survey by question id
 	 * @access public
@@ -255,7 +255,7 @@ class Survey extends ApiResource
 
 	/*FORMATERS*/
 	/**
-	 * Format teams! We want to keep things useable and organized, 
+	 * Format teams! We want to keep things useable and organized,
 	 * hence the custom formatter for teams
 	 * Loops through teams, formats the team
 	 * @access private
@@ -273,9 +273,9 @@ class Survey extends ApiResource
 	}
 
 	/**
-	 * Format pages! We want to keep things useable and organized, 
+	 * Format pages! We want to keep things useable and organized,
 	 * hence the custom formatter for pages
-	 * Loops through pages, formats the page, and each page formats its questions. 
+	 * Loops through pages, formats the page, and each page formats its questions.
 	 * @access private
 	 * @return void
 	 */
@@ -333,7 +333,7 @@ class Survey extends ApiResource
 		}
 		return $return;
 	}
-	
+
 	/**
 	 * Format individual question options
 	 * @access private

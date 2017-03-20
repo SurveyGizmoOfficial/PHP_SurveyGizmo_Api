@@ -11,7 +11,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class EmailMessage extends ApiResource
 {
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{survey_id}/surveycampaign/{campaign_id}/emailmessage/{id}";
 
@@ -20,11 +20,11 @@ class EmailMessage extends ApiResource
 	 * @access public
 	 * @param int $survey_id - Survey ID
 	 * @param int $campaign_id - parent Survey Campaign ID
-	 * @param SurveyGizmo\Filter $filters - filter object
+	 * @param SurveyGizmo\Filter $filter - filter object
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\EmailMessage Objects
 	 */
-	public static function fetch($survey_id, $campaign_id, $filters = null, $options = null) {
+	public static function fetch($survey_id = null, $campaign_id = null, $filter = null, $options = null) {
 		if ($campaign_id < 1 && $survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing campaign or survey ID");
 		}
@@ -40,7 +40,7 @@ class EmailMessage extends ApiResource
 	 * @param int $id - email id
 	 * @return SurveyGizmo\EmailMessage Object
 	 */
-	public static function get($survey_id, $campaign_id, $id){
+	public static function get($survey_id = null, $campaign_id = null, $id = null){
 		if ($id < 1 && $survey_id < 1 && $campaign_id < 1) {
 			throw new SurveyGizmoException(500, "IDs required");
 		}
