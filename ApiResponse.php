@@ -20,6 +20,12 @@ class ApiResponse
 	public $code;
 
 	/**
+	 * Id of the object that has been created.
+	 * @var int
+	 */
+	public $id;
+
+	/**
 	 * Error message.
 	 * @var string
 	 */
@@ -82,6 +88,7 @@ class ApiResponse
 				$this->results_per_page = $json_obj->results_per_page;
 			}
 			$this->data = isset($json_obj->data) ? $json_obj->data : null;
+			$this->id = isset($json_obj->id) ? $json_obj->id : null;
 		}
 	}
 
