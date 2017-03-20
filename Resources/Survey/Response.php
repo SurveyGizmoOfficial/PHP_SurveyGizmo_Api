@@ -11,7 +11,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class Response extends ApiResource {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{survey_id}/surveyresponse/{id}";
 
@@ -38,7 +38,7 @@ class Response extends ApiResource {
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse with SurveyGizmo\Response Object
 	 */
-	public static function fetch($survey_id, $filter = null, $options = null) {
+	public static function fetch($survey_id = null, $filter = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
@@ -53,13 +53,13 @@ class Response extends ApiResource {
 	 * @param int $id - response id
 	 * @return SurveyGizmo\Response Object
 	 */
-	public static function get($survey_id, $id){
+	public static function get($survey_id = null, $id = null){
 		return self::_get(array(
 			'survey_id' => $survey_id,
 			'id' => $id
 		));
 	}
-	
+
 	/**
 	 * Saves current Response Object
  	 * @access public
@@ -89,11 +89,11 @@ class Response extends ApiResource {
 	 * Format survey_data into the data property so that it will post correctly
 	 * @access private
 	 * @param Array $survey_data - Response survey_data property
-	 * @return Array $payload_data - formatted data. 
+	 * @return Array $payload_data - formatted data.
 	 */
 	private function processSurveyData($survey_data){
 		$payload_data = array();
-		//loop through each question 
+		//loop through each question
 		foreach ($survey_data as $question_id => $question_data) {
 
 			//Sub-questions (Tables, Custom Groups, etc.)

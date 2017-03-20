@@ -10,7 +10,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class User extends ApiResource
 {
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/accountuser/{id}";
 
@@ -45,7 +45,7 @@ class User extends ApiResource
 	 * @param $id int - User ID
 	 * @return SurveyGizmo\User Object
 	 */
-	public static function get($id)
+	public static function get($id = null)
 	{
 		$id = (int) $id;
 		if ($id < 1) {

@@ -11,7 +11,7 @@ use SurveyGizmo\Resources\ContactList\Contact;
 class ContactList extends ApiResource
 {
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/contactlist/{id}";
 
@@ -46,7 +46,7 @@ class ContactList extends ApiResource
 	 * @param $id int - Contact list ID
 	 * @return SurveyGizmo\ContactList Object
 	 */
-	public static function get($id)
+	public static function get($id = null)
 	{
 		$id = (int) $id;
 		if ($id < 1) {

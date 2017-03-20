@@ -11,7 +11,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 class Page extends ApiResource {
 
 	/**
-	 * API call path 
+	 * API call path
 	 */
 	static $path = "/survey/{survey_id}/surveypage/{id}";
 
@@ -23,7 +23,7 @@ class Page extends ApiResource {
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\Page Objects
 	 */
-	public static function fetch($survey_id, $filters = null, $options = null) {
+	public static function fetch($survey_id = null, $filters = null, $options = null) {
 		if ($survey_id < 1) {
 			throw new SurveyGizmoException(500, "Missing survey ID");
 		}
@@ -36,9 +36,9 @@ class Page extends ApiResource {
 	 * @access public
 	 * @param int $survey_id - survey id
 	 * @param int $id - page id
-	 * @return SurveyGizmo\Page Object 
+	 * @return SurveyGizmo\Page Object
 	 */
-	public static function get($survey_id, $id){
+	public static function get($survey_id = null, $id = null){
 		if ($id < 1 && $survey_id < 1) {
 			throw new SurveyGizmoException(500, "IDs required");
 		}
@@ -59,7 +59,7 @@ class Page extends ApiResource {
 			'id' => $this->exists() ? $this->id : ''
 		));
 	}
-	
+
 	/**
 	 * Delete current Page Obj
 	 * @access public
