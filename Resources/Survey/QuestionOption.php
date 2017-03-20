@@ -11,7 +11,7 @@ class QuestionOption extends ApiResource {
 	public function save(){
 		return parent::_save();
 	}
-	public static function get($id){
+	public static function get($id = null){
 		return parent::_get(get_class($this),$id);
 	}
 	public function delete(){
