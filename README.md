@@ -61,7 +61,7 @@ try {
 
 #### Rate limiting
 For info on API request limiting see https://apihelp.surveygizmo.com/help/api-request-limits.
-```
+```php
 //set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
 SurveyGizmo\ApiRequest::setRepeatRateLimitedRquest(10);
 ```
