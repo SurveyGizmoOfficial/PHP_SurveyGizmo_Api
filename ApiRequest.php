@@ -29,6 +29,16 @@ class ApiRequest
 	private static $API_URL = 'restapi.surveygizmo.com/v5';
 
 	/**
+	 * If set the request will be repeated until request is not rate
+	 * limited.
+	 *
+	 * @var int
+	 *   - 0 to disable
+	 *   - Number for maximum retries of the request
+	 */
+	private static $repeat_rate_limited_request = 0;
+
+	/**
 	 * The JSON decoded return from the API.
 	 * @var stdClass null
 	 */
@@ -107,30 +117,54 @@ class ApiRequest
 	 */
 	private function requestByCURL () {
 		try {
-			// Open CURL handle
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $this->_url);
-			curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
-			curl_setopt($ch, CURLOPT_VERBOSE, 0);
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-			if ($this->method == "PUT" || $this->method == "POST") {
-				curl_setopt($ch, CURLOPT_POST, 1);
-				curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
-			}
-			curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-			// Execute CURL request
-			$buffer = curl_exec($ch);
+			$sendRequest = true;
+			$nrRetries = self::$repeat_rate_limited_request;
 
-			// Check HTTP status code
-			$this->request_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+			while ($sendRequest === true) {
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $this->_url);
+				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
+				curl_setopt($ch, CURLOPT_VERBOSE, 0);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+				if ($this->method == "PUT" || $this->method == "POST") {
+					curl_setopt($ch, CURLOPT_POST, 1);
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
+				}
+				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
-			// Close CURL handle
-			curl_close($ch);
+				// Execute CURL request
+				$buffer = curl_exec($ch);
 
-			if ($buffer !== false) {
-				$this->request_return = json_decode($buffer);
+				// Check HTTP status code
+				$this->request_http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+				// Close CURL handle
+				curl_close($ch);
+
+				if ($buffer !== false) {
+					$this->request_return = json_decode($buffer);
+				}
+
+				// By default do not send request again.
+				$sendRequest = false;
+
+				// Rate limiting
+				// - see https://apihelp.surveygizmo.com/help/api-request-limits (status code 429)
+				// - When sending many requests the API sometimes returns a 400 status "Please wait for other requests to complete"
+				//   in this case also repeat the request. Do not use the status code because other replies also seem to use this status code.
+				if (
+					$nrRetries > 0 &&
+					(
+						( ! empty($this->request_return->code) && $this->request_return->code != 429) ||
+						( ! empty($this->request_return->message) && $this->request_return->message == 'Please wait for other requests to complete')
+					)
+				) {
+					sleep(5);
+					$nrRetries--;
+					$sendRequest = true;
+				}
 			}
 		} catch (Exception $e) {
 			new SurveyGizmoException(500, "CURL error", $e);
@@ -244,6 +278,18 @@ class ApiRequest
 	public static function setBaseURI($path)
 	{
 		self::$API_URL = $path;
+	}
+
+	/**
+	 * Turn repeating of rate limited request on/off.
+	 *
+	 * @param int $val
+	 *   - 0 to disable
+	 *   - Number for maximum retries of the request
+	 */
+	public static function setRepeatRateLimitedRquest($val)
+	{
+		self::$repeat_rate_limited_request = (int) $val;
 	}
 
 	/**
