@@ -7,7 +7,7 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 - Survey
   - Responses
   - Questions
-  - Pages 
+  - Pages
   - Statistics
   - Reports
   - Campaigns
@@ -58,6 +58,14 @@ try {
 	die("Error Authenticating");
 }
 ```
+
+#### Rate limiting
+For info on API request limiting see https://apihelp.surveygizmo.com/help/api-request-limits.
+```
+//set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
+SurveyGizmo\ApiRequest::setRepeatRateLimitedRquest(10);
+```
+
 ### Surveys
 
 ###### Fetching Surveys
@@ -114,7 +122,7 @@ The Survey object provides a few help functions to easily access related collect
 ```
 
 ### Questions
-To access the questions on a survey you'll need an instance of a SurveyGizmo\Resources\Survey object. 
+To access the questions on a survey you'll need an instance of a SurveyGizmo\Resources\Survey object.
 
 ###### Get all Survey Questions
 ```php
@@ -149,7 +157,7 @@ $ret = $response->save();
 
 
 #### Filtering & Paging Objects
-All fetch methods take both optional $filter and $options arguments. 
+All fetch methods take both optional $filter and $options arguments.
 
 ###### Filtering
 ```php
