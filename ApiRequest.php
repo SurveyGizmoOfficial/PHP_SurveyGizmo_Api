@@ -29,12 +29,14 @@ class ApiRequest
 	private static $API_URL = 'restapi.surveygizmo.com/v5';
 
 	/**
-	 * If true the request will be repeated until request is not rate
+	 * If set the request will be repeated until request is not rate
 	 * limited.
 	 *
-	 * @var bool
+	 * @var int
+	 *   - 0 to disable
+	 *   - Number for maximum retries of the request
 	 */
-	private static $repeat_rate_limited_request = false;
+	private static $repeat_rate_limited_request = 0;
 
 	/**
 	 * The JSON decoded return from the API.
@@ -115,7 +117,10 @@ class ApiRequest
 	 */
 	private function requestByCURL () {
 		try {
+
 			$sendRequest = true;
+			$nrRetries = self::$repeat_rate_limited_request;
+
 			while ($sendRequest === true) {
 				$ch = curl_init();
 				curl_setopt($ch, CURLOPT_URL, $this->_url);
@@ -142,15 +147,23 @@ class ApiRequest
 					$this->request_return = json_decode($buffer);
 				}
 
-				// Do not repeat this request if request was not rate limited
-				// https://apihelp.surveygizmo.com/help/api-request-limits
+				// By default do not send request again.
+				$sendRequest = false;
+
+				// Rate limiting
+				// - see https://apihelp.surveygizmo.com/help/api-request-limits (status code 429)
+				// - When sending many requests the API sometimes returns a 400 status "Please wait for other requests to complete"
+				//   in this case also repeat the request. Do not use the status code because other replies also seem to use this status code.
 				if (
-					self::$repeat_rate_limited_request === false ||
-					( ! empty($this->request_return->code) && $this->request_return->code != 429)
+					$nrRetries > 0 &&
+					(
+						( ! empty($this->request_return->code) && $this->request_return->code != 429) ||
+						( ! empty($this->request_return->message) && $this->request_return->message == 'Please wait for other requests to complete')
+					)
 				) {
-					$sendRequest = false;
-				} else {
-					sleep(10);
+					sleep(5);
+					$nrRetries--;
+					$sendRequest = true;
 				}
 			}
 		} catch (Exception $e) {
