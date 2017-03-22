@@ -38,7 +38,7 @@ class ApiResource
 		// Process the return
 		if ($response->data) {
 			// Determine the name of the class that will be instantiated
-			$class_name = is_array($options) && $options['class'] ? $options['class'] : get_called_class();
+			$class_name = is_array($options) && isset($options['class']) ? $options['class'] : get_called_class();
 			// Form objects from the data returned from the API
 			$response->data = self::_parseObjects($class_name, $response->data);
 			// Add extra parameters to each instance (e.g. survey_id)
@@ -55,7 +55,7 @@ class ApiResource
 		// Return the modified ApiResponse
 		return $response;
 	}
-	
+
 	/**
 	 * Returns the specific instance of a resource using an HTTP GET.
 	 * @access public
@@ -147,7 +147,7 @@ class ApiResource
 	 */
 	public function _delete($params = null)
 	{
-		// Determine whether this object actually exists in the API. Override the `exists` 
+		// Determine whether this object actually exists in the API. Override the `exists`
 		// method in the resource classes to change the behavior
 		if (!$this->exists()) {
 			throw new SurveyGizmoException(500, "Resource does not exist");
@@ -260,7 +260,7 @@ class ApiResource
 
 	/**
 	 * Save the instance of this resource. By default this method is not supported.
-	 * Extend in order to change behavior. 
+	 * Extend in order to change behavior.
 	 * @access public
 	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
@@ -271,7 +271,7 @@ class ApiResource
 
 	/**
 	 * Deletes the instance of this resource. By default this method is not supported.
-	 * Extend in order to change behavior. 
+	 * Extend in order to change behavior.
 	 * @access public
 	 * @return SurveyGizmo\Helpers\ApiResponse
 	 */
