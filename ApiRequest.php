@@ -131,7 +131,7 @@ class ApiRequest
 					curl_setopt($ch, CURLOPT_POST, 1);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
 				}
-				curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+				curl_setopt($ch, CURLOPT_TIMEOUT, 35);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 				// Execute CURL request
@@ -157,7 +157,7 @@ class ApiRequest
 				if (
 					$nrRetries > 0 &&
 					(
-						$this->request_http_code == 429 || 
+						$this->request_http_code == 429 ||
 						( ! empty($this->request_return->code) && $this->request_return->code == 429) ||
 						( ! empty($this->request_return->message) && $this->request_return->message == 'Please wait for other requests to complete')
 					)
