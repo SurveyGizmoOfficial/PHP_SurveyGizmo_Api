@@ -14,8 +14,7 @@ class SurveyGizmoException extends Exception
 	// Used for HTTP-like status code
 	protected $code = 500;
 
-	// Redefine the exception so code is first parameter
-	public function __construct($code = 0, $message, Exception $previous = null) {
+	public function __construct($code = 0, $message = "", Exception $previous = null) {
 		parent::__construct($message, $code, $previous);
 
 		// Default the message based on code (if empty)
