@@ -23,10 +23,10 @@ class Contact extends ApiResource
 	public function save()
 	{
 		if ((int) $this->list_id < 1) {
-			throw new SurveyGizmoException(500, "Contact needs to belong to a contact list");
+			throw new SurveyGizmoException("Contact needs to belong to a contact list", 500);
 		}
 		if (empty($this->email_address)) {
-			throw new SurveyGizmoException(500, "Contact requires an email");
+			throw new SurveyGizmoException("Contact requires an email", 500);
 		}
 		return $this->_save(array(
 			'id' => $this->id,
@@ -42,7 +42,7 @@ class Contact extends ApiResource
 	public function delete()
 	{
 		if ((int) $this->list_id < 1) {
-			throw new SurveyGizmoException(500, "Contact needs to belong to a contact list");
+			throw new SurveyGizmoException("Contact needs to belong to a contact list", 500);
 		}
 		return self::_delete(array(
 			'id' => $this->id,
@@ -63,7 +63,7 @@ class Contact extends ApiResource
 		$list_id = (int) $list_id;
 		$id = (int) $id;
 		if ($id < 1 || $list_id < 1) {
-			throw new SurveyGizmoException(500, "Contact list ID and contact ID required");
+			throw new SurveyGizmoException("Contact list ID and contact ID required", 500);
 		}
 		return self::_get(array(
 			'id' => $id,
@@ -84,7 +84,7 @@ class Contact extends ApiResource
 	{
 		$list_id = (int) $list_id;
 		if ($list_id < 1) {
-			throw new SurveyGizmoException(500, "Contact list ID required");
+			throw new SurveyGizmoException("Contact list ID required", 500);
 		}
 		return self::_fetch(array(
 			'id' => '',

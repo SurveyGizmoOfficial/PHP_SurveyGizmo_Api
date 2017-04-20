@@ -49,7 +49,7 @@ class User extends ApiResource
 	{
 		$id = (int) $id;
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "User ID required");
+			throw new SurveyGizmoException("User ID required", 500);
 		}
 		return self::_get(array(
 			'id' => $id

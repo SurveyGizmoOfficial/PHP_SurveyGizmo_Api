@@ -53,7 +53,7 @@ class Survey extends ApiResource
 	public static function get($id = null)
 	{
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "ID required");
+			throw new SurveyGizmoException("ID required", 500);
 		}
 		return self::_get(array(
 			'id' => $id

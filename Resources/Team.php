@@ -49,7 +49,7 @@ class Team extends ApiResource
 	{
 		$id = (int) $id;
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "Team ID required");
+			throw new SurveyGizmoException("Team ID required", 500);
 		}
 		return self::_get(array(
 			'id' => $id

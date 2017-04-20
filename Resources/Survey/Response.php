@@ -40,7 +40,7 @@ class Response extends ApiResource {
 	 */
 	public static function fetch($survey_id = null, $filter = null, $options = null) {
 		if ($survey_id < 1) {
-			throw new SurveyGizmoException(500, "Missing survey ID");
+			throw new SurveyGizmoException("Missing survey ID", 500);
 		}
 		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
 		return $response;
