@@ -19,7 +19,7 @@ class Statistics extends ApiResource {
 
 	public static function fetch($survey_id = null){
 		if($survey_id < 1){
-			throw new SurveyGizmoException(500, "Survey ID required");
+			throw new SurveyGizmoException("Survey ID required", 500);
 		}
 		return self::_fetch(array(
 			'survey_id' => $survey_id

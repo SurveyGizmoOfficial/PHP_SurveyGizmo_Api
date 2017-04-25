@@ -25,7 +25,7 @@ class Campaign extends ApiResource
 	 */
 	public static function fetch($survey_id = null, $filter = null, $options = null) {
 		if ($survey_id < 1) {
-			throw new SurveyGizmoException(500, "Missing survey ID");
+			throw new SurveyGizmoException("Missing survey ID", 500);
 		}
 		$response = self::_fetch(array('id' => '', 'survey_id' => $survey_id), $filter, $options);
 		return $response;
@@ -40,7 +40,7 @@ class Campaign extends ApiResource
 	 */
 	public static function get($survey_id = null, $id = null){
 		if ($id < 1 && $survey_id < 1) {
-			throw new SurveyGizmoException(500, "IDs required");
+			throw new SurveyGizmoException("IDs required", 500);
 		}
 		return self::_get(array(
 			'survey_id' => $survey_id,

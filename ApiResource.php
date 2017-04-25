@@ -150,7 +150,7 @@ class ApiResource
 		// Determine whether this object actually exists in the API. Override the `exists`
 		// method in the resource classes to change the behavior
 		if (!$this->exists()) {
-			throw new SurveyGizmoException(500, "Resource does not exist");
+			throw new SurveyGizmoException("Resource does not exist", 500);
 		}
 		// Get the URL string
 		$path = self::_mergePath(static::$path, $params);
@@ -242,7 +242,7 @@ class ApiResource
 	 */
 	public static function fetch()
 	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+		throw new SurveyGizmoException('', SurveyGizmoException::NOT_SUPPORTED);
 	}
 
 	/**
@@ -255,7 +255,7 @@ class ApiResource
 	 */
 	public static function get()
 	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+		throw new SurveyGizmoException('', SurveyGizmoException::NOT_SUPPORTED);
 	}
 
 	/**
@@ -266,7 +266,7 @@ class ApiResource
 	 */
 	public function save()
 	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+		throw new SurveyGizmoException('', SurveyGizmoException::NOT_SUPPORTED);
 	}
 
 	/**
@@ -277,7 +277,7 @@ class ApiResource
 	 */
 	public function delete()
 	{
-		throw new SurveyGizmoException(SurveyGizmoException::NOT_SUPPORTED);
+		throw new SurveyGizmoException('', SurveyGizmoException::NOT_SUPPORTED);
 	}
 
 }

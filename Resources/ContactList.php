@@ -50,7 +50,7 @@ class ContactList extends ApiResource
 	{
 		$id = (int) $id;
 		if ($id < 1) {
-			throw new SurveyGizmoException(500, "Contact List ID required");
+			throw new SurveyGizmoException("Contact List ID required", 500);
 		}
 		return self::_get(array(
 			'id' => $id

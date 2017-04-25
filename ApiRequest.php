@@ -168,7 +168,7 @@ class ApiRequest
 				}
 			}
 		} catch (Exception $e) {
-			new SurveyGizmoException(500, "CURL error", $e);
+			new SurveyGizmoException("CURL error", 500, $e);
 		}
 	}
 
@@ -197,20 +197,20 @@ class ApiRequest
 	{
 		// The API URL must be set
 		if (!self::$API_URL) {
-			new SurveyGizmoException(500, "ApiRequest: API URL required");
+			new SurveyGizmoException("ApiRequest: API URL required", 500);
 		}
 		// The API resource URL must be set
 		if (!$this->path) {
-			new SurveyGizmoException(500, "ApiRequest: resource URL required");
+			new SurveyGizmoException("ApiRequest: resource URL required", 500);
 		}
 		// The request must be one of the 4 types
 		if (!in_array($this->method, array('GET', 'POST', 'PUT', 'DELETE'))) {
-			new SurveyGizmoException(500, "ApiRequest: invalid method type");
+			new SurveyGizmoException("ApiRequest: invalid method type", 500);
 		}
 		// The API credentials must be set prior to making a request
 		$creds = SurveyGizmoAPI::getAuth();
 		if (!$creds['AuthToken'] || !$creds['AuthSecret']) {
-			new SurveyGizmoException(500, "ApiRequest: API credentials are required");
+			new SurveyGizmoException("ApiRequest: API credentials are required", 500);
 		}
 
 		// Construct the array of parameters
