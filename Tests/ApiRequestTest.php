@@ -3,7 +3,7 @@ namespace SurveyGizmo\Tests;
 
 use SurveyGizmo\ApiRequest;
 
-class RequestTest extends TestCase
+class ApiRequestTest extends TestCase
 {
 
 /*======= TestSuite Setup ======*/
