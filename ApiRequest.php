@@ -288,9 +288,20 @@ class ApiRequest
 	 *   - 0 to disable
 	 *   - Number for maximum retries of the request
 	 */
+	public static function setRepeatRateLimitedRequest($val) {
+		self::$repeat_rate_limited_request = (int) $val;
+	}
+
+	/**
+	 * Fix for typography issue in previous release
+	 *
+	 * @param int $val
+	 *   - 0 to disable
+	 *   - Number for maximum retries of the request
+	 */
 	public static function setRepeatRateLimitedRquest($val)
 	{
-		self::$repeat_rate_limited_request = (int) $val;
+		self::setRepeatRateLimitedRequest($val);
 	}
 
 	/**

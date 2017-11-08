@@ -69,7 +69,7 @@ class Survey extends ApiResource
 	{
 		$this->type = empty($this->type) ? "survey" : $this->type;
 		return $this->_save(array(
-			'id' => $this->id
+			'id' => $this->exists() ? $this->id : ''
 		));
 	}
 
