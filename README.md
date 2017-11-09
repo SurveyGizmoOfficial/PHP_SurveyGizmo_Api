@@ -1,6 +1,6 @@
 # Official PHP library for SurveyGizmo API
 
-https://poser.pugx.org/surveygizmo/surveygizmo-api/version
+[![Latest Stable Version](https://poser.pugx.org/surveygizmo/surveygizmo-api/version)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
 
 ## Summary
 The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Resources\Survey).
