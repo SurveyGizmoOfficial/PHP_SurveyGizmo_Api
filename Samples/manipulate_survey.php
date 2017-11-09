@@ -21,15 +21,14 @@ function testVardump($dump)
 testLog("TESTING Library");
 //Require autoloader
 require_once "../SurveyGizmoAutoLoader.php";
-//set token & secret
-$api_key = "";
-$api_secret = "";
+//set token & secret (From .credentials file, copy .credentials.example to .credentials and supply your API authentication credentials accordingly)
+$credentials = parse_ini_file('.credentials');
 
 //authenticate
 testLog("Authenticating");
 
 try {
-	\SurveyGizmo\SurveyGizmoAPI::auth($api_key, $api_secret);
+	\SurveyGizmo\SurveyGizmoAPI::auth($credentials['SG_API_KEY'], $credentials['SG_API_SECRET']);
 } catch (\SurveyGizmo\Helpers\SurveyGizmoException $e) {
 	testLog("Error Authenticating", $e);
 	die;
@@ -59,7 +58,7 @@ $surveys = \SurveyGizmo\Resources\Survey::fetch($filter);
 
 // testLog("got Surveys",$surveys);
 
-$survey = current($surveys->data);
+$survey = reset($surveys->data);
 
 $sid = $survey->id;
 testLog("Updating Survey " . $sid);
@@ -71,19 +70,19 @@ $survey = \SurveyGizmo\Resources\Survey::get($sid);
 // testLog("got Survey",$survey);
 
 $campaigns = $survey->getCampaigns();
-$campaign_id = current($campaigns->data)->id;
+$campaign_id = reset($campaigns->data)->id;
 
 $campaign = $survey->getCampaign($campaign_id);
 testLog("got Campaign", $campaign);
 
 $emails = $campaign->getEmailMessages();
-$email_id = current($emails->data)->id;
+$email_id = reset($emails->data)->id;
 
 $email = $campaign->getEmailMessage($email_id);
 testLog("got Email Message", $email);
 
 $questions = $survey->getQuestions();
-$question_id = current($questions->data)->id;
+$question_id = reset($questions->data)->id;
 
 $question = $survey->getQuestion($question_id);
 $question->title->English = "API TEST";
@@ -109,7 +108,7 @@ $response->save();
 testLog("Getting Responses for survey " . $sid);
 $responses = $survey->getResponses();
 
-$response_id = current($responses->data)->id;
+$response_id = reset($responses->data)->id;
 
 $response = $survey->getResponse($response_id);
 // testLog("got Response ", $response);
@@ -131,14 +130,14 @@ $ret = $response->save();
 // 	$reports = $survey->getReports();
 // }
 
-// $report_id = current($reports->data)->id;
+// $report_id = reset($reports->data)->id;
 
 // testLog("Getting one report for survey " . $survey->id);
 // $report = \SurveyGizmo\Resources\Survey\Report::get($survey->id, $report_id);
 // testLog("got report",$report);
 
 testLog("Updating Survey Page 1 title for survey " . $survey->id);
-$page = current($survey->pages);
+$page = reset($survey->pages);
 $page->title = "API PAGE TITLE";
 $page->save();
 

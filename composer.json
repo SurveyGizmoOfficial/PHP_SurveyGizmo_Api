@@ -1,7 +1,12 @@
 {
     "name": "surveygizmo/surveygizmo-api",
     "description": "Official PHP library for SurveyGizmo API",
-    "version": "v1.0.0-stable",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api/issues",
+        "source": "https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api",
+        "wiki": "https://apihelp.surveygizmo.com/help"
+    },
     "require": {},
     "autoload": {
         "psr-4": {
