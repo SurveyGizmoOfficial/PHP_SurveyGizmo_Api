@@ -63,7 +63,7 @@ try {
 For info on API request limiting see https://apihelp.surveygizmo.com/help/api-request-limits.
 ```php
 //set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
-SurveyGizmo\ApiRequest::setRepeatRateLimitedRquest(10);
+SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
 ```
 
 ### Surveys
@@ -218,9 +218,14 @@ try {
 }
 ```
 
-## API Reference
-This Library uses the version 5 SurveyGizmo API.  [API Documentation](https://apihelp.surveygizmo.com).
+## Automated Installation
+This library is now available in [packagist](https://packagist.org/), and you can include [surveygizmo/surveygizmo-api](https://packagist.org/packages/surveygizmo/surveygizmo-api) in your composer files to autoload it.
 
+## Code Samples
+Please refer to the [Samples folder](https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api/tree/master/Samples) for more thorough example use cases.
+
+## API Reference
+This Library uses the version 5 SurveyGizmo API, please refer to our [API Documentation](https://apihelp.surveygizmo.com/help/version-5) for more information.
 
 ## Tests
 Unit tests are included under the /Tests directory.  They can be executed by running:

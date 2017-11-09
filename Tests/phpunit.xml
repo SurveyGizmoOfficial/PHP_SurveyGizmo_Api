@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="./bootstrap.php">
+	<testsuites>
+		<testsuite name="ApiResource">
+			<file>./ApiResourceTest.php</file>
+		</testsuite>
+		<testsuite name="ApiRequest">
+			<file>./ApiRequestTest.php</file>
+		</testsuite>
+		<testsuite name="Resources">
+			<directory suffix="Test.php">./Resources</directory>
+		</testsuite>
+		<testsuite name="Helpers">
+			<directory suffix="Test.php">./Helpers</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<ini name="display_errors" value="true" />
+	</php>
+</phpunit>
