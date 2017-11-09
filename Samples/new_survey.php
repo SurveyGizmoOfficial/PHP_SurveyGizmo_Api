@@ -21,15 +21,15 @@ function testVardump($dump)
 testLog("TESTING Library");
 //Require autoloader
 require_once "../SurveyGizmoAutoLoader.php";
-//set token & secret
-$api_key = "";
-$api_secret = "";
+
+//set token & secret (From .credentials file, copy .credentials.example to .credentials and supply your API authentication credentials accordingly)
+$credentials = parse_ini_file('.credentials');
 
 //authenticate
 testLog("Authenticating");
 
 try {
-	\SurveyGizmo\SurveyGizmoAPI::auth($api_key, $api_secret);
+	\SurveyGizmo\SurveyGizmoAPI::auth($credentials['SG_API_KEY'], $credentials['SG_API_SECRET']);
 } catch (\SurveyGizmo\Helpers\SurveyGizmoException $e) {
 	testLog("Error Authenticating", $e);
 	die;
@@ -47,7 +47,7 @@ if ( ! $survey_save_result->result_ok) {
 }
 
 // Newly created surveys contain one page
-$page = \SurveyGizmo\Resources\Survey\Page::get($survey->id, current($survey->pages)->id);
+$page = \SurveyGizmo\Resources\Survey\Page::get($survey->id, reset($survey->pages)->id);
 // See: https://apihelp.surveygizmo.com/help/surveypage-sub-object-v5
 $page->title->English = 'Example Page';
 $page_save_result = $page->save();

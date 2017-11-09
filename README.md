@@ -1,9 +1,13 @@
 # Official PHP library for SurveyGizmo API
 
-[![Latest Stable Version](https://poser.pugx.org/surveygizmo/surveygizmo-api/version)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
+[![Latest Stable Version](https://poser.pugx.org/surveygizmo/surveygizmo-api/v/stable)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
+[![Total Downloads](https://poser.pugx.org/surveygizmo/surveygizmo-api/downloads)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
+[![Latest Unstable Version](https://poser.pugx.org/surveygizmo/surveygizmo-api/v/unstable)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
+[![License](https://poser.pugx.org/surveygizmo/surveygizmo-api/license)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
+[![composer.lock](https://poser.pugx.org/surveygizmo/surveygizmo-api/composerlock)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
 
 ## Summary
-The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; SurveyGizmo\Resources\Survey).
+The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; \SurveyGizmo\Resources\Survey).
 
 ##### Supported Objects
 - Survey
@@ -48,14 +52,12 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 ## Code Examples
 
 #### Auto Loading & Authenticating
+If you are not using composer, you can use our AutoLoader directly as follows:
 ```php
 require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
-//set your key & secret
-$api_key = "<YOUR API_KEY>";
-$api_secret = "<YOUR API_SECRET>";
 
 try {
-	$sg = SurveyGizmo\SurveyGizmoAPI::auth($api_key,$api_secret);
+	\SurveyGizmo\SurveyGizmoAPI::auth("<YOUR API_KEY>", "<YOUR API_SECRET>");
 } catch (Exception $e) {
 	die("Error Authenticating");
 }
@@ -65,7 +67,7 @@ try {
 For info on API request limiting see https://apihelp.surveygizmo.com/help/api-request-limits.
 ```php
 //set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
-SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
+\SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
 ```
 
 ### Surveys
@@ -73,13 +75,13 @@ SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
 ###### Fetching Surveys
 See filter and paging below.
 ```php
-$surveys = SurveyGizmo\Resources\Survey::fetch(<FILTER>,<OPTIONS>);
+$surveys = \SurveyGizmo\Resources\Survey::fetch(<FILTER>,<OPTIONS>);
 ```
 
 ###### Getting a Single Survey
 ```php
 $survey_id = <SURVEY_ID>;
-$survey = SurveyGizmo\Resources\Survey::get(survey_id);
+$survey = \SurveyGizmo\Resources\Survey::get(survey_id);
 ```
 
 ###### Updating a Survey
@@ -90,7 +92,7 @@ $survey->save();
 
 ###### Creating a Survey
 ```php
-$survey = new SurveyGizmo\Resources\Survey();
+$survey = new \SurveyGizmo\Resources\Survey();
 $survey->title = "NEW SURVEY";
 $results = $survey->save();
 ```
@@ -124,7 +126,7 @@ The Survey object provides a few help functions to easily access related collect
 ```
 
 ### Questions
-To access the questions on a survey you'll need an instance of a SurveyGizmo\Resources\Survey object.
+To access the questions on a survey you'll need an instance of a \SurveyGizmo\Resources\Survey object.
 
 ###### Get all Survey Questions
 ```php
@@ -139,7 +141,7 @@ $ret = $question->save();
 ```
 
 ### Responses
-To access the responses for a survey you'll need an instance of a SurveyGizmo\Resources\Survey object. See filter and paging below.
+To access the responses for a survey you'll need an instance of a \SurveyGizmo\Resources\Survey object. See filter and paging below.
 
 ###### Get all Survey Responses
 ```php
@@ -163,20 +165,20 @@ All fetch methods take both optional $filter and $options arguments.
 
 ###### Filtering
 ```php
-$filter = new SurveyGizmo\Helpers\Filter();
-$filter_item = new SurveyGizmo\Helpers\FilterItem();
+$filter = new \SurveyGizmo\Helpers\Filter();
+$filter_item = new \SurveyGizmo\Helpers\FilterItem();
 $filter_item->setField('title');
 $filter_item->setOperator('=');
 $filter_item->setCondition('TEST from API');
 $filter->addFilterItem($filter_item);
-$surveys = SurveyGizmo\Resources\Survey::fetch($filter);
+$surveys = \SurveyGizmo\Resources\Survey::fetch($filter);
 ```
 
 ###### Paging Collections
 Sometimes you will need to page through collections of objects.  To accommodate this use the optional $options argument on any fetch method;
 ```php
 $options = array( 'page' => 3, 'limit' => 100 );
-$surveys = SurveyGizmo\Resources\Survey::fetch($filter,$options);
+$surveys = \SurveyGizmo\Resources\Survey::fetch($filter,$options);
 ```
 
 ### ERROR Message & Responses
@@ -188,9 +190,9 @@ Not Authorized (401)
 ```
 
 ### Simple API request
-To perform a API call without going through a specific resource class, use SurveyGizmo\ApiRequest::call.
+To perform a API call without going through a specific resource class, use \SurveyGizmo\ApiRequest::call.
 ```php
-$response = SurveyGizmo\ApiRequest::call('contactlist', null, null, null);
+$response = \SurveyGizmo\ApiRequest::call('contactlist', null, null, null);
 ```
 
 ## Dependencies
@@ -209,12 +211,9 @@ require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
 ```
 3. Authenticate using your SurveyGizmo [API Key and Secret](https://apihelp.surveygizmo.com/help/article/link/authentication).
 ```php
-//set your key & secret
-$api_key = "<YOUR API_KEY>";
-$api_secret = "<YOUR API_SECRET>";
 
 try {
-	$sg = SurveyGizmo\SurveyGizmoAPI::auth($api_key,$api_secret);
+	\SurveyGizmo\SurveyGizmoAPI::auth("<YOUR API_KEY>", "<YOUR API_SECRET>");
 } catch (Exception $e) {
 	die("Error Authenticating");
 }
@@ -226,13 +225,21 @@ This library is now available in [packagist](https://packagist.org/), and you ca
 ## Code Samples
 Please refer to the [Samples folder](https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api/tree/master/Samples) for more thorough example use cases.
 
+To use these samples, copy the example file and then supply your own credentials:
+```bash
+$ cp Samples/.credentials.example Samples/.credentials
+$ vi Samples/.credentials # then supply your credentials accordingly
+$ cd Samples
+$ php new_survey.php # run once prior to running manipulate_survey.php
+```
+
 ## API Reference
 This Library uses the version 5 SurveyGizmo API, please refer to our [API Documentation](https://apihelp.surveygizmo.com/help/version-5) for more information.
 
 ## Tests
-Unit tests are included under the /Tests directory.  They can be executed by running:
+Unit tests are included under the /Tests directory.  They can be run by calling PHPUnit within the Tests folder:
 ```bash
-$ phpunit -c bootstrap.xml
+$ phpunit
 ```
 
 ## Contributors
