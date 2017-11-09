@@ -5,7 +5,7 @@ use SurveyGizmo\Helpers\SurveyGizmoException;
 use SurveyGizmo\Resources\Account;
 
 /**
- * Simple class to store auth credentials for SG API and authorize API use. 
+ * Simple class to store auth credentials for SG API and authorize API use.
  */
 class SurveyGizmoAPI
 {
@@ -18,20 +18,23 @@ class SurveyGizmoAPI
 	 * API AuthSecret
 	 */
 	static $AuthSecret;
-	
+
 	/**
 	 * Authorizes API use for all calls and performes a test to verify creds are still good
 	 * @access public
 	 * @param string $api_key api key from SurveyGizmo
 	 * @param string $api_secret api secret from SurveyGizmo
+	 * @param bool $bypass_test bypass testing credentials
 	 * @return void
 	 */
-	public static function auth($api_key, $api_secret)
+	public static function auth($api_key, $api_secret, $bypass_test = false)
 	{
 		self::$AuthToken = $api_key;
 		self::$AuthSecret = $api_secret;
-		
-		return self::testCredentials();
+
+		if ( ! $bypass_test) {
+			self::testCredentials();
+		}
 	}
 
 	/**
