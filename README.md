@@ -116,7 +116,7 @@ The Survey object provides a few help functions to easily access related collect
 	$survey->getReport($id);
 	//get statistics
 	$survey->getStatistics();
-	$survey->getQuestionStatistics($question_id);
+	$survey->getStatisticsByID($question_id);
 	//get campaigns
 	$survey->getCampaigns();
 	$survey->getCampaign($id);
