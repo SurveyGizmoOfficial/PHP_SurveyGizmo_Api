@@ -264,7 +264,7 @@ class Survey extends ApiResource
 	private function formatTeams()
 	{
 		$return = array();
-		$teams = $this->team;
+		$teams = is_array($this->team) ? $this->team : [(object) array('id' => $this->team)];
 		foreach ($teams as $obj) {
 			$team = $this->formatTeam($obj);
 			$return[] = $team;
