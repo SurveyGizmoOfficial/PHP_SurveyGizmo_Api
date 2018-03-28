@@ -24,9 +24,11 @@ class Survey extends ApiResource
 	public function __set($name, $value)
 	{
 		$this->{$name} = $value;
+
 		if ($name == 'team') {
 			$this->formatTeams();
 		}
+
 		if ($name == 'pages') {
 			$this->formatPages();
 		}
@@ -41,7 +43,13 @@ class Survey extends ApiResource
 	 */
 	public static function fetch($filter = null, $options = null)
 	{
-		return self::_fetch(array('id' => ''), $filter, $options);
+		return self::_fetch(
+			array(
+				'id' => '',
+			),
+			$filter,
+			$options
+		);
 	}
 
 	/**
@@ -55,8 +63,9 @@ class Survey extends ApiResource
 		if ($id < 1) {
 			throw new SurveyGizmoException("ID required", 500);
 		}
+
 		return self::_get(array(
-			'id' => $id
+			'id' => $id,
 		));
 	}
 
@@ -68,8 +77,9 @@ class Survey extends ApiResource
 	public function save()
 	{
 		$this->type = empty($this->type) ? "survey" : $this->type;
+
 		return $this->_save(array(
-			'id' => $this->exists() ? $this->id : ''
+			'id' => $this->exists() ? $this->id : '',
 		));
 	}
 
@@ -81,11 +91,12 @@ class Survey extends ApiResource
 	public function delete()
 	{
 		return self::_delete(array(
-			'id' => $this->id
+			'id' => $this->id,
 		));
 	}
 
 	/*PAGES*/
+
 	/**
 	 * Return pages array from current Survey object
 	 * @access public
@@ -109,10 +120,12 @@ class Survey extends ApiResource
 				return $page;
 			}
 		}
+
 		return false;
 	}
 
 	/*QUESTIONS*/
+
 	/**
 	 * Return questions from current Survey object
 	 * @access public
@@ -196,8 +209,9 @@ class Survey extends ApiResource
 	public function getStatisticsByID($question_id)
 	{
 		$stats = $this->getSubObjects("SurveyGizmo\\Resources\\Survey\\Statistics");
+
 		foreach ($stats->data as $key => $question_stats) {
-			if($question_stats->id == $question_id){
+			if ($question_stats->id == $question_id) {
 				return $question_stats;
 			}
 		}
@@ -234,10 +248,10 @@ class Survey extends ApiResource
 	 * @param Array $options
 	 * @return SurveyGizmo\ApiResponse Object with SurveyGizmo\{$type} Object
 	 */
-	private function getSubObjects($type, $filter = null, $options = null)
+	private function getSubObjects($type, $filter = null, $options = array())
 	{
-		$options = (isset($options))? $options: array();
 		$options["survey_id"] = $this->id;
+
 		return $type::fetch($this->id, $filter, $options);
 	}
 
@@ -254,6 +268,7 @@ class Survey extends ApiResource
 	}
 
 	/*FORMATERS*/
+
 	/**
 	 * Format teams! We want to keep things useable and organized,
 	 * hence the custom formatter for teams
@@ -264,11 +279,20 @@ class Survey extends ApiResource
 	private function formatTeams()
 	{
 		$return = array();
-		$teams = is_array($this->team) ? $this->team : [(object) array('id' => $this->team)];
+
+		$teams = is_array($this->team) ?
+			$this->team
+			: array(
+				(object) array(
+					'id' => $this->team,
+				),
+			);
+
 		foreach ($teams as $obj) {
 			$team = $this->formatTeam($obj);
 			$return[] = $team;
 		}
+
 		$this->team = $return;
 	}
 
@@ -283,10 +307,12 @@ class Survey extends ApiResource
 	{
 		$return = array();
 		$pages = $this->pages;
+
 		foreach ($pages as $obj) {
 			$page = self::formatPage($obj);
 			$return[] = $page;
 		}
+
 		$this->pages = $return;
 	}
 
@@ -300,10 +326,11 @@ class Survey extends ApiResource
 	{
 		$page = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Page", $page_obj);
 		$page->questions = self::formatQuestions($page);
+
 		return $page;
 	}
 
-		/**
+	/**
 	 * Format teams
 	 * @access private
 	 * @param object $team_info
@@ -311,8 +338,7 @@ class Survey extends ApiResource
 	 */
 	private function formatTeam($team_info)
 	{
-		$team = Team::get($team_info->id);
-		return $team;
+		return Team::get($team_info->id);
 	}
 
 	/**
@@ -325,12 +351,15 @@ class Survey extends ApiResource
 	{
 		$return = array();
 		$raw_questions = $page->questions;
+
 		foreach ($raw_questions as $obj) {
 			$question = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\Question", $obj);
-			//format options
+
+			// format options
 			$question->options = self::formatQuestionOptions($question);
 			$return[] = $question;
 		}
+
 		return $return;
 	}
 
@@ -344,11 +373,14 @@ class Survey extends ApiResource
 	{
 		$return = array();
 		$raw_options = $question->options;
+
 		foreach ($raw_options as $obj) {
 			$option = parent::_formatObject("SurveyGizmo\\Resources\\Survey\\QuestionOption", $obj);
+
 			//format options
 			$return[] = $option;
 		}
+
 		return $return;
 	}
 
