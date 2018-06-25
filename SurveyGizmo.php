@@ -3,6 +3,7 @@ namespace SurveyGizmo;
 
 use SurveyGizmo\Helpers\SurveyGizmoException;
 use SurveyGizmo\Resources\Account;
+use SurveyGizmo\ApiRequest;
 
 /**
  * Simple class to store auth credentials for SG API and authorize API use.
@@ -35,6 +36,24 @@ class SurveyGizmoAPI
 		if ( ! $bypass_test) {
 			self::testCredentials();
 		}
+	}
+
+	public static function setRegion($region = 'US') {
+		switch (strtoupper($region)) {
+			case 'US':
+				$region_base_url = 'restapi.surveygizmo.com/v5';
+				break;
+			case 'EU':
+				$region_base_url = 'restapi.surveygizmo.eu/v5';
+				break;
+			case 'CA':
+				$region_base_url = 'restapica.surveygizmo.com/v5';
+				break;
+			default:
+				throw new SurveyGizmoException('Invalid region supplied: ' . $region, SurveyGizmoException::NOT_SUPPORTED);
+		}
+
+		ApiRequest::setBaseURI($region_base_url);
 	}
 
 	/**
