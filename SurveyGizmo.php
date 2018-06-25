@@ -38,6 +38,12 @@ class SurveyGizmoAPI
 		}
 	}
 
+	/**
+	 * Changes hostname to point API calls to international data centers
+	 * @access public
+	 * @param string $region what region your account resides on (US/CA/EU)
+	 * @return void
+	 */
 	public static function setRegion($region = 'US') {
 		switch (strtoupper($region)) {
 			case 'US':
