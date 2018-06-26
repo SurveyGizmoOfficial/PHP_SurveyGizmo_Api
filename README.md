@@ -51,11 +51,27 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 
 ## Code Examples
 
-#### Auto Loading & Authenticating
+#### Auto Loading
 If you are not using composer, you can use our AutoLoader directly as follows:
 ```php
 require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
+```
 
+#### Configuring Requests for International Data Centers
+If you are not using our US data center, you will need to choose the appropriate region (US, CA, or EU):
+```php
+try {
+	\SurveyGizmo\SurveyGizmoAPI::setRegion('EU');
+} catch (Exception $e) {
+	die('Region not available');
+}
+```
+The datacenter must be configured correctly prior to authentication and any other calls.
+
+If you are not sure if you are using the US, EU, or CA API, see: https://apihelp.surveygizmo.com/help/us-eu-or-ca-api
+
+#### Authenticating
+```php
 try {
 	\SurveyGizmo\SurveyGizmoAPI::auth("<YOUR API_KEY>", "<YOUR API_SECRET>");
 } catch (Exception $e) {
@@ -64,7 +80,7 @@ try {
 ```
 
 #### Rate limiting
-For info on API request limiting see https://apihelp.surveygizmo.com/help/api-request-limits.
+For info on API request limiting see: https://apihelp.surveygizmo.com/help/api-request-limits
 ```php
 //set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
 \SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
@@ -209,7 +225,15 @@ Imagination, Determination and Common Sense!
 ```php
 require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
 ```
-3. Authenticate using your SurveyGizmo [API Key and Secret](https://apihelp.surveygizmo.com/help/article/link/authentication).
+3. Configure your SurveyGizmo API data center (Defaults to US data center if not called)
+```php
+try {
+	\SurveyGizmo\SurveyGizmoAPI::setRegion('EU');
+} catch (Exception $e) {
+	die('Region not available');
+}
+```
+4. Authenticate using your SurveyGizmo [API Key and Secret](https://apihelp.surveygizmo.com/help/article/link/authentication).
 ```php
 
 try {

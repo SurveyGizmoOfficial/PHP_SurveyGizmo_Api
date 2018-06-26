@@ -76,8 +76,6 @@ class ApiRequestTest extends TestCase
     public function testbuildURI()
     {
 
-      //$expected = "trunk.qa.devo.boulder.sgizmo.com/services/rest/v4this is a string.json?api_token=testing&api_token_secret=sauce&_method=GET";
-
       $test = new ApiRequest();
       $test->data = new \stdClass();
       $test->path = 'this is a string';
@@ -91,20 +89,20 @@ class ApiRequestTest extends TestCase
     }
 
     /**
- * Call protected/private method of a class.
- *
- * @param object &$object    Instantiated object that we will run method on.
- * @param string $methodName Method name to call
- * @param array  $parameters Array of parameters to pass into method.
- *
- * @return mixed Method return.
- */
-public function invokeMethod(&$object, $methodName, array $parameters = array())
-{
-    $reflection = new \ReflectionClass(get_class($object));
-    $method = $reflection->getMethod($methodName);
-    $method->setAccessible(true);
-    return $method->invokeArgs($object, array($parameters));
-}
+     * Call protected/private method of a class.
+     *
+     * @param object &$object    Instantiated object that we will run method on.
+     * @param string $methodName Method name to call
+     * @param array  $parameters Array of parameters to pass into method.
+     *
+     * @return mixed Method return.
+     */
+    public function invokeMethod(&$object, $methodName, array $parameters = array())
+    {
+        $reflection = new \ReflectionClass(get_class($object));
+        $method = $reflection->getMethod($methodName);
+        $method->setAccessible(true);
+        return $method->invokeArgs($object, array($parameters));
+    }
 
 }
