@@ -7,7 +7,69 @@
 [![composer.lock](https://poser.pugx.org/surveygizmo/surveygizmo-api/composerlock)](https://packagist.org/packages/surveygizmo/surveygizmo-api)
 
 ## Summary
-The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (eg; \SurveyGizmo\Resources\Survey).
+The library is intended to make integrating with SurveyGizmo easier and quicker than using the API directly.  The following objects are supported via this library and are all namespaced under SurveyGizmo (e.g. \SurveyGizmo\Resources\Survey).
+
+## Requirements
+- PHP 5.3+
+- cURL
+- Active SurveyGizmo Account
+
+## Recommended Installation
+This library is now available in [packagist](https://packagist.org/), and you can include [surveygizmo/surveygizmo-api](https://packagist.org/packages/surveygizmo/surveygizmo-api) in your [composer](https://getcomposer.org/doc/00-intro.md) configuration files to autoload it:
+```bash
+$ composer require surveygizmo/surveygizmo-api
+Using version ^1.0 for surveygizmo/surveygizmo-api
+./composer.json has been updated
+Loading composer repositories with package information
+Updating dependencies (including require-dev)
+Package operations: 1 install, 0 updates, 0 removals
+  - Installing surveygizmo/surveygizmo-api (v1.0.3-stable): Loading from cache
+Writing lock file
+Generating autoload files
+```
+
+## Manual Installation
+1. Download the library and add it to your project.
+2. Include the SurveyGizmoAutoLoader.php file, replacing `<LIBRARY_PATH>` with the appropriate path.
+```php
+require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
+```
+
+## Configuration
+1. If you are not using our US data center, you will need to choose the appropriate region (US, CA, or EU). If you are not sure if you are using the US, EU, or CA API, see: https://apihelp.surveygizmo.com/help/us-eu-or-ca-api
+```php
+try {
+	\SurveyGizmo\SurveyGizmoAPI::setRegion('EU');
+} catch (Exception $e) {
+	die('Region not available');
+}
+```
+2. Authenticate using your SurveyGizmo [API Key and Secret](https://apihelp.surveygizmo.com/help/article/link/authentication).
+```php
+
+try {
+	\SurveyGizmo\SurveyGizmoAPI::auth("<YOUR API_KEY>", "<YOUR API_SECRET>");
+} catch (Exception $e) {
+	die("Error Authenticating");
+}
+```
+3. If needed, configure [rate limiting](https://apihelp.surveygizmo.com/help/api-request-limits).
+```php
+//set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
+\SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
+```
+
+## Code Samples
+Please refer to the [Samples folder](https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api/tree/master/Samples) for more thorough example use cases.
+
+To use these samples, copy the example file and then supply your own credentials:
+```bash
+$ cd Samples
+$ cp .credentials.example .credentials
+$ vi .credentials # then supply your credentials accordingly
+$ php new_survey.php # run once prior to running manipulate_survey.php
+$ php manipulate_survey.php
+```
 
 ##### Supported Objects
 - Survey
@@ -25,8 +87,10 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 - ContactLists
 	- Contacts
 
+## API Object Reference
+This Library uses the version 5 SurveyGizmo API, please refer to our [API Documentation](https://apihelp.surveygizmo.com/help/version-5) for more information.
 
-####All objects use the following standard functions:
+#### All objects use the following standard functions:
 
 ```
 <OBJECT>::fetch(<FILTERS>,<OPTIONS>);
@@ -48,43 +112,6 @@ The library is intended to make integrating with SurveyGizmo easier and quicker 
 ```
 > Deletes an instance of an object
 
-
-## Code Examples
-
-#### Auto Loading
-If you are not using composer, you can use our AutoLoader directly as follows:
-```php
-require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
-```
-
-#### Configuring Requests for International Data Centers
-If you are not using our US data center, you will need to choose the appropriate region (US, CA, or EU):
-```php
-try {
-	\SurveyGizmo\SurveyGizmoAPI::setRegion('EU');
-} catch (Exception $e) {
-	die('Region not available');
-}
-```
-The datacenter must be configured correctly prior to authentication and any other calls.
-
-If you are not sure if you are using the US, EU, or CA API, see: https://apihelp.surveygizmo.com/help/us-eu-or-ca-api
-
-#### Authenticating
-```php
-try {
-	\SurveyGizmo\SurveyGizmoAPI::auth("<YOUR API_KEY>", "<YOUR API_SECRET>");
-} catch (Exception $e) {
-	die("Error Authenticating");
-}
-```
-
-#### Rate limiting
-For info on API request limiting see: https://apihelp.surveygizmo.com/help/api-request-limits
-```php
-//set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
-\SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
-```
 
 ### Surveys
 
@@ -175,7 +202,6 @@ $response->survey_data[$question_id]['answer'] = 'YES';
 $ret = $response->save();
 ```
 
-
 #### Filtering & Paging Objects
 All fetch methods take both optional $filter and $options arguments.
 
@@ -197,7 +223,7 @@ $options = array( 'page' => 3, 'limit' => 100 );
 $surveys = \SurveyGizmo\Resources\Survey::fetch($filter,$options);
 ```
 
-### ERROR Message & Responses
+### Error Messages & Responses
 In the case of an error we will return the following responses and status codes:
 ```
 Method not implemented (404)
@@ -211,63 +237,14 @@ To perform a API call without going through a specific resource class, use \Surv
 $response = \SurveyGizmo\ApiRequest::call('contactlist', null, null, null);
 ```
 
-## Dependencies
-```
-PHP 5.3+
-CURL
-Active SurveyGizmo Account
-Imagination, Determination and Common Sense!
-```
-
-## Installation
-1. Download the Library and add it to your project.
-2. Include the SurveyGizmoAutoLoader.php file
-```php
-require_once "<LIBRARY_PATH>/SurveyGizmoAutoLoader.php";
-```
-3. Configure your SurveyGizmo API data center (Defaults to US data center if not called)
-```php
-try {
-	\SurveyGizmo\SurveyGizmoAPI::setRegion('EU');
-} catch (Exception $e) {
-	die('Region not available');
-}
-```
-4. Authenticate using your SurveyGizmo [API Key and Secret](https://apihelp.surveygizmo.com/help/article/link/authentication).
-```php
-
-try {
-	\SurveyGizmo\SurveyGizmoAPI::auth("<YOUR API_KEY>", "<YOUR API_SECRET>");
-} catch (Exception $e) {
-	die("Error Authenticating");
-}
-```
-
-## Automated Installation
-This library is now available in [packagist](https://packagist.org/), and you can include [surveygizmo/surveygizmo-api](https://packagist.org/packages/surveygizmo/surveygizmo-api) in your composer files to autoload it.
-
-## Code Samples
-Please refer to the [Samples folder](https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api/tree/master/Samples) for more thorough example use cases.
-
-To use these samples, copy the example file and then supply your own credentials:
-```bash
-$ cp Samples/.credentials.example Samples/.credentials
-$ vi Samples/.credentials # then supply your credentials accordingly
-$ cd Samples
-$ php new_survey.php # run once prior to running manipulate_survey.php
-```
-
-## API Reference
-This Library uses the version 5 SurveyGizmo API, please refer to our [API Documentation](https://apihelp.surveygizmo.com/help/version-5) for more information.
-
 ## Tests
-Unit tests are included under the /Tests directory.  They can be run by calling PHPUnit within the Tests folder:
+Unit tests are included under the `/Tests` directory.  They can be run by calling PHPUnit within the Tests folder:
 ```bash
 $ phpunit
 ```
 
 ## Contributors
-The library was developed and is maintained by the [SurveyGizmo](http://www.surveygizmo.com) Product Development Team.
+The library was developed and is maintained by the [SurveyGizmo](http://www.surveygizmo.com) Development Team.
 
 ## License
 This project is licensed under the terms of the MIT license.
