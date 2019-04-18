@@ -58,6 +58,12 @@ try {
 //set max retries of requests to 10, when request is rate limited it will be retried after 5 seconds.
 \SurveyGizmo\ApiRequest::setRepeatRateLimitedRequest(10);
 ```
+4. If needed, configure the request timeout duration (in seconds, defaults to 35 if not specified)
+```php
+//this is the maximum wait period before aborting requests, you may need to
+//increase this from the default of 35 seconds if working with oversize surveys
+\SurveyGizmo\ApiRequest::setRequestTimeout(60);
+```
 
 ## Code Samples
 Please refer to the [Samples folder](https://github.com/SurveyGizmoOfficial/PHP_SurveyGizmo_Api/tree/master/Samples) for more thorough example use cases.
