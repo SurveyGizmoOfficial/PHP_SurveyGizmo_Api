@@ -39,6 +39,13 @@ class ApiRequest
 	private static $repeat_rate_limited_request = 0;
 
 	/**
+	 * Configures the cURL request timeout limit
+	 *
+	 * @var int number of seconds before timeout
+	 */
+	private static $request_timeout = 35;
+
+	/**
 	 * The JSON decoded return from the API.
 	 * @var stdClass null
 	 */
@@ -127,11 +134,13 @@ class ApiRequest
 				curl_setopt($ch, CURLOPT_NOPROGRESS, 1);
 				curl_setopt($ch, CURLOPT_VERBOSE, 0);
 				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
+
 				if ($this->method == "PUT" || $this->method == "POST") {
 					curl_setopt($ch, CURLOPT_POST, 1);
 					curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_post_data);
 				}
-				curl_setopt($ch, CURLOPT_TIMEOUT, 35);
+
+				curl_setopt($ch, CURLOPT_TIMEOUT, self::$request_timeout);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
 				// Execute CURL request
@@ -290,6 +299,19 @@ class ApiRequest
 	 */
 	public static function setRepeatRateLimitedRequest($val) {
 		self::$repeat_rate_limited_request = (int) $val;
+	}
+
+	/**
+	 * Configure the cURL request timeout
+	 *
+	 * This is the maximum wait period before aborting requests, you may need
+	 * to increase this from the default of 35 seconds if working with oversize
+	 * surveys
+	 *
+	 * @param int number of seconds before timeout
+	 */
+	public static function setRequestTimeout($val) {
+		self::$request_timeout = (int) $val;
 	}
 
 	/**
