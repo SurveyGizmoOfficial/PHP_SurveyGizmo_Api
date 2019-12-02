@@ -76,6 +76,12 @@ class ApiRequest
 	private $limit;
 
 	/**
+	 * metaonly (exclude page info on surveys)
+	 * @var bool null
+	 */
+	private $metaonly;
+
+	/**
 	 * Complete URL string.
 	 * @var string null
 	 */
@@ -231,6 +237,10 @@ class ApiRequest
 			'resultsperpage' => $this->limit,
 		);
 
+		if (isset($this->metaonly)) {
+			$params['metaonly'] = $this->metaonly ? 'true' : 'false';
+		}
+
 		$uri = self::$API_URL . $this->path . ".json?" . http_build_query($params);
 
 		// Add filter parameters if available
@@ -275,6 +285,13 @@ class ApiRequest
 			$this->limit = $options['limit'];
 		} else {
 			$this->limit = 50;
+		}
+
+		// metaonly flag
+		if (isset($options['metaonly'])) {
+			$this->metaonly = (bool) $options['metaonly'];
+		} else {
+			$this->metaonly = null;
 		}
 	}
 
